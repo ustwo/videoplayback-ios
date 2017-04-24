@@ -13,6 +13,16 @@
 		2789D7191EA940FB0087CB5B /* VideoPlaybackKitTVOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2789D7101EA940FA0087CB5B /* VideoPlaybackKitTVOS.framework */; };
 		2789D71E1EA940FB0087CB5B /* VideoPlaybackKitTVOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D71D1EA940FB0087CB5B /* VideoPlaybackKitTVOSTests.swift */; };
 		2789D7201EA940FB0087CB5B /* VideoPlaybackKitTVOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2789D7121EA940FA0087CB5B /* VideoPlaybackKitTVOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2789D7391EAA625F0087CB5B /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D7381EAA625F0087CB5B /* VPKVideoView.swift */; };
+		2789D73A1EAA625F0087CB5B /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D7381EAA625F0087CB5B /* VPKVideoView.swift */; };
+		2789D73C1EAA62830087CB5B /* VPKVideoViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D73B1EAA62830087CB5B /* VPKVideoViewPresenter.swift */; };
+		2789D73D1EAA62830087CB5B /* VPKVideoViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D73B1EAA62830087CB5B /* VPKVideoViewPresenter.swift */; };
+		2789D74E1EAA86450087CB5B /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D74D1EAA86450087CB5B /* VPKVideoToolBarView.swift */; };
+		2789D74F1EAA86450087CB5B /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D74D1EAA86450087CB5B /* VPKVideoToolBarView.swift */; };
+		2789D75E1EAE595D0087CB5B /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D75D1EAE595D0087CB5B /* VPKPlayerContract.swift */; };
+		2789D75F1EAE595D0087CB5B /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D75D1EAE595D0087CB5B /* VPKPlayerContract.swift */; };
+		2789D7611EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D7601EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift */; };
+		2789D7621EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2789D7601EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +59,11 @@
 		2789D7181EA940FB0087CB5B /* VideoPlaybackKitTVOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoPlaybackKitTVOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2789D71D1EA940FB0087CB5B /* VideoPlaybackKitTVOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackKitTVOSTests.swift; sourceTree = "<group>"; };
 		2789D71F1EA940FB0087CB5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2789D7381EAA625F0087CB5B /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPKVideoView.swift; path = ../Sources/VPKVideoView.swift; sourceTree = "<group>"; };
+		2789D73B1EAA62830087CB5B /* VPKVideoViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPKVideoViewPresenter.swift; path = ../Sources/VPKVideoViewPresenter.swift; sourceTree = "<group>"; };
+		2789D74D1EAA86450087CB5B /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPKVideoToolBarView.swift; path = ../Sources/VPKVideoToolBarView.swift; sourceTree = "<group>"; };
+		2789D75D1EAE595D0087CB5B /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPKPlayerContract.swift; path = ../Sources/VPKPlayerContract.swift; sourceTree = "<group>"; };
+		2789D7601EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPKVideoPlayerInteractor.swift; path = ../Sources/VPKVideoPlayerInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +183,14 @@
 		2789D7271EA941360087CB5B /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2789D75D1EAE595D0087CB5B /* VPKPlayerContract.swift */,
+				2789D7501EAA86880087CB5B /* Animator */,
+				2789D7491EAA632C0087CB5B /* Protocol */,
+				2789D7481EAA631F0087CB5B /* Builder */,
+				2789D7471EAA63120087CB5B /* Manager */,
+				2789D7461EAA63080087CB5B /* View */,
+				2789D7451EAA63030087CB5B /* Interactor */,
+				2789D7441EAA62FD0087CB5B /* Presenter */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -177,6 +200,59 @@
 			children = (
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		2789D7441EAA62FD0087CB5B /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				2789D73B1EAA62830087CB5B /* VPKVideoViewPresenter.swift */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		2789D7451EAA63030087CB5B /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				2789D7601EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift */,
+			);
+			name = Interactor;
+			sourceTree = "<group>";
+		};
+		2789D7461EAA63080087CB5B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2789D7381EAA625F0087CB5B /* VPKVideoView.swift */,
+				2789D74D1EAA86450087CB5B /* VPKVideoToolBarView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2789D7471EAA63120087CB5B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Manager;
+			sourceTree = "<group>";
+		};
+		2789D7481EAA631F0087CB5B /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Builder;
+			sourceTree = "<group>";
+		};
+		2789D7491EAA632C0087CB5B /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Protocol;
+			sourceTree = "<group>";
+		};
+		2789D7501EAA86880087CB5B /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Animator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -363,6 +439,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2789D74E1EAA86450087CB5B /* VPKVideoToolBarView.swift in Sources */,
+				2789D7391EAA625F0087CB5B /* VPKVideoView.swift in Sources */,
+				2789D75E1EAE595D0087CB5B /* VPKPlayerContract.swift in Sources */,
+				2789D7611EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift in Sources */,
+				2789D73C1EAA62830087CB5B /* VPKVideoViewPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +459,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2789D74F1EAA86450087CB5B /* VPKVideoToolBarView.swift in Sources */,
+				2789D73A1EAA625F0087CB5B /* VPKVideoView.swift in Sources */,
+				2789D75F1EAE595D0087CB5B /* VPKPlayerContract.swift in Sources */,
+				2789D7621EAE7C260087CB5B /* VPKVideoPlayerInteractor.swift in Sources */,
+				2789D73D1EAA62830087CB5B /* VPKVideoViewPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -554,6 +640,7 @@
 		2789D7091EA940E00087CB5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				INFOPLIST_FILE = VideoPlaybackKitiOSTests/Info.plist;
@@ -569,6 +656,7 @@
 		2789D70A1EA940E00087CB5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				INFOPLIST_FILE = VideoPlaybackKitiOSTests/Info.plist;
@@ -633,6 +721,7 @@
 		2789D7251EA940FB0087CB5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				INFOPLIST_FILE = VideoPlaybackKitTVOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -647,6 +736,7 @@
 		2789D7261EA940FB0087CB5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				INFOPLIST_FILE = VideoPlaybackKitTVOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
