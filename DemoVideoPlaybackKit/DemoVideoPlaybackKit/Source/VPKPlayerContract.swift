@@ -8,6 +8,14 @@
 
 import Foundation
 import UIKit
+import AVKit
+import AVFoundation
+
+typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
+
+public enum PlayerState {
+    case playing, paused
+}
 
 
 //** Builder
@@ -77,7 +85,7 @@ public protocol VPKVideoPlayerPresenter: class {
     func onError(_ errorMessage: String)
 }
 
-public protocol VPKVideoPlayerManager {
+public protocol VPKVideoPlayerEventHandler {
     
 }
 
@@ -96,8 +104,15 @@ public protocol VPKVideoPlayerManager {
 //** Interactor
 //*
 //*
-protocol VPKVideoPlayerInteractorInput: class {
-    func didTapVideo()
+protocol VPKVideoPlayerInteractorInput {
+    func didTapVideo(videoURL: URL)
     func didScrub()
-    func didToggeViewExpansion()
+    func didToggleViewExpansion()
+}
+
+
+protocol VPKVideoPlayerInteractorOutput {
+    func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer)
+    func onVideoLoadFail(_ error: String)
+    func onStateChange(_ startState: PlayerState, to endState: PlayerState)
 }

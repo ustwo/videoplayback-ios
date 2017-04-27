@@ -16,7 +16,7 @@
 		272A1D171EAFE64F007F5816 /* VPKPlayerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D0F1EAFE64E007F5816 /* VPKPlayerBuilder.swift */; };
 		272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */; };
 		272A1D191EAFE64F007F5816 /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */; };
-		272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D121EAFE64F007F5816 /* VPKVideoPlayerEventHandler.swift */; };
+		272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */; };
 		272A1D1B1EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D131EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift */; };
 		272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */; };
 		272A1D1D1EAFE64F007F5816 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D151EAFE64F007F5816 /* VPKVideoView.swift */; };
@@ -87,7 +87,7 @@
 		272A1D0F1EAFE64E007F5816 /* VPKPlayerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerBuilder.swift; sourceTree = "<group>"; };
 		272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
 		272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
-		272A1D121EAFE64F007F5816 /* VPKVideoPlayerEventHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlayerEventHandler.swift; sourceTree = "<group>"; };
+		272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlayerManager.swift; sourceTree = "<group>"; };
 		272A1D131EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlayerInteractor.swift; sourceTree = "<group>"; };
 		272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoToolBarView.swift; sourceTree = "<group>"; };
 		272A1D151EAFE64F007F5816 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 		272A1D411EB0E7E5007F5816 /* Event Handler */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D121EAFE64F007F5816 /* VPKVideoPlayerEventHandler.swift */,
+				272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */,
 				272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */,
 			);
 			name = "Event Handler";
@@ -457,7 +457,7 @@
 				272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */,
 				272A1D1E1EAFE64F007F5816 /* VPKVideoViewPresenter.swift in Sources */,
 				272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */,
-				272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerEventHandler.swift in Sources */,
+				272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerManager.swift in Sources */,
 				272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */,
 				272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */,
 				272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */,

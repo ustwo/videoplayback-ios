@@ -12,16 +12,11 @@ public typealias VideoViewClosure = (_ view: VPKVideoView) -> ()
 
 public class VPKPlayerBuilder: NSObject {
    
-    private let presenter = VPKVideoViewPresenter()
-    private let interactor = VPKVideoPlayerInteractor()
-
     //Local video playback
     public static func vpk_buildLocal(_ pathName: String, withType fileType: String, withPlaceHolder placeHolder: String, shouldRueseInCell isInCell: Bool = false, playerViewCompletion completion: VideoViewClosure) {
         
-        
-        let videoView = VPKVideoView(frame: .zero)
-        videoView.placeHolderImageName = placeHolder
-        completion(videoView)
+        let presenter = VPKVideoViewPresenter(localFileName: pathName, fileType: fileType, placeHolder: placeHolder)
+        completion(presenter.localVideoView())
     }
     
     //Remote video playback
@@ -31,4 +26,3 @@ public class VPKPlayerBuilder: NSObject {
         completion(videoView)        
     }
 }
-

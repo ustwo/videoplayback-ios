@@ -18,24 +18,29 @@ private enum LayerHierachy: CGFloat {
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     public var localPath: String?
-    public var placeHolderImageName: String? {
+    public var placeHolderImage: UIImage? {
         didSet {
-            guard   let imageName = placeHolderImageName,
-                    let image = UIImage(named: imageName) else { return }
+            guard let image = placeHolderImage else { return }
                 placeHolder.image = image
         }
     }
-    
-    public let actionButton = UIButton()
+
     
     //private
     private let activityIndicator = UIActivityIndicatorView(frame: .zero)
+    private let actionButton = UIButton()
     private let placeHolder = UIImageView(frame: .zero)
     private var playerLayer: AVPlayerLayer?
     private let tap = UITapGestureRecognizer()
+    private weak var presenter: VPKVideoViewPresenter?
     
     
     //MARK: Lifecycle
+    convenience init(presenter: VPKVideoViewPresenter) {
+        self.init(frame: .zero)
+        self.presenter = presenter
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
@@ -48,8 +53,10 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     //MARK: UI
     private func setup() {
+        self.isUserInteractionEnabled = true
+        
         tap.delegate = self
-      //  tap.addTarget(self, action: #selector(didTapPlayButton))
+       // tap.addTarget(self, action: #selector(didTapView))
         addGestureRecognizer(tap)
         tap.numberOfTapsRequired = 1
         
@@ -65,7 +72,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             make.center.equalTo(self.snp.center)
             make.width.height.equalTo(80)
         }
-        //actionButton.addTarget(self, action: #selector(didTapPlayButton), for: .touchUpInside)
+        actionButton.addTarget(self, action: #selector(didTapView), for: .touchUpInside)
+        actionButton.setTitle("Trigger", for: .normal)
         actionButton.layer.zPosition = LayerHierachy.middle.rawValue
         
         addSubview(activityIndicator)
@@ -75,8 +83,21 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         activityIndicator.color = .white
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
     }
-}
     
+    public func didTapView() {
+        presenter?.didTapVideoView()
+    }
+    
+    public func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
+        self.playerLayer = playerLayer
+        playerLayer.frame = self.bounds
+        playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
+        playerLayer.zPosition = LayerHierachy.top.rawValue
+        layer.insertSublayer(playerLayer, at: 0)
+    }
+}
+
+
     /*
     //MARK: Configuration
     private func configure(model: VideoPlayerModel, manager: VideoPlayerManager) {

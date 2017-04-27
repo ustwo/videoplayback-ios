@@ -7,13 +7,52 @@
 //
 
 import Foundation
+import AVKit
+import AVFoundation
+import RxSwift
 
-public class VPKVideoPlayerInteractor {
-    var videoPlayerManager: VPKVideoPlayerManager?
+
+public class VPKVideoPlayerInteractor: NSObject {
     
-    func loadVideo(_ videoURL: String, withPlaceholder placeholderURL: String, forPresenter presenter: VPKVideoViewPresenter) {
+    fileprivate var manager = VPKVideoPlayerManager()
+    internal var onVideoLoadSuccess: LayerClosure?
+    
+    override init() {
+        super.init()
+        manager.playerLayerClosure = { (playerLayer) in
+            self.onVideoLoadSuccess(playerLayer)
+        }
+    }
+ 
+}
+
+extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorInput {
+   
+    func didTapVideo(videoURL: URL) {
+        manager.didSelectVideoUrl(videoURL)
+    }
+    
+    func didScrub() {
+                
+    }
+    
+    func didToggleViewExpansion() {
         
+    }
+}
+
+
+extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorOutput {
+    
+    func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {
+        self.onVideoLoadSuccess?(playerLayer)
+    }
+    
+    func onVideoLoadFail(_ error: String) {
         
     }
     
+    func onStateChange(_ startState: PlayerState, to endState: PlayerState) {
+        
+    }
 }
