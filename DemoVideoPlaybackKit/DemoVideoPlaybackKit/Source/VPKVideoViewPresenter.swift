@@ -70,6 +70,10 @@ public class VPKVideoViewPresenter {
         
     }
     
+    public func didMoveOffScreen() {
+        interactor.didMoveOffScreen()
+    }
+    
     //MARK: Interactor output
     func observeOnVideoLoadSuccess() {
         interactor.onVideoLoadSuccess = { (playerLayer) in

@@ -108,6 +108,7 @@ protocol VPKVideoPlayerInteractorInput {
     func didTapVideo(videoURL: URL)
     func didScrub()
     func didToggleViewExpansion()
+    func didMoveOffScreen()
 }
 
 

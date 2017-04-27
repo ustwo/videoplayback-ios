@@ -95,6 +95,11 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         playerLayer.zPosition = LayerHierachy.top.rawValue
         layer.insertSublayer(playerLayer, at: 0)
     }
+    
+    override public func removeFromSuperview() {
+        super.removeFromSuperview()
+        presenter?.didMoveOffScreen()
+    }
 }
 
 

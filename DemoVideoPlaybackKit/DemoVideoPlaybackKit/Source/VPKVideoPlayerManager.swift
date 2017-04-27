@@ -73,6 +73,12 @@ class VPKVideoPlayerManager: NSObject {
         backgroundQueue.async(group: serviceGroup, execute: workItemTwo)
     }
     
+    public func didMoveOffScreen() {
+        if isPlayerPlaying() {
+            player.pause()
+        }
+    }
+    
     private func configurePlayer(item: AVPlayerItem?) {
         player.replaceCurrentItem(with: item)
     }
@@ -80,6 +86,11 @@ class VPKVideoPlayerManager: NSObject {
     private func play() {
         player.play()
         player.rate = 1.0 // sets desired playback rate (full speed)
+    }
+    
+    //MARK: Helpers
+    private func isPlayerPlaying() -> Bool {
+        return player.rate == 1 && player.error == nil
     }
     
 }

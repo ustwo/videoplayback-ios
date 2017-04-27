@@ -39,6 +39,10 @@ extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorInput {
     func didToggleViewExpansion() {
         
     }
+    
+    func didMoveOffScreen() {
+        manager.didMoveOffScreen()
+    }
 }
 
 
