@@ -65,55 +65,63 @@ protocol VPKMainPlayerUseCase: class {
     func doubleTapForCommand()
 }
 
-//** View
-//*
-//*
-protocol VPKVideoPlayerView: class {
-    func showError(_ message: String)
-    func loadVideo(_ videoURL: String, withPlaceHolder placeHolderURL: String)
-    func setReuseInCell(_ shouldReuseInCell: Bool)
-    var  isReusedInCell: Bool? { get set }
-}
 
-//** Presenter 
-//*
-//*
-public protocol VPKVideoPlayerPresenter: class {
-    func onViewDidLoad()
-    func onDidSelectView()
-    func onReuseInCell()
-    func onError(_ errorMessage: String)
-}
+//***** REFACTOR ATTEMPT *****************
 
-public protocol VPKVideoPlayerEventHandler {
+protocol VPKVideoViewProtocol: class {
+    var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
+    var placeHolderName: String? { get set }
+    var viewWillAppearClosure: CompletionClosure? { get set }
+
+    // PRESENTER -> VIEW
+    func reuseInCell(_ shouldReuse: Bool)
+    func reloadInterface(with playerLayer: AVPlayerLayer)
+    func didTapView()
+    func didMoveOffScreen()
     
 }
 
-//** Interactor
-//*
-//*
-/*public protocol VPKVideoPlayerInteractor {
-    associatedtype VideoPlayerPresenterType: VPKVideoPlayerPresenter
-    associatedtype VideoPlayerManagerType: VPKVideoPlayerManager
-    var presenter: VPKVideoPlayerPresenter { get }
-    var videoPlayerManager: VPKVideoPlayerManager { get }
-    func loadVideo(_ videoURL: String, withPlaceholder placeholderURL: String)
+protocol VPKVideoPlaybackBuilderProtocol: class {
+    static func createVideoPlaybackModule() -> VPKVideoView
 }
-*/
 
-//** Interactor
-//*
-//*
-protocol VPKVideoPlayerInteractorInput {
+//*** Presenter
+protocol VPKVideoPlaybackPresenterProtocol: class {
+    
+    var videoView: VPKVideoViewProtocol? { get set }
+    var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
+    
+    // VIEW -> PRESENTER
+    func viewDidLoad()
+    func didMoveOffScreen()
+    func didTapVideoView()
+}
+
+//*** Interactor
+protocol VPKVideoPlaybackInteractorInputProtocol: class  {
+    
+    var presenter: VPKVideoPlaybackInteractorOutputProtocol? { get set }
+    var playbackManager: VPKVideoPlaybackManagerInputProtocol? { get set }
+
+    // PRESENTER -> INTERACTOR
     func didTapVideo(videoURL: URL)
     func didScrub()
     func didToggleViewExpansion()
     func didMoveOffScreen()
 }
 
-
-protocol VPKVideoPlayerInteractorOutput {
+protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
+    
+    //INTERACTOR --> PRESENTER
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer)
     func onVideoLoadFail(_ error: String)
     func onStateChange(_ startState: PlayerState, to endState: PlayerState)
+}
+
+//** Manager
+
+protocol VPKVideoPlaybackManagerInputProtocol: class {
+    var  playerLayerClosure: LayerClosure? { get set }
+    func didSelectVideoUrl(_ url: URL)
+    func didMoveOffScreen()
 }

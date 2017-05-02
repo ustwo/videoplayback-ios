@@ -12,24 +12,21 @@ import AVFoundation
 import RxSwift
 
 
-public class VPKVideoPlayerInteractor: NSObject {
+public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {
     
-    fileprivate var manager = VPKVideoPlayerManager()
-    internal var onVideoLoadSuccess: LayerClosure?
+    var playbackManager: VPKVideoPlaybackManagerInputProtocol? = VPKVideoPlaybackManager()
+    var presenter: VPKVideoPlaybackInteractorOutputProtocol?
+
+    internal var onVideoPlayerLoadSuccess: LayerClosure?
     
-    override init() {
-        super.init()
-        manager.playerLayerClosure = { (playerLayer) in
+    init() {
+        playbackManager?.playerLayerClosure = { (playerLayer) in
             self.onVideoLoadSuccess(playerLayer)
         }
     }
- 
-}
-
-extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorInput {
    
     func didTapVideo(videoURL: URL) {
-        manager.didSelectVideoUrl(videoURL)
+        playbackManager?.didSelectVideoUrl(videoURL)
     }
     
     func didScrub() {
@@ -41,19 +38,20 @@ extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorInput {
     }
     
     func didMoveOffScreen() {
-        manager.didMoveOffScreen()
+        playbackManager?.didMoveOffScreen()
     }
 }
 
 
-extension VPKVideoPlayerInteractor: VPKVideoPlayerInteractorOutput {
+//Output
+extension VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorOutputProtocol {
     
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {
-        self.onVideoLoadSuccess?(playerLayer)
+        presenter?.onVideoLoadSuccess(playerLayer)
     }
     
     func onVideoLoadFail(_ error: String) {
-        
+        presenter?.onVideoLoadFail(error)
     }
     
     func onStateChange(_ startState: PlayerState, to endState: PlayerState) {

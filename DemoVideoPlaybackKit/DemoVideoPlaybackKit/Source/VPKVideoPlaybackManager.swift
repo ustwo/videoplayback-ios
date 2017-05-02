@@ -11,18 +11,19 @@ import AVKit
 import AVFoundation
 import RxSwift
 
-class VPKVideoPlayerManager: NSObject {
+
+class VPKVideoPlaybackManager: NSObject {
     
     //pubic 
-    public var playerLayerClosure: LayerClosure?
+    var playerLayerClosure: LayerClosure?
     public var videoURL: Variable<URL>?
     
     //private
-    private var playerState: PlayerState = .paused
-    private var currentVideoURL: URL?
-    private static let queueIdentifier = "com.vpk.playerQueue"
-    private lazy var player = AVPlayer()
-    private enum ObservableKeyPaths: String {
+    fileprivate var playerState: PlayerState = .paused
+    fileprivate var currentVideoURL: URL?
+    fileprivate static let queueIdentifier = "com.vpk.playerQueue"
+    fileprivate lazy var player = AVPlayer()
+    fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus
         static let allValues = [status, rate, timeControlStatus]
     }
@@ -35,19 +36,9 @@ class VPKVideoPlayerManager: NSObject {
         addPlayerObservers()
     }
     
-    
-    public func didSelectVideoUrl(_ url: URL) {
-        switch playerState {
-            case .playing:
-                stop()
-            case .paused:
-                url == currentVideoURL ? play() : playVideoForTheFirstTime(url)
-        }
-    }
-    
-    private func playVideoForTheFirstTime(_ url: URL) {
+    fileprivate func playVideoForTheFirstTime(_ url: URL) {
         let serviceGroup = DispatchGroup()
-        let backgroundQueue = DispatchQueue(label: VPKVideoPlayerManager.queueIdentifier, qos: .background, target: nil)
+        let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
         
         //stop()
         let workItemOne = DispatchWorkItem {
@@ -80,12 +71,7 @@ class VPKVideoPlayerManager: NSObject {
         serviceGroup.notify(queue: backgroundQueue, work: workItemTwo)
         backgroundQueue.async(group: serviceGroup, execute: workItemTwo)
     }
-    
-    public func didMoveOffScreen() {
-        if isPlayerPlaying() {
-            player.pause()
-        }
-    }
+
     
     //MARK: Configuration
     private func configurePlayer(item: AVPlayerItem?) {
@@ -93,11 +79,11 @@ class VPKVideoPlayerManager: NSObject {
     }
     
     //MARK: Playback 
-    private func stop() {
+    fileprivate func stop() {
         player.pause()
     }
     
-    private func play() {
+    fileprivate func play() {
         player.play()
         player.rate = 1.0 // sets desired playback rate (full speed)
     }
@@ -173,9 +159,26 @@ class VPKVideoPlayerManager: NSObject {
         }
     }
     
-    
     //MARK: Helpers
-    private func isPlayerPlaying() -> Bool {
+    fileprivate func isPlayerPlaying() -> Bool {
         return player.rate == 1 && player.error == nil
+    }
+}
+
+extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
+    
+    func didMoveOffScreen()  {
+        if isPlayerPlaying() {
+            player.pause()
+        }
+    }
+    
+    func didSelectVideoUrl(_ url: URL) {
+        switch playerState {
+        case .playing:
+            stop()
+        case .paused:
+            url == currentVideoURL ? play() : playVideoForTheFirstTime(url)
+        }
     }
 }

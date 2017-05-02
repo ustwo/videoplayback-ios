@@ -13,14 +13,14 @@
 		272A1CEB1EAFE62F007F5816 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE91EAFE62F007F5816 /* LaunchScreen.storyboard */; };
 		272A1CF61EAFE62F007F5816 /* DemoVideoPlaybackKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1CF51EAFE62F007F5816 /* DemoVideoPlaybackKitTests.swift */; };
 		272A1D011EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */; };
-		272A1D171EAFE64F007F5816 /* VPKPlayerBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D0F1EAFE64E007F5816 /* VPKPlayerBuilder.swift */; };
+		272A1D171EAFE64F007F5816 /* VPKPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */; };
 		272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */; };
 		272A1D191EAFE64F007F5816 /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */; };
-		272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */; };
-		272A1D1B1EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D131EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift */; };
+		272A1D1A1EAFE64F007F5816 /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */; };
+		272A1D1B1EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */; };
 		272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */; };
 		272A1D1D1EAFE64F007F5816 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D151EAFE64F007F5816 /* VPKVideoView.swift */; };
-		272A1D1E1EAFE64F007F5816 /* VPKVideoViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D161EAFE64F007F5816 /* VPKVideoViewPresenter.swift */; };
+		272A1D1E1EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */; };
 		272A1D211EAFE75B007F5816 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D201EAFE75B007F5816 /* DemoViewController.swift */; };
 		272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */; };
 		272A1D2A1EAFED10007F5816 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D291EAFED10007F5816 /* Alamofire.framework */; };
@@ -84,14 +84,14 @@
 		272A1CFC1EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoVideoPlaybackKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoVideoPlaybackKitUITests.swift; sourceTree = "<group>"; };
 		272A1D021EAFE62F007F5816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		272A1D0F1EAFE64E007F5816 /* VPKPlayerBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerBuilder.swift; sourceTree = "<group>"; };
+		272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackBuilder.swift; sourceTree = "<group>"; };
 		272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
 		272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
-		272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlayerManager.swift; sourceTree = "<group>"; };
-		272A1D131EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlayerInteractor.swift; sourceTree = "<group>"; };
+		272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
+		272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
 		272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoToolBarView.swift; sourceTree = "<group>"; };
 		272A1D151EAFE64F007F5816 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
-		272A1D161EAFE64F007F5816 /* VPKVideoViewPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoViewPresenter.swift; sourceTree = "<group>"; };
+		272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
 		272A1D201EAFE75B007F5816 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleVideoPlaybackViewController.swift; path = DemoVideoPlaybackKit/ViewController/SingleVideoPlaybackViewController.swift; sourceTree = SOURCE_ROOT; };
 		272A1D291EAFED10007F5816 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
@@ -184,6 +184,7 @@
 		272A1CFF1EAFE62F007F5816 /* DemoVideoPlaybackKitUITests */ = {
 			isa = PBXGroup;
 			children = (
+				272A1D471EB27F86007F5816 /* VideoPlayerModule_Specs */,
 				272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */,
 				272A1D021EAFE62F007F5816 /* Info.plist */,
 			);
@@ -193,9 +194,9 @@
 		272A1D0E1EAFE64E007F5816 /* VideoPlayerKitModule */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D0F1EAFE64E007F5816 /* VPKPlayerBuilder.swift */,
+				272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */,
 				272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */,
-				272A1D411EB0E7E5007F5816 /* Event Handler */,
+				272A1D411EB0E7E5007F5816 /* Manager */,
 				272A1D401EB0E7DA007F5816 /* View */,
 				272A1D3F1EB0E7D6007F5816 /* Interactor */,
 				272A1D3E1EB0E7D2007F5816 /* Presenter */,
@@ -245,7 +246,7 @@
 		272A1D3E1EB0E7D2007F5816 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D161EAFE64F007F5816 /* VPKVideoViewPresenter.swift */,
+				272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";
@@ -253,7 +254,7 @@
 		272A1D3F1EB0E7D6007F5816 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D131EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift */,
+				272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */,
 			);
 			name = Interactor;
 			sourceTree = "<group>";
@@ -267,13 +268,13 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		272A1D411EB0E7E5007F5816 /* Event Handler */ = {
+		272A1D411EB0E7E5007F5816 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D121EAFE64F007F5816 /* VPKVideoPlayerManager.swift */,
+				272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */,
 				272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */,
 			);
-			name = "Event Handler";
+			name = Manager;
 			sourceTree = "<group>";
 		};
 		272A1D431EB10386007F5816 /* Service */ = {
@@ -289,6 +290,13 @@
 				272A1D451EB108AF007F5816 /* Elon_Musk.mp4 */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		272A1D471EB27F86007F5816 /* VideoPlayerModule_Specs */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VideoPlayerModule_Specs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,12 +460,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				272A1D1D1EAFE64F007F5816 /* VPKVideoView.swift in Sources */,
-				272A1D1B1EAFE64F007F5816 /* VPKVideoPlayerInteractor.swift in Sources */,
-				272A1D171EAFE64F007F5816 /* VPKPlayerBuilder.swift in Sources */,
+				272A1D1B1EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift in Sources */,
+				272A1D171EAFE64F007F5816 /* VPKPlaybackBuilder.swift in Sources */,
 				272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */,
-				272A1D1E1EAFE64F007F5816 /* VPKVideoViewPresenter.swift in Sources */,
+				272A1D1E1EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift in Sources */,
 				272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */,
-				272A1D1A1EAFE64F007F5816 /* VPKVideoPlayerManager.swift in Sources */,
+				272A1D1A1EAFE64F007F5816 /* VPKVideoPlaybackManager.swift in Sources */,
 				272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */,
 				272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */,
 				272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */,

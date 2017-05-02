@@ -12,14 +12,14 @@ import RxSwift
 import RxCocoa
 
 private enum DemoOption: String {
-    case SingleVideoView, CustomToolBar, FeedView, FeedAutoplayView
+    case SingleVideoView, SingleViewViewAutoplay, CustomToolBar, FeedView, FeedAutoplayView
 }
 
 class DemoViewController: UIViewController {
 
     private let tableView = UITableView(frame: .zero)
     private let disposeBag = DisposeBag()
-    private let demoList = Variable([DemoOption.SingleVideoView, DemoOption.CustomToolBar, DemoOption.FeedView, DemoOption.FeedAutoplayView])
+    private let demoList = Variable([DemoOption.SingleVideoView, DemoOption.SingleViewViewAutoplay, DemoOption.CustomToolBar, DemoOption.FeedView, DemoOption.FeedAutoplayView])
     
     
     override func viewDidLoad() {
@@ -51,6 +51,8 @@ class DemoViewController: UIViewController {
             switch demoOption {
             case .SingleVideoView:
                 self.navigationController?.pushViewController(SingleVideoPlaybackViewController(), animated: true)
+            case .SingleViewViewAutoplay:
+                self.navigationController?.pushViewController(SingleVideoPlaybackViewController(shouldAutoPlay: true), animated: true)                
             default:
                 print("not ready")
                 break

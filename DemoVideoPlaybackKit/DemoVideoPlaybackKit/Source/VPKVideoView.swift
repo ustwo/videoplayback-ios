@@ -17,26 +17,25 @@ private enum LayerHierachy: CGFloat {
 
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
-    public var localPath: String?
-    public var placeHolderImage: UIImage? {
+    var presenter: VPKVideoPlaybackPresenterProtocol?
+    var viewWillAppearClosure: CompletionClosure?
+    var placeHolderName: String? {
         didSet {
-            guard let image = placeHolderImage else { return }
-                placeHolder.image = image
+            guard let name = placeHolderName, let image = UIImage(named: name) else { return }
+            placeHolder.image = image 
         }
     }
 
-    
     //private
     private let activityIndicator = UIActivityIndicatorView(frame: .zero)
     private let actionButton = UIButton()
     private let placeHolder = UIImageView(frame: .zero)
-    private var playerLayer: AVPlayerLayer?
+    fileprivate var playerLayer: AVPlayerLayer?
     private let tap = UITapGestureRecognizer()
-    private weak var presenter: VPKVideoViewPresenter?
     
     
     //MARK: Lifecycle
-    convenience init(presenter: VPKVideoViewPresenter) {
+    convenience init(presenter: VPKVideoPlaybackPresenterProtocol) {
         self.init(frame: .zero)
         self.presenter = presenter
     }
@@ -50,10 +49,16 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override public func willMove(toWindow newWindow: UIWindow?) {
+        super.willMove(toWindow: newWindow)
+        if newWindow != nil {
+            viewWillAppearClosure?()
+        }
+    }
     
     //MARK: UI
     private func setup() {
-        self.isUserInteractionEnabled = true
+        isUserInteractionEnabled = true
         
         tap.delegate = self
        // tap.addTarget(self, action: #selector(didTapView))
@@ -84,39 +89,37 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
     }
     
-    public func didTapView() {
+    override public func removeFromSuperview() {
+        super.removeFromSuperview()
+        didMoveOffScreen()
+    }
+}
+
+extension VPKVideoView: VPKVideoViewProtocol {
+    
+    func didMoveOffScreen() {
+        presenter?.didMoveOffScreen()
+    }
+    
+    func didTapView() {
         presenter?.didTapVideoView()
     }
     
-    public func setPlayerLayer(_ playerLayer: AVPlayerLayer) {
+    func reuseInCell(_ shouldReuse: Bool) {
+        
+    }
+    
+    func reloadInterface(with playerLayer: AVPlayerLayer) {
         self.playerLayer = playerLayer
         playerLayer.frame = self.bounds
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer.zPosition = LayerHierachy.top.rawValue
         layer.insertSublayer(playerLayer, at: 0)
     }
-    
-    override public func removeFromSuperview() {
-        super.removeFromSuperview()
-        presenter?.didMoveOffScreen()
-    }
 }
 
-
     /*
-    //MARK: Configuration
-    private func configure(model: VideoPlayerModel, manager: VideoPlayerManager) {
-        self.playerModel = model
-        self.videoManager = manager
-        
-        //TODO: Add placeholder images
-        let progressQueue = DispatchQueue(label: "progress")
-        activityIndicator.startAnimating()
-        placeHolder.af_setImage(withURL: model.placeHolderImageURL, placeholderImage: nil, filter: nil, progress: nil, progressQueue: progressQueue, imageTransition: UIImageView.ImageTransition.noTransition, runImageTransitionIfCached: false, completion: { [weak self] image in
-            self?.activityIndicator.stopAnimating()
-        })
-    }
-    
+ 
     func resetView() {
         placeHolder.image = nil
         placeHolder.layer.zPosition = LayerHierachy.top.rawValue
@@ -125,29 +128,6 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
       //  VideoViewAnimator.animateVideoPlayerView(self, fromState: .playing, toState: .paused, withCompletion: nil)
     }
     
-    //MARK: Actions
-    func didTapPlayButton() {
-       /* guard   let model = playerModel,
-            let videoManager = self.videoManager else { return }
-        
-        videoManager.playerDelegate = self
-        
-        //TODO: Remove this logic, place in manager
-        let didTapSameVideo = model.videoURL == videoManager.currentUrl
-        
-        switch videoManager.playerState {
-        case .paused where didTapSameVideo:
-            resumePlayingSameVideo()
-        case .playing where didTapSameVideo == false:
-            playNewVideo(url: model.videoURL)
-        case .paused:
-            playNewVideo(url: model.videoURL)
-        case .playing:
-            stopPlayback()
-        default:
-            stopPlayback()
-        }*/
-    }
     
     private func playNewVideo(url: URL) {
         /*VideoViewAnimator.animateVideoPlayerView(self, fromState: .paused, toState: .playing, withCompletion: {
