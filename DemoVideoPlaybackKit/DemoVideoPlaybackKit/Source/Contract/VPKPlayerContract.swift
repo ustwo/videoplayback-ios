@@ -15,14 +15,19 @@ typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
 public enum PlayerState {
     case playing, paused
+    
+    mutating func toggle() {
+        switch self {
+        case .playing:
+            self = .paused
+        case .paused:
+            self = .playing
+        }
+    }
 }
 
-
-//** Builder
-//*
-//*
-public protocol VPKVideoBuilder {
-    func build(videoURL: String, with placeHolderImageURL: String,shouldAutoplay autoPlay: Bool) -> VPKVideoView
+public enum VPKVideoType {
+    case remote(url: String), local(pathName: String, fileType: String)
 }
 
 //** Styling
@@ -65,31 +70,63 @@ protocol VPKMainPlayerUseCase: class {
     func doubleTapForCommand()
 }
 
+/*
+ ***** VIPER PROTOCOL CONTRACT ******
+ */
+ 
 
-//***** REFACTOR ATTEMPT *****************
+//** Builder
+//*
+//*
+public protocol VPKVideoBuilder {
+    func build(videoURL: String, with placeHolderImageURL: String, shouldAutoplay autoPlay: Bool) -> VPKVideoView
+}
 
+//*** View
+//*
+//*
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
-    var placeHolderName: String? { get set }
+    var placeHolderName: String { get set }
     var viewWillAppearClosure: CompletionClosure? { get set }
 
     // PRESENTER -> VIEW
     func reuseInCell(_ shouldReuse: Bool)
     func reloadInterface(with playerLayer: AVPlayerLayer)
+    func toggleActionButtonTitleTo(_ title: String)
+    
     func didTapView()
     func didMoveOffScreen()
     
 }
 
-protocol VPKVideoPlaybackBuilderProtocol: class {
-    static func createVideoPlaybackModule() -> VPKVideoView
+//*** Builder
+//*
+//*
+
+public protocol VPKVideoPlaybackBuilderProtocol: class {
+    static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCell: Bool, completion viewCompletion: VideoViewClosure)
+}
+
+protocol VPKDependencyManagerProtocol {
+    static func setupViewWithDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
 }
 
 //*** Presenter
+//*
+//*
 protocol VPKVideoPlaybackPresenterProtocol: class {
     
     var videoView: VPKVideoViewProtocol? { get set }
     var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
+    
+    var videoType: VPKVideoType { get set }
+    var placeHolderName: String? { get set } //if nil defaults to framework default
+    var shouldAutoplay: Bool? { get set } // if nil defaults to false
+    var isInCell: Bool? { get set } //if nil defaults to false
+    
+    init(videoType: VPKVideoType,withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool)
+
     
     // VIEW -> PRESENTER
     func viewDidLoad()
@@ -98,10 +135,12 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
 }
 
 //*** Interactor
+//*
+//* 
 protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     
     var presenter: VPKVideoPlaybackInteractorOutputProtocol? { get set }
-    var playbackManager: VPKVideoPlaybackManagerInputProtocol? { get set }
+    var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol)? { get set }
 
     // PRESENTER -> INTERACTOR
     func didTapVideo(videoURL: URL)
@@ -118,10 +157,22 @@ protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
     func onStateChange(_ startState: PlayerState, to endState: PlayerState)
 }
 
-//** Manager
+//** Player Manager
+//*
+//*
+protocol VPKVideoPlaybackManagerProtocol: class {
+    var playerState: PlayerState? { get set }
+    var currentVideoUrl: URL? { get set }
+}
+
+protocol VPKVideoPlaybackManagerOutputProtocol: class {
+    var onPlayerLayerClosure: LayerClosure? { get set }
+    var onStartPlayingClosure: CompletionClosure? { get set }
+    var onStopPlayingClosure: CompletionClosure? { get set }
+    var onDidPlayToEndClosure: CompletionClosure? { get set }
+}
 
 protocol VPKVideoPlaybackManagerInputProtocol: class {
-    var  playerLayerClosure: LayerClosure? { get set }
     func didSelectVideoUrl(_ url: URL)
     func didMoveOffScreen()
 }

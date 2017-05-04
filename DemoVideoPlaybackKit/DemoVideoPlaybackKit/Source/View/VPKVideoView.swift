@@ -17,32 +17,39 @@ private enum LayerHierachy: CGFloat {
 
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
-    var presenter: VPKVideoPlaybackPresenterProtocol?
+    weak var presenter: VPKVideoPlaybackPresenterProtocol?
     var viewWillAppearClosure: CompletionClosure?
-    var placeHolderName: String? {
+    var placeHolderName: String = "TODO_Default_image" {
         didSet {
-            guard let name = placeHolderName, let image = UIImage(named: name) else { return }
-            placeHolder.image = image 
+            guard let image = UIImage(named: placeHolderName) else { return }
+            placeHolder.image = image
+            layoutIfNeeded()
         }
     }
 
     //private
+    private let expandButton = UIButton()
     private let activityIndicator = UIActivityIndicatorView(frame: .zero)
     private let actionButton = UIButton()
-    private let placeHolder = UIImageView(frame: .zero)
+    fileprivate let placeHolder = UIImageView(frame: .zero)
     fileprivate var playerLayer: AVPlayerLayer?
     private let tap = UITapGestureRecognizer()
     
     
     //MARK: Lifecycle
-    convenience init(presenter: VPKVideoPlaybackPresenterProtocol) {
-        self.init(frame: .zero)
-        self.presenter = presenter
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+    }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        if let sublayers =  layer.sublayers {
+            for playerLayer in sublayers where layer is AVPlayerLayer{
+                playerLayer.frame = placeHolder.frame
+            }
+        }
+        
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -52,7 +59,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     override public func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         if newWindow != nil {
-            viewWillAppearClosure?()
+            presenter?.viewDidLoad()
         }
     }
     
@@ -71,15 +78,28 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         }
         placeHolder.contentMode = .scaleAspectFit
         
-        
         addSubview(actionButton)
         actionButton.snp.makeConstraints { (make) in
-            make.center.equalTo(self.snp.center)
-            make.width.height.equalTo(80)
+            make.top.equalTo(placeHolder.snp.bottom).offset(10)
+            make.centerX.equalTo(placeHolder)
+            make.bottom.equalTo(self)
+            make.width.height.equalTo(40)
         }
         actionButton.addTarget(self, action: #selector(didTapView), for: .touchUpInside)
-        actionButton.setTitle("Trigger", for: .normal)
+        actionButton.setTitle("Play", for: .normal)
+        actionButton.setTitleColor(.lightGray, for: .highlighted)
+        actionButton.backgroundColor = .purple
         actionButton.layer.zPosition = LayerHierachy.middle.rawValue
+        
+        addSubview(expandButton)
+        expandButton.setTitle("Expand/Collapse", for: .normal)
+        expandButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.snp.right).offset(-8.0)
+            make.bottom.equalTo(self.snp.bottom).offset(8.0)
+        }
+        expandButton.sizeToFit()
+        expandButton.backgroundColor = .purple
+        expandButton.setTitleColor(.lightGray, for: .highlighted)
         
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
@@ -109,12 +129,19 @@ extension VPKVideoView: VPKVideoViewProtocol {
         
     }
     
+    func toggleActionButtonTitleTo(_ title: String) {
+        
+    }
+    
     func reloadInterface(with playerLayer: AVPlayerLayer) {
         self.playerLayer = playerLayer
-        playerLayer.frame = self.bounds
+        playerLayer.frame = placeHolder.bounds
+        playerLayer.needsDisplayOnBoundsChange = true
+
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer.zPosition = LayerHierachy.top.rawValue
         layer.insertSublayer(playerLayer, at: 0)
+        placeHolder.isHidden = true        
     }
 }
 

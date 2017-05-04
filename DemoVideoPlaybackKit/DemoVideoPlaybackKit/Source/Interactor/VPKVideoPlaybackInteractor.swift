@@ -14,19 +14,16 @@ import RxSwift
 
 public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {
     
-    var playbackManager: VPKVideoPlaybackManagerInputProtocol? = VPKVideoPlaybackManager()
+    var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol)?
     var presenter: VPKVideoPlaybackInteractorOutputProtocol?
 
     internal var onVideoPlayerLoadSuccess: LayerClosure?
     
-    init() {
-        playbackManager?.playerLayerClosure = { (playerLayer) in
-            self.onVideoLoadSuccess(playerLayer)
-        }
-    }
-   
     func didTapVideo(videoURL: URL) {
         playbackManager?.didSelectVideoUrl(videoURL)
+        playbackManager?.onPlayerLayerClosure = { (playerLayer) in
+            self.onVideoLoadSuccess(playerLayer)
+        }
     }
     
     func didScrub() {

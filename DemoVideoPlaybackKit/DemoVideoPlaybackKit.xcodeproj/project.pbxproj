@@ -13,14 +13,6 @@
 		272A1CEB1EAFE62F007F5816 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE91EAFE62F007F5816 /* LaunchScreen.storyboard */; };
 		272A1CF61EAFE62F007F5816 /* DemoVideoPlaybackKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1CF51EAFE62F007F5816 /* DemoVideoPlaybackKitTests.swift */; };
 		272A1D011EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */; };
-		272A1D171EAFE64F007F5816 /* VPKPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */; };
-		272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */; };
-		272A1D191EAFE64F007F5816 /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */; };
-		272A1D1A1EAFE64F007F5816 /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */; };
-		272A1D1B1EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */; };
-		272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */; };
-		272A1D1D1EAFE64F007F5816 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D151EAFE64F007F5816 /* VPKVideoView.swift */; };
-		272A1D1E1EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */; };
 		272A1D211EAFE75B007F5816 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D201EAFE75B007F5816 /* DemoViewController.swift */; };
 		272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */; };
 		272A1D2A1EAFED10007F5816 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D291EAFED10007F5816 /* Alamofire.framework */; };
@@ -35,6 +27,14 @@
 		272A1D3A1EAFF0F8007F5816 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D291EAFED10007F5816 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D3C1EAFF316007F5816 /* BasicTableViewCell.swift */; };
 		272A1D461EB108B6007F5816 /* Elon_Musk.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 272A1D451EB108AF007F5816 /* Elon_Musk.mp4 */; };
+		273EC38F1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC38E1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift */; };
+		273EC3921EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3911EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift */; };
+		273EC3961EBB89C900F9D38F /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3941EBB89C900F9D38F /* VPKPlayerDelegate.swift */; };
+		273EC3971EBB89C900F9D38F /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3951EBB89C900F9D38F /* VPKVideoPlaybackManager.swift */; };
+		273EC39A1EBB89CE00F9D38F /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3991EBB89CE00F9D38F /* VPKVideoPlaybackPresenter.swift */; };
+		273EC39E1EBB89D300F9D38F /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */; };
+		273EC39F1EBB89D300F9D38F /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */; };
+		273EC3A21EBB89E200F9D38F /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,14 +84,6 @@
 		272A1CFC1EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoVideoPlaybackKitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoVideoPlaybackKitUITests.swift; sourceTree = "<group>"; };
 		272A1D021EAFE62F007F5816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackBuilder.swift; sourceTree = "<group>"; };
-		272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
-		272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
-		272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
-		272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
-		272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoToolBarView.swift; sourceTree = "<group>"; };
-		272A1D151EAFE64F007F5816 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
-		272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
 		272A1D201EAFE75B007F5816 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleVideoPlaybackViewController.swift; path = DemoVideoPlaybackKit/ViewController/SingleVideoPlaybackViewController.swift; sourceTree = SOURCE_ROOT; };
 		272A1D291EAFED10007F5816 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
@@ -101,6 +93,14 @@
 		272A1D311EAFEDA2007F5816 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = "<group>"; };
 		272A1D3C1EAFF316007F5816 /* BasicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableViewCell.swift; sourceTree = "<group>"; };
 		272A1D451EB108AF007F5816 /* Elon_Musk.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Elon_Musk.mp4; sourceTree = "<group>"; };
+		273EC38E1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackBuilder.swift; sourceTree = "<group>"; };
+		273EC3911EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
+		273EC3941EBB89C900F9D38F /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
+		273EC3951EBB89C900F9D38F /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
+		273EC3991EBB89CE00F9D38F /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
+		273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoToolBarView.swift; sourceTree = "<group>"; };
+		273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
+		273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,12 +194,12 @@
 		272A1D0E1EAFE64E007F5816 /* VideoPlayerKitModule */ = {
 			isa = PBXGroup;
 			children = (
-				272A1D0F1EAFE64E007F5816 /* VPKPlaybackBuilder.swift */,
-				272A1D101EAFE64E007F5816 /* VPKPlayerContract.swift */,
-				272A1D411EB0E7E5007F5816 /* Manager */,
-				272A1D401EB0E7DA007F5816 /* View */,
-				272A1D3F1EB0E7D6007F5816 /* Interactor */,
-				272A1D3E1EB0E7D2007F5816 /* Presenter */,
+				273EC3A01EBB89E200F9D38F /* Contract */,
+				273EC39B1EBB89D300F9D38F /* View */,
+				273EC3981EBB89CE00F9D38F /* Presenter */,
+				273EC3931EBB89C900F9D38F /* Manager */,
+				273EC3901EBB89C300F9D38F /* Interactor */,
+				273EC38D1EBB89BB00F9D38F /* Builder */,
 			);
 			name = VideoPlayerKitModule;
 			path = Source;
@@ -243,40 +243,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		272A1D3E1EB0E7D2007F5816 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				272A1D161EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift */,
-			);
-			name = Presenter;
-			sourceTree = "<group>";
-		};
-		272A1D3F1EB0E7D6007F5816 /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				272A1D131EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift */,
-			);
-			name = Interactor;
-			sourceTree = "<group>";
-		};
-		272A1D401EB0E7DA007F5816 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				272A1D151EAFE64F007F5816 /* VPKVideoView.swift */,
-				272A1D141EAFE64F007F5816 /* VPKVideoToolBarView.swift */,
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		272A1D411EB0E7E5007F5816 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				272A1D121EAFE64F007F5816 /* VPKVideoPlaybackManager.swift */,
-				272A1D111EAFE64E007F5816 /* VPKPlayerDelegate.swift */,
-			);
-			name = Manager;
-			sourceTree = "<group>";
-		};
 		272A1D431EB10386007F5816 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +263,56 @@
 			children = (
 			);
 			path = VideoPlayerModule_Specs;
+			sourceTree = "<group>";
+		};
+		273EC38D1EBB89BB00F9D38F /* Builder */ = {
+			isa = PBXGroup;
+			children = (
+				273EC38E1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift */,
+			);
+			path = Builder;
+			sourceTree = "<group>";
+		};
+		273EC3901EBB89C300F9D38F /* Interactor */ = {
+			isa = PBXGroup;
+			children = (
+				273EC3911EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift */,
+			);
+			path = Interactor;
+			sourceTree = "<group>";
+		};
+		273EC3931EBB89C900F9D38F /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				273EC3941EBB89C900F9D38F /* VPKPlayerDelegate.swift */,
+				273EC3951EBB89C900F9D38F /* VPKVideoPlaybackManager.swift */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		273EC3981EBB89CE00F9D38F /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				273EC3991EBB89CE00F9D38F /* VPKVideoPlaybackPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		273EC39B1EBB89D300F9D38F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */,
+				273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		273EC3A01EBB89E200F9D38F /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */,
+			);
+			path = Contract;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -459,17 +475,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272A1D1D1EAFE64F007F5816 /* VPKVideoView.swift in Sources */,
-				272A1D1B1EAFE64F007F5816 /* VPKVideoPlaybackInteractor.swift in Sources */,
-				272A1D171EAFE64F007F5816 /* VPKPlaybackBuilder.swift in Sources */,
+				273EC39F1EBB89D300F9D38F /* VPKVideoView.swift in Sources */,
+				273EC3921EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift in Sources */,
 				272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */,
-				272A1D1E1EAFE64F007F5816 /* VPKVideoPlaybackPresenter.swift in Sources */,
-				272A1D1C1EAFE64F007F5816 /* VPKVideoToolBarView.swift in Sources */,
-				272A1D1A1EAFE64F007F5816 /* VPKVideoPlaybackManager.swift in Sources */,
-				272A1D181EAFE64F007F5816 /* VPKPlayerContract.swift in Sources */,
+				273EC3961EBB89C900F9D38F /* VPKPlayerDelegate.swift in Sources */,
 				272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */,
+				273EC39A1EBB89CE00F9D38F /* VPKVideoPlaybackPresenter.swift in Sources */,
+				273EC3971EBB89C900F9D38F /* VPKVideoPlaybackManager.swift in Sources */,
+				273EC3A21EBB89E200F9D38F /* VPKPlayerContract.swift in Sources */,
 				272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */,
-				272A1D191EAFE64F007F5816 /* VPKPlayerDelegate.swift in Sources */,
+				273EC39E1EBB89D300F9D38F /* VPKVideoToolBarView.swift in Sources */,
+				273EC38F1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift in Sources */,
 				272A1D211EAFE75B007F5816 /* DemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -729,6 +745,7 @@
 				272A1D071EAFE62F007F5816 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		272A1D081EAFE62F007F5816 /* Build configuration list for PBXNativeTarget "DemoVideoPlaybackKitTests" */ = {
 			isa = XCConfigurationList;
@@ -737,6 +754,7 @@
 				272A1D0A1EAFE62F007F5816 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		272A1D0B1EAFE62F007F5816 /* Build configuration list for PBXNativeTarget "DemoVideoPlaybackKitUITests" */ = {
 			isa = XCConfigurationList;
@@ -745,6 +763,7 @@
 				272A1D0D1EAFE62F007F5816 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,15 +12,19 @@ import AVFoundation
 import RxSwift
 
 
-class VPKVideoPlaybackManager: NSObject {
+class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
-    //pubic 
-    var playerLayerClosure: LayerClosure?
-    public var videoURL: Variable<URL>?
+    //state
+    var playerState: PlayerState?
+    var currentVideoUrl: URL?
+    
+    //output
+    var onStartPlayingClosure: CompletionClosure?
+    var onStopPlayingClosure: CompletionClosure?
+    var onDidPlayToEndClosure: CompletionClosure?
+    var onPlayerLayerClosure: LayerClosure?
     
     //private
-    fileprivate var playerState: PlayerState = .paused
-    fileprivate var currentVideoURL: URL?
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate lazy var player = AVPlayer()
     fileprivate enum ObservableKeyPaths: String {
@@ -31,8 +35,9 @@ class VPKVideoPlaybackManager: NSObject {
     //MARK: Setup
     override init() {
         super.init()
+        playerState = .paused
         player.actionAtItemEnd = .none
-       // addApplicationObservers()
+      //  addApplicationObservers()
         addPlayerObservers()
     }
     
@@ -56,12 +61,11 @@ class VPKVideoPlaybackManager: NSObject {
         let workItemTwo = DispatchWorkItem {
             let playerAsset = AVAsset(url: url)
             let playerItem = AVPlayerItem(asset: playerAsset)
-            self.currentVideoURL = url
+            self.currentVideoUrl = url
             
             let playerLayer = AVPlayerLayer(player: self.player)
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
-                
-                self.playerLayerClosure?(playerLayer)
+                self.didPreparePlayerLayer(playerLayer)
                 self.play()
                 self.configurePlayer(item: playerItem)
                 self.addPlayerItemObservers()
@@ -88,17 +92,6 @@ class VPKVideoPlaybackManager: NSObject {
         player.rate = 1.0 // sets desired playback rate (full speed)
     }
     
-    @objc private func didPlayToEnd() {
-        
-    }
-    
-    @objc private func didStopPlaying() {
-        playerState = .paused
-    }
-
-    @objc private func didStartPlaying() {
-        playerState = .playing
-    }
     
     //MARK: KVO setup
     private func addPlayerObservers() {
@@ -121,7 +114,7 @@ class VPKVideoPlaybackManager: NSObject {
     
     private func removePlayerItemObservers() {
         if player.currentItem != nil {
-            let itemQueue = DispatchQueue(label: "com.ellen.playerItemQueue", qos: .background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: nil)
+            let itemQueue = DispatchQueue(label: "com.vpk.playerItemQueue", qos: .background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: nil)
             itemQueue.async {
                 NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player.currentItem)
                 self.configurePlayer(item: nil)
@@ -160,8 +153,31 @@ class VPKVideoPlaybackManager: NSObject {
     }
     
     //MARK: Helpers
-    fileprivate func isPlayerPlaying() -> Bool {
+    func isPlayerPlaying() -> Bool {
         return player.rate == 1 && player.error == nil
+    }
+    
+    deinit {
+        removePlayerObservers()
+    }
+}
+
+extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
+    
+    fileprivate func didPreparePlayerLayer(_ playerLayer: AVPlayerLayer) {
+        onPlayerLayerClosure?(playerLayer)
+    }
+    
+    fileprivate func didStopPlaying() {
+        onStopPlayingClosure?()
+    }
+    
+    fileprivate func didStartPlaying() {
+        onStartPlayingClosure?()
+    }
+    
+    fileprivate func didPlayToEnd() {
+        onDidPlayToEndClosure?()
     }
 }
 
@@ -174,11 +190,12 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
     }
     
     func didSelectVideoUrl(_ url: URL) {
-        switch playerState {
+        guard let state = playerState else { return }
+        switch state {
         case .playing:
             stop()
         case .paused:
-            url == currentVideoURL ? play() : playVideoForTheFirstTime(url)
+            url == currentVideoUrl ? play() : playVideoForTheFirstTime(url)
         }
     }
 }
