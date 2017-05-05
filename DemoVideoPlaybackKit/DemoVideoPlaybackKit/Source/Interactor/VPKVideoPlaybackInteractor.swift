@@ -15,14 +15,27 @@ import RxSwift
 public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {
     
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol)?
-    var presenter: VPKVideoPlaybackInteractorOutputProtocol?
+    weak var presenter: VPKVideoPlaybackInteractorOutputProtocol?
 
     internal var onVideoPlayerLoadSuccess: LayerClosure?
     
     func didTapVideo(videoURL: URL) {
         playbackManager?.didSelectVideoUrl(videoURL)
-        playbackManager?.onPlayerLayerClosure = { (playerLayer) in
-            self.onVideoLoadSuccess(playerLayer)
+       
+        playbackManager?.onPlayerLayerClosure = { [weak self] (playerLayer) in
+            self?.presenter?.onVideoLoadSuccess(playerLayer)
+        }
+        
+        playbackManager?.onStartPlayingClosure = { [weak self] () in
+            self?.presenter?.onVideoDidStartPlaying()
+        }
+        
+        playbackManager?.onStopPlayingClosure = { [weak self] () in
+            self?.presenter?.onVideoDidStopPlaying()
+        }
+        
+        playbackManager?.onDidPlayToEndClosure = { [weak self] () in
+            self?.presenter?.onVideoDidPlayToEnd()
         }
     }
     
@@ -36,22 +49,5 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol
     
     func didMoveOffScreen() {
         playbackManager?.didMoveOffScreen()
-    }
-}
-
-
-//Output
-extension VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorOutputProtocol {
-    
-    func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {
-        presenter?.onVideoLoadSuccess(playerLayer)
-    }
-    
-    func onVideoLoadFail(_ error: String) {
-        presenter?.onVideoLoadFail(error)
-    }
-    
-    func onStateChange(_ startState: PlayerState, to endState: PlayerState) {
-        
     }
 }

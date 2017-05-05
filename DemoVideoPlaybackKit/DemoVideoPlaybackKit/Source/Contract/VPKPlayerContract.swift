@@ -13,23 +13,6 @@ import AVFoundation
 
 typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
-public enum PlayerState {
-    case playing, paused
-    
-    mutating func toggle() {
-        switch self {
-        case .playing:
-            self = .paused
-        case .paused:
-            self = .playing
-        }
-    }
-}
-
-public enum VPKVideoType {
-    case remote(url: String), local(pathName: String, fileType: String)
-}
-
 //** Styling
 //*
 //*
@@ -89,12 +72,17 @@ protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var placeHolderName: String { get set }
     var viewWillAppearClosure: CompletionClosure? { get set }
-
+    
     // PRESENTER -> VIEW
     func reuseInCell(_ shouldReuse: Bool)
     func reloadInterface(with playerLayer: AVPlayerLayer)
     func toggleActionButtonTitleTo(_ title: String)
-    
+    func showPlaceholder()
+    func makeFullScreen()
+    func makeNormalScreen()
+
+    //VIEW -> PRESENTER
+    func didTapExpandView()
     func didTapView()
     func didMoveOffScreen()
     
@@ -109,7 +97,7 @@ public protocol VPKVideoPlaybackBuilderProtocol: class {
 }
 
 protocol VPKDependencyManagerProtocol {
-    static func setupViewWithDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
+    static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
 }
 
 //*** Presenter
@@ -119,6 +107,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     
     var videoView: VPKVideoViewProtocol? { get set }
     var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
+    var videoSizeState: VideoSizeState? { get set }
     
     var videoType: VPKVideoType { get set }
     var placeHolderName: String? { get set } //if nil defaults to framework default
@@ -132,6 +121,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     func viewDidLoad()
     func didMoveOffScreen()
     func didTapVideoView()
+    func didExpand() 
 }
 
 //*** Interactor
@@ -154,7 +144,10 @@ protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
     //INTERACTOR --> PRESENTER
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer)
     func onVideoLoadFail(_ error: String)
-    func onStateChange(_ startState: PlayerState, to endState: PlayerState)
+    func onVideoDidStartPlaying()
+    func onVideoDidStopPlaying()
+    func onVideoDidPlayToEnd()
+    
 }
 
 //** Player Manager

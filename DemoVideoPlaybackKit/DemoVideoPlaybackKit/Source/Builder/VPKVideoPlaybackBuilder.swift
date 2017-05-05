@@ -18,16 +18,14 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     public static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCell: Bool = false, completion viewCompletion: VideoViewClosure) {
         
         let presenter:VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withPlaceholder: placeHolderName, withAutoplay: autoPlay, showInCell: isInCell)
-        
-        viewCompletion(VPKDependencyManager.setupViewWithDependencies(presenter: presenter))        
+        viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
     
 }
 
 internal class VPKDependencyManager: VPKDependencyManagerProtocol {
     
-    
-    static func setupViewWithDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
+    static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
         
         let videoView = VPKVideoView(frame: .zero)
         let interactor : VPKVideoPlaybackInteractorInputProtocol = VPKVideoPlaybackInteractor()

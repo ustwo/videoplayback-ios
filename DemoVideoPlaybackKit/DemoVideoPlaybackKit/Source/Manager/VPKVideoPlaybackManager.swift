@@ -62,8 +62,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             let playerAsset = AVAsset(url: url)
             let playerItem = AVPlayerItem(asset: playerAsset)
             self.currentVideoUrl = url
-            
             let playerLayer = AVPlayerLayer(player: self.player)
+            
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
                 self.didPreparePlayerLayer(playerLayer)
                 self.play()
@@ -78,7 +78,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
 
     
     //MARK: Configuration
-    private func configurePlayer(item: AVPlayerItem?) {
+    fileprivate func configurePlayer(item: AVPlayerItem?) {
         player.replaceCurrentItem(with: item)
     }
     
@@ -169,14 +169,18 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     }
     
     fileprivate func didStopPlaying() {
+        playerState = .paused
         onStopPlayingClosure?()
     }
     
     fileprivate func didStartPlaying() {
+        playerState = .playing
         onStartPlayingClosure?()
     }
     
     fileprivate func didPlayToEnd() {
+        playerState = .paused
+        configurePlayer(item: nil)
         onDidPlayToEndClosure?()
     }
 }

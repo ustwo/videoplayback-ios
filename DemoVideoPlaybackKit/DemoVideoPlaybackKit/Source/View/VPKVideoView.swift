@@ -30,7 +30,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     //private
     private let expandButton = UIButton()
     private let activityIndicator = UIActivityIndicatorView(frame: .zero)
-    private let actionButton = UIButton()
+    fileprivate let actionButton = UIButton()
     fileprivate let placeHolder = UIImageView(frame: .zero)
     fileprivate var playerLayer: AVPlayerLayer?
     private let tap = UITapGestureRecognizer()
@@ -41,16 +41,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         super.init(frame: frame)
         setup()
     }
-    
-    override public func layoutSubviews() {
-        super.layoutSubviews()
-        if let sublayers =  layer.sublayers {
-            for playerLayer in sublayers where layer is AVPlayerLayer{
-                playerLayer.frame = placeHolder.frame
-            }
-        }
-        
-    }
+
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -100,6 +91,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         expandButton.sizeToFit()
         expandButton.backgroundColor = .purple
         expandButton.setTitleColor(.lightGray, for: .highlighted)
+        expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
         
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
@@ -115,6 +107,10 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     }
 }
 
+//MARK: Outputs
+//**
+//*
+//*
 extension VPKVideoView: VPKVideoViewProtocol {
     
     func didMoveOffScreen() {
@@ -125,84 +121,37 @@ extension VPKVideoView: VPKVideoViewProtocol {
         presenter?.didTapVideoView()
     }
     
+    func didTapExpandView() {
+        presenter?.didExpand()
+    }
+    
     func reuseInCell(_ shouldReuse: Bool) {
         
     }
     
     func toggleActionButtonTitleTo(_ title: String) {
-        
+        actionButton.setTitle(title, for: .normal)
+    }
+    
+    func showPlaceholder() {
+        placeHolder.isHidden = false
     }
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
         self.playerLayer = playerLayer
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
-
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer.zPosition = LayerHierachy.top.rawValue
         layer.insertSublayer(playerLayer, at: 0)
         placeHolder.isHidden = true        
     }
-}
-
-    /*
- 
-    func resetView() {
-        placeHolder.image = nil
-        placeHolder.layer.zPosition = LayerHierachy.top.rawValue
-       // placeHolder.fadeIn(time: 0.3, completion: nil) //TODO: Add cross fade animation between placeholder and playerlayer in VideoAnimator
-        activityIndicator.stopAnimating()
-      //  VideoViewAnimator.animateVideoPlayerView(self, fromState: .playing, toState: .paused, withCompletion: nil)
+    
+    func makeFullScreen() {
+        VideoViewAnimator.animateToFullScreen(self)
     }
     
-    
-    private func playNewVideo(url: URL) {
-        /*VideoViewAnimator.animateVideoPlayerView(self, fromState: .paused, toState: .playing, withCompletion: {
-            self.videoManager?.playVideoUrl(url, withPlaceHolder: self.placeHolder, inView: self, returnedLayer: { [weak self] (playerLayer) in
-                guard let currentBounds = self?.bounds else { return }
-                playerLayer.frame =  currentBounds
-                playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                playerLayer.isHidden = false
-                self?.layer.insertSublayer(playerLayer, below: self?.playButton.layer)
-                self?.placeHolder.layer.zPosition = LayerHierachy.middle.rawValue
-                playerLayer.zPosition = LayerHierachy.bottom.rawValue
-                self?.playerLayer = playerLayer
-            })
-        })*/
-    }
-    
-    private func resumePlayingSameVideo() {
-        videoManager?.play()
-        playButton.fadeOut(time: 0.3, completion: nil)
-    }
-    
-    private func stopPlayback() {
-        videoManager?.stop()
-        activityIndicator.stopAnimating()
+    func makeNormalScreen() {
+        
     }
 }
-
-//MARK: Video Manager Callbacks
-extension VideoPlayerView: VideoPlayerDelegate {
-    
-    func didStopPlaying() {
-        VideoViewAnimator.animateVideoPlayerView(self, fromState: .playing, toState: .paused, withCompletion: nil)
-    }
-    
-    func didStartPlaying() {
-        DispatchQueue.main.async {
-            self.activityIndicator.stopAnimating()
-            self.placeHolder.fadeOut(time: 0.3, completion: nil)
-            self.playButton.fadeOut(time: 0.3, completion: nil)
-        }
-    }
-    
-    func didFail(error: Error) {
-        //TODO: Handle error state
-        print(error)
-    }
-    
-    func didPlayToEnd() {
-        resetView()
-    }
- */

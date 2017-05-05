@@ -9,6 +9,7 @@
 import Foundation
 import AVFoundation
 
+
 public class VPKVideoPlaybackPresenter {
 
     var videoView: VPKVideoViewProtocol? {
@@ -19,6 +20,7 @@ public class VPKVideoPlaybackPresenter {
     
     var interactor: VPKVideoPlaybackInteractorInputProtocol?
     var builder: VPKVideoPlaybackBuilderProtocol?
+    var videoSizeState: VideoSizeState?
     
     var videoType: VPKVideoType
     var placeHolderName: String? {
@@ -36,6 +38,7 @@ public class VPKVideoPlaybackPresenter {
         self.placeHolderName = placeHolderName
         self.shouldAutoplay = shouldAutoplay
         self.isInCell = isInCell
+        self.videoSizeState = .normal
     }
 
     private func observeVideoViewLifecycle() {
@@ -49,11 +52,6 @@ public class VPKVideoPlaybackPresenter {
     public func didScrub() {
         
     }
-    
-    public func didToggeViewExpansion() {
-        
-    }
-
 }
 
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
@@ -86,19 +84,38 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
         guard let safeVideoUrl = videoUrl else { return }
         interactor?.didTapVideo(videoURL: safeVideoUrl)
     }
+    
+    public func didExpand() {
+        guard let state = videoSizeState else { return }
+        switch state {
+        case .normal:
+            videoView?.makeFullScreen()
+        case .fullScreen:
+            videoView?.makeNormalScreen()
+        }
+    }
 }
 
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
-   
+    
+    func onVideoDidPlayToEnd() {
+        videoView?.showPlaceholder()
+        videoView?.toggleActionButtonTitleTo(PlayerState.paused.buttonTitle)
+    }
+    
+    func onVideoDidStopPlaying() {
+        videoView?.toggleActionButtonTitleTo(PlayerState.paused.buttonTitle)
+    }
+    
+    func onVideoDidStartPlaying() {
+        videoView?.toggleActionButtonTitleTo(PlayerState.playing.buttonTitle)
+    }
+
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {
         videoView?.reloadInterface(with: playerLayer)
     }
     
     func onVideoLoadFail(_ error: String) {
-        
-    }
-    
-    func onStateChange(_ startState: PlayerState, to endState: PlayerState) {
         
     }
 }

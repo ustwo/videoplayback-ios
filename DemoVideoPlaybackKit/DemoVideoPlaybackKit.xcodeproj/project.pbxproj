@@ -35,6 +35,8 @@
 		273EC39E1EBB89D300F9D38F /* VPKVideoToolBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */; };
 		273EC39F1EBB89D300F9D38F /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */; };
 		273EC3A21EBB89E200F9D38F /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */; };
+		273EC3A41EBBC92C00F9D38F /* VPKEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A31EBBC92C00F9D38F /* VPKEnum.swift */; };
+		273EC3A71EBBCF7300F9D38F /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A61EBBCF7300F9D38F /* VideoViewAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +103,8 @@
 		273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoToolBarView.swift; sourceTree = "<group>"; };
 		273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
 		273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
+		273EC3A31EBBC92C00F9D38F /* VPKEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKEnum.swift; sourceTree = "<group>"; };
+		273EC3A61EBBCF7300F9D38F /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,11 +199,11 @@
 			isa = PBXGroup;
 			children = (
 				273EC3A01EBB89E200F9D38F /* Contract */,
+				273EC38D1EBB89BB00F9D38F /* Builder */,
 				273EC39B1EBB89D300F9D38F /* View */,
 				273EC3981EBB89CE00F9D38F /* Presenter */,
 				273EC3931EBB89C900F9D38F /* Manager */,
 				273EC3901EBB89C300F9D38F /* Interactor */,
-				273EC38D1EBB89BB00F9D38F /* Builder */,
 			);
 			name = VideoPlayerKitModule;
 			path = Source;
@@ -301,6 +305,7 @@
 		273EC39B1EBB89D300F9D38F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				273EC3A51EBBCF5A00F9D38F /* Animator */,
 				273EC39C1EBB89D300F9D38F /* VPKVideoToolBarView.swift */,
 				273EC39D1EBB89D300F9D38F /* VPKVideoView.swift */,
 			);
@@ -311,8 +316,17 @@
 			isa = PBXGroup;
 			children = (
 				273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */,
+				273EC3A31EBBC92C00F9D38F /* VPKEnum.swift */,
 			);
 			path = Contract;
+			sourceTree = "<group>";
+		};
+		273EC3A51EBBCF5A00F9D38F /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				273EC3A61EBBCF7300F9D38F /* VideoViewAnimator.swift */,
+			);
+			path = Animator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -487,6 +501,8 @@
 				273EC39E1EBB89D300F9D38F /* VPKVideoToolBarView.swift in Sources */,
 				273EC38F1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift in Sources */,
 				272A1D211EAFE75B007F5816 /* DemoViewController.swift in Sources */,
+				273EC3A41EBBC92C00F9D38F /* VPKEnum.swift in Sources */,
+				273EC3A71EBBCF7300F9D38F /* VideoViewAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
