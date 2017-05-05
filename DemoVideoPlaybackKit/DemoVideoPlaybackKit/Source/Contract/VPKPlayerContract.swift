@@ -85,7 +85,6 @@ protocol VPKVideoViewProtocol: class {
     func didTapExpandView()
     func didTapView()
     func didMoveOffScreen()
-    
 }
 
 //*** Builder
@@ -114,7 +113,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     var shouldAutoplay: Bool? { get set } // if nil defaults to false
     var isInCell: Bool? { get set } //if nil defaults to false
     
-    init(videoType: VPKVideoType,withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool)
+    init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool)
 
     
     // VIEW -> PRESENTER

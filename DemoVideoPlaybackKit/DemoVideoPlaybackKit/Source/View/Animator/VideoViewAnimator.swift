@@ -8,25 +8,16 @@
 
 import Foundation
 import UIKit
+import AVKit
+import AVFoundation
 
 
 //MARK: Animator
 struct VideoViewAnimator {
     
     static func animateToFullScreen(_ videoView: VPKVideoView) {
-        videoView.clipsToBounds = false
-        let layer = videoView.layer
-        let oldBounds = layer.bounds
-        var newBounds = oldBounds
-        newBounds.size = UIScreen.main.bounds.size
-        
-        //Ensure at the end of animation, you have proper bounds
-        layer.bounds = newBounds
-
-        let boundsAnimation = CABasicAnimation(keyPath: "bounds")
-        boundsAnimation.fromValue = oldBounds
-        boundsAnimation.toValue = newBounds
-        boundsAnimation.duration = 30
+        videoView.clipsToBounds = true 
+        videoView.goFullscreen()
     }
     
     static func animateVideoPlayerView(_ videoView: VPKVideoView, fromState initialState: PlayerState, toState finalState: PlayerState, withCompletion completion: CompletionClosure?) {
@@ -48,5 +39,32 @@ struct VideoViewAnimator {
         default:
             break
         }*/
+    }
+}
+
+
+extension CGAffineTransform {
+    
+    static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
+}
+
+extension UIView {
+    
+    var fullScreenAnimationDuration: TimeInterval {
+        return 0.15
+    }
+    
+    func minimizeToFrame(_ frame: CGRect) {
+        UIView.animate(withDuration: fullScreenAnimationDuration) {
+            self.layer.setAffineTransform(.identity)
+            self.frame = frame
+        }
+    }
+    
+    func goFullscreen() {
+        UIView.animate(withDuration: fullScreenAnimationDuration) {
+            self.layer.setAffineTransform(.ninetyDegreeRotation)
+            self.frame = UIScreen.main.bounds
+        }
     }
 }

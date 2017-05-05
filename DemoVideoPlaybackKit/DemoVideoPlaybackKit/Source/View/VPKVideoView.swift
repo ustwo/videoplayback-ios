@@ -142,12 +142,21 @@ extension VPKVideoView: VPKVideoViewProtocol {
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
-        playerLayer.zPosition = LayerHierachy.top.rawValue
+        playerLayer.zPosition = -1
         layer.insertSublayer(playerLayer, at: 0)
         placeHolder.isHidden = true        
     }
     
     func makeFullScreen() {
+        let tmpView = UIView(frame: .zero)
+        addSubview(tmpView)
+        tmpView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
+        tmpView.backgroundColor = .clear
+        tmpView.layer.zPosition = 1.0
+        
+        //guard let safePlayerLayer = self.playerLayer else { return }
         VideoViewAnimator.animateToFullScreen(self)
     }
     
