@@ -18,7 +18,14 @@ private enum LayerHierachy: CGFloat {
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
+    weak var playbackBarView: VPKPlaybackControlViewProtocol? {
+        didSet {
+            addPlaybackControlView()
+        }
+    }
+    
     var viewWillAppearClosure: CompletionClosure?
+    var playerLayer: AVPlayerLayer?
     var placeHolderName: String = "TODO_Default_image" {
         didSet {
             guard let image = UIImage(named: placeHolderName) else { return }
@@ -28,11 +35,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     }
 
     //private
-    private let expandButton = UIButton()
     private let activityIndicator = UIActivityIndicatorView(frame: .zero)
-    fileprivate let actionButton = UIButton()
     fileprivate let placeHolder = UIImageView(frame: .zero)
-    fileprivate var playerLayer: AVPlayerLayer?
     private let tap = UITapGestureRecognizer()
     
     
@@ -41,7 +45,6 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         super.init(frame: frame)
         setup()
     }
-
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,30 +72,6 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         }
         placeHolder.contentMode = .scaleAspectFit
         
-        addSubview(actionButton)
-        actionButton.snp.makeConstraints { (make) in
-            make.top.equalTo(placeHolder.snp.bottom).offset(10)
-            make.centerX.equalTo(placeHolder)
-            make.bottom.equalTo(self)
-            make.width.height.equalTo(40)
-        }
-        actionButton.addTarget(self, action: #selector(didTapView), for: .touchUpInside)
-        actionButton.setTitle("Play", for: .normal)
-        actionButton.setTitleColor(.lightGray, for: .highlighted)
-        actionButton.backgroundColor = .purple
-        actionButton.layer.zPosition = LayerHierachy.middle.rawValue
-        
-        addSubview(expandButton)
-        expandButton.setTitle("Expand/Collapse", for: .normal)
-        expandButton.snp.makeConstraints { (make) in
-            make.right.equalTo(self.snp.right).offset(-8.0)
-            make.bottom.equalTo(self.snp.bottom).offset(8.0)
-        }
-        expandButton.sizeToFit()
-        expandButton.backgroundColor = .purple
-        expandButton.setTitleColor(.lightGray, for: .highlighted)
-        expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
-        
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
             make.center.equalTo(self.snp.center)
@@ -104,6 +83,17 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     override public func removeFromSuperview() {
         super.removeFromSuperview()
         didMoveOffScreen()
+    }
+    
+    func addPlaybackControlView() {
+        guard let safePlaybackBarView = playbackBarView as? UIView else { return } // cannot complete playback view with no playback controls
+        addSubview(safePlaybackBarView)
+        safePlaybackBarView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(self)
+            make.bottom.equalTo(self)
+            make.height.equalTo(60)
+            
+        }
     }
 }
 
@@ -121,16 +111,9 @@ extension VPKVideoView: VPKVideoViewProtocol {
         presenter?.didTapVideoView()
     }
     
-    func didTapExpandView() {
-        presenter?.didExpand()
-    }
     
     func reuseInCell(_ shouldReuse: Bool) {
         
-    }
-    
-    func toggleActionButtonTitleTo(_ title: String) {
-        actionButton.setTitle(title, for: .normal)
     }
     
     func showPlaceholder() {
@@ -142,21 +125,14 @@ extension VPKVideoView: VPKVideoViewProtocol {
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
-        playerLayer.zPosition = -1
-        layer.insertSublayer(playerLayer, at: 0)
-        placeHolder.isHidden = true        
+        playerLayer.zPosition = 2.0
+        DispatchQueue.main.async {
+            self.layer.insertSublayer(playerLayer, at: 0)
+            self.placeHolder.isHidden = true
+        }
     }
     
     func makeFullScreen() {
-        let tmpView = UIView(frame: .zero)
-        addSubview(tmpView)
-        tmpView.snp.makeConstraints { (make) in
-            make.edges.equalTo(self)
-        }
-        tmpView.backgroundColor = .clear
-        tmpView.layer.zPosition = 1.0
-        
-        //guard let safePlayerLayer = self.playerLayer else { return }
         VideoViewAnimator.animateToFullScreen(self)
     }
     

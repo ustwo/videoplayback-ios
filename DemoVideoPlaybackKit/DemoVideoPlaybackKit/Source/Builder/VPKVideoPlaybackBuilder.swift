@@ -28,11 +28,16 @@ internal class VPKDependencyManager: VPKDependencyManagerProtocol {
     static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
         
         let videoView = VPKVideoView(frame: .zero)
+        let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: .normal) //TODO: ADD THEME TO BUILDER *make dynamic*
         let interactor : VPKVideoPlaybackInteractorInputProtocol = VPKVideoPlaybackInteractor()
         let videoPlaybackManager: VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol = VPKVideoPlaybackManager()
         
         //Dependency setup
         videoView.presenter = presenter
+        videoView.playbackBarView = playbackBarView
+        playbackBarView.presenter = presenter
+        
+        presenter.playbackBarView = playbackBarView
         presenter.videoView = videoView
         presenter.interactor = interactor
         interactor.presenter = presenter

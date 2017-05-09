@@ -70,22 +70,33 @@ public protocol VPKVideoBuilder {
 //*
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
+    var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
+    
     var placeHolderName: String { get set }
     var viewWillAppearClosure: CompletionClosure? { get set }
+    var playerLayer: AVPlayerLayer? { get set }
     
     // PRESENTER -> VIEW
     func reuseInCell(_ shouldReuse: Bool)
     func reloadInterface(with playerLayer: AVPlayerLayer)
-    func toggleActionButtonTitleTo(_ title: String)
     func showPlaceholder()
     func makeFullScreen()
     func makeNormalScreen()
 
     //VIEW -> PRESENTER
-    func didTapExpandView()
     func didTapView()
     func didMoveOffScreen()
 }
+
+protocol VPKPlaybackControlViewProtocol: class {
+    var presenter: VPKVideoPlaybackPresenterProtocol? { get set } //weak
+    var theme: ToolBarTheme? { get set }
+
+    func didTapExpandView()
+    func didTapPlayPause() 
+    func toggleActionButton(_ imageName: String)
+}
+
 
 //*** Builder
 //*
@@ -105,6 +116,7 @@ protocol VPKDependencyManagerProtocol {
 protocol VPKVideoPlaybackPresenterProtocol: class {
     
     var videoView: VPKVideoViewProtocol? { get set }
+    var playbackBarView: VPKPlaybackControlViewProtocol? { get set } 
     var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
     var videoSizeState: VideoSizeState? { get set }
     

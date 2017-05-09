@@ -169,11 +169,19 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     }
     
     fileprivate func didStopPlaying() {
+        #if DEBUG
+            print("stopped playing")
+        #endif
+            
         playerState = .paused
         onStopPlayingClosure?()
     }
     
     fileprivate func didStartPlaying() {
+        #if DEBUG
+            print("started playing")
+        #endif
+        
         playerState = .playing
         onStartPlayingClosure?()
     }

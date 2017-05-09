@@ -17,7 +17,7 @@ public class VPKVideoPlaybackPresenter {
             observeVideoViewLifecycle()
         }
     }
-    
+    var playbackBarView: VPKPlaybackControlViewProtocol?
     var interactor: VPKVideoPlaybackInteractorInputProtocol?
     var builder: VPKVideoPlaybackBuilderProtocol?
     var videoSizeState: VideoSizeState?
@@ -56,7 +56,6 @@ public class VPKVideoPlaybackPresenter {
 
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
     
-    
     //VIEW -> PRESENTER    
     func viewDidLoad() {
         videoView?.placeHolderName = placeHolderName ?? "default_placeholder"
@@ -93,6 +92,8 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
         case .fullScreen:
             videoView?.makeNormalScreen()
         }
+        
+      videoSizeState?.toggle()
     }
 }
 
@@ -100,15 +101,15 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     
     func onVideoDidPlayToEnd() {
         videoView?.showPlaceholder()
-        videoView?.toggleActionButtonTitleTo(PlayerState.paused.buttonTitle)
+        playbackBarView?.toggleActionButton(PlayerState.paused.buttonImageName)
     }
     
     func onVideoDidStopPlaying() {
-        videoView?.toggleActionButtonTitleTo(PlayerState.paused.buttonTitle)
+        playbackBarView?.toggleActionButton(PlayerState.paused.buttonImageName)
     }
     
     func onVideoDidStartPlaying() {
-        videoView?.toggleActionButtonTitleTo(PlayerState.playing.buttonTitle)
+        playbackBarView?.toggleActionButton(PlayerState.playing.buttonImageName)
     }
 
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {

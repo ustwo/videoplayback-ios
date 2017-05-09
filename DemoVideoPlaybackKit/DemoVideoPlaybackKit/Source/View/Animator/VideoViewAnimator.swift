@@ -12,59 +12,59 @@ import AVKit
 import AVFoundation
 
 
+
 //MARK: Animator
 struct VideoViewAnimator {
     
-    static func animateToFullScreen(_ videoView: VPKVideoView) {
-        videoView.clipsToBounds = true 
-        videoView.goFullscreen()
-    }
-    
-    static func animateVideoPlayerView(_ videoView: VPKVideoView, fromState initialState: PlayerState, toState finalState: PlayerState, withCompletion completion: CompletionClosure?) {
-        
-        /*switch (initialState, finalState) {
-        case (.playing, .paused) where videoView.activityIndicator.isAnimating == false:
-            DispatchQueue.main.async {
-                videoView.playButton.toggle(state: finalState)
-                videoView.playButton.layer.zPosition = LayerHierachy.top.rawValue
-                videoView.playButton.fadeIn(time: 0.3, completion: {
-                    completion?()
-                })
-            }
-        case (.paused, .playing):
-            videoView.playButton.fadeOutPulse(time: 0.3, completion: {
-                videoView.activityIndicator.startAnimating()
-                completion?()
-            })
-        default:
-            break
-        }*/
-    }
-}
-
-
-extension CGAffineTransform {
-    
-    static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
-}
-
-extension UIView {
-    
-    var fullScreenAnimationDuration: TimeInterval {
+    private var fullScreenAnimationDuration: TimeInterval {
         return 0.15
     }
     
-    func minimizeToFrame(_ frame: CGRect) {
+    static func animateToFullScreen<T: UIView>(_ videoView: T) where T: VPKVideoViewProtocol {
+        videoView.fullScreenMode()
+    }
+    
+    static func animateToNormalScreen(_ videoView: VPKVideoViewProtocol) {
+        
+    }
+    
+    
+    /*func minimizeToFrame(_ frame: CGRect) {
         UIView.animate(withDuration: fullScreenAnimationDuration) {
             self.layer.setAffineTransform(.identity)
             self.frame = frame
         }
-    }
+    }*/
     
-    func goFullscreen() {
-        UIView.animate(withDuration: fullScreenAnimationDuration) {
-            self.layer.setAffineTransform(.ninetyDegreeRotation)
-            self.frame = UIScreen.main.bounds
-        }
+    static func animateVideoPlayerView(_ videoView: VPKVideoView, fromState initialState: PlayerState, toState finalState: PlayerState, withCompletion completion: CompletionClosure?) {
     }
+}
+
+//TODO: CLEAN UP
+extension VPKVideoViewProtocol where Self: UIView {
+    
+    func fullScreenMode() {
+        guard  let window = UIApplication.shared.delegate?.window,
+            let safePlayerLayer = self.playerLayer else { return }
+        
+        window?.addSubview(self)
+        var sx: CGFloat = 0
+        var sy: CGFloat = 0
+        
+        if self.frame.size.width > self.frame.size.height {
+            sx = self.frame.size.width/safePlayerLayer.frame.size.width
+            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
+        } else {
+            sy = self.frame.size.height/safePlayerLayer.frame.size.height
+            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
+        }
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
+            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
+        })
+    }
+}
+
+extension CGAffineTransform {
+    
+    static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
 }

@@ -7,6 +7,16 @@
 //
 
 import Foundation
+import UIKit
+
+//*** UI ****
+//**
+//*
+
+public enum ToolBarTheme {
+    case normal
+    case transparent(backgroundColor: UIColor, foregroundColor: UIColor,  alphaValue: CGFloat)
+}
 
 
 //**** Used between presenter & view to manage view size & state
@@ -14,8 +24,16 @@ import Foundation
 //*
 enum VideoSizeState {
     case normal, fullScreen
+   
+    mutating func toggle() {
+        switch self {
+        case .normal:
+            self = .fullScreen
+        case .fullScreen:
+            self = .normal
+        }
+    }
 }
-
 
 //*** These enums are used throughout the framework & viper architecture
 //**
@@ -33,12 +51,12 @@ public enum PlayerState {
         }
     }
     
-    var buttonTitle: String {
+    var buttonImageName: String {
         switch self {
         case .playing:
-            return "Pause" //TODO: Replace with icons
+            return "pauseDefault"
         case .paused:
-            return "Play"
+            return "playDefault"
         }
     }
 }
