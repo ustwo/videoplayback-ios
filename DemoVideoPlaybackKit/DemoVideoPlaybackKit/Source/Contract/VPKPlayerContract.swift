@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import AVKit
 import AVFoundation
+import ASValueTrackingSlider
 
 typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
@@ -91,10 +92,17 @@ protocol VPKVideoViewProtocol: class {
 protocol VPKPlaybackControlViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set } //weak
     var theme: ToolBarTheme? { get set }
+    var maximumSeconds: Float { get set }
+    var progressValue: Float { get set } 
+
 
     func didTapExpandView()
-    func didTapPlayPause() 
+    func didTapPlayPause()
+    
     func toggleActionButton(_ imageName: String)
+    func showDurationWith(_ time: String)
+    func updateTimePlayingCompletedTo(_ time: Float)
+    func didScrub()
 }
 
 
@@ -132,7 +140,8 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     func viewDidLoad()
     func didMoveOffScreen()
     func didTapVideoView()
-    func didExpand() 
+    func didExpand()
+    func didScrubTo(_ value: TimeInterval)
 }
 
 //*** Interactor
@@ -145,7 +154,7 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
 
     // PRESENTER -> INTERACTOR
     func didTapVideo(videoURL: URL)
-    func didScrub()
+    func didScrubTo(_ timeInSeconds: TimeInterval)
     func didToggleViewExpansion()
     func didMoveOffScreen()
 }
@@ -155,10 +164,10 @@ protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
     //INTERACTOR --> PRESENTER
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer)
     func onVideoLoadFail(_ error: String)
-    func onVideoDidStartPlaying()
+    func onVideoDidStartPlayingWith(_ duration: TimeInterval)
     func onVideoDidStopPlaying()
     func onVideoDidPlayToEnd()
-    
+    func onVideoPlayingFor(_ seconds: TimeInterval)    
 }
 
 //** Player Manager
@@ -171,12 +180,14 @@ protocol VPKVideoPlaybackManagerProtocol: class {
 
 protocol VPKVideoPlaybackManagerOutputProtocol: class {
     var onPlayerLayerClosure: LayerClosure? { get set }
-    var onStartPlayingClosure: CompletionClosure? { get set }
+    var onStartPlayingWithDurationClosure: StartWithDurationClosure? { get set }
     var onStopPlayingClosure: CompletionClosure? { get set }
     var onDidPlayToEndClosure: CompletionClosure? { get set }
+    var onTimeDidChangeClosure: TimeClosure? { get set }
 }
 
 protocol VPKVideoPlaybackManagerInputProtocol: class {
     func didSelectVideoUrl(_ url: URL)
     func didMoveOffScreen()
+    func didScrubTo(_ seconds: TimeInterval)
 }

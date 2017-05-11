@@ -16,8 +16,6 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol
     
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol)?
     weak var presenter: VPKVideoPlaybackInteractorOutputProtocol?
-
-    internal var onVideoPlayerLoadSuccess: LayerClosure?
     
     func didTapVideo(videoURL: URL) {
         playbackManager?.didSelectVideoUrl(videoURL)
@@ -26,8 +24,8 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol
             self?.presenter?.onVideoLoadSuccess(playerLayer)
         }
         
-        playbackManager?.onStartPlayingClosure = { [weak self] () in
-            self?.presenter?.onVideoDidStartPlaying()
+        playbackManager?.onStartPlayingWithDurationClosure = { [weak self] (duration) in
+            self?.presenter?.onVideoDidStartPlayingWith(duration)
         }
         
         playbackManager?.onStopPlayingClosure = { [weak self] () in
@@ -37,10 +35,14 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol
         playbackManager?.onDidPlayToEndClosure = { [weak self] () in
             self?.presenter?.onVideoDidPlayToEnd()
         }
+        
+        playbackManager?.onTimeDidChangeClosure = { [weak self] (time) in
+            self?.presenter?.onVideoPlayingFor(time)
+        }
     }
     
-    func didScrub() {
-                
+    func didScrubTo(_ timeInSeconds: TimeInterval) {
+        playbackManager?.didScrubTo(timeInSeconds)                
     }
     
     func didToggleViewExpansion() {

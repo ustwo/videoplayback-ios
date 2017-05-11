@@ -48,14 +48,12 @@ public class VPKVideoPlaybackPresenter {
             }
         }
     }
-    
-    public func didScrub() {
-        
-    }
+
 }
 
+//MARK: VIEW --> Presenter
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
-    
+
     //VIEW -> PRESENTER    
     func viewDidLoad() {
         videoView?.placeHolderName = placeHolderName ?? "default_placeholder"
@@ -73,7 +71,6 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
         switch videoType {
         case let .local(pathName: aName, fileType: aType) where Bundle.main.path(forResource: aName, ofType: aType) != nil:
             videoUrl = URL(fileURLWithPath: Bundle.main.path(forResource: aName, ofType: aType)!)
-            
         case let .remote(url: remoteUrlName) where URL(string: remoteUrlName) != nil:
             videoUrl = URL(string: remoteUrlName)
         default:
@@ -95,9 +92,24 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
         
       videoSizeState?.toggle()
     }
+    
+    func didScrubTo(_ value: TimeInterval) {
+        interactor?.didScrubTo(value)
+    }
 }
 
+//MARK: INTERACTOR --> Presenter
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
+    
+    func onVideoDidStartPlayingWith(_ duration: TimeInterval) {
+        playbackBarView?.maximumSeconds = Float(duration)
+        playbackBarView?.showDurationWith(duration.formattedTimeFromSeconds)
+        playbackBarView?.toggleActionButton(PlayerState.playing.buttonImageName)
+    }
+    
+    func onVideoPlayingFor(_ seconds: TimeInterval) {
+        playbackBarView?.progressValue = roundf(Float(seconds))
+    }
     
     func onVideoDidPlayToEnd() {
         videoView?.showPlaceholder()
@@ -118,5 +130,14 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     
     func onVideoLoadFail(_ error: String) {
         
+    }
+}
+
+//MAK: Presenter transformers
+fileprivate extension TimeInterval {
+    var formattedTimeFromSeconds: String {
+        let minutes = Int(self.truncatingRemainder(dividingBy: 3600))/60
+        let seconds = Int(self.truncatingRemainder(dividingBy: 60))
+        return String(format: "%02i:%02i", minutes, seconds)
     }
 }

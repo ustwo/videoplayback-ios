@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 
 public typealias VideoViewClosure = (_ view: VPKVideoView) -> ()
+public typealias TimeClosure = (_ time: TimeInterval) -> ()
+public typealias StartWithDurationClosure = (_ duration: TimeInterval) -> ()
 public typealias CompletionClosure = () -> ()
-
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     

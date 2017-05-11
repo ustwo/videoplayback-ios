@@ -62,7 +62,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         isUserInteractionEnabled = true
         
         tap.delegate = self
-       // tap.addTarget(self, action: #selector(didTapView))
+        tap.addTarget(self, action: #selector(didTapView))
         addGestureRecognizer(tap)
         tap.numberOfTapsRequired = 1
         
@@ -125,7 +125,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
-        playerLayer.zPosition = 2.0
+        playerLayer.zPosition = -1.0
         DispatchQueue.main.async {
             self.layer.insertSublayer(playerLayer, at: 0)
             self.placeHolder.isHidden = true

@@ -19,12 +19,15 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     var currentVideoUrl: URL?
     
     //output
-    var onStartPlayingClosure: CompletionClosure?
+    var onStartPlayingWithDurationClosure: StartWithDurationClosure?
     var onStopPlayingClosure: CompletionClosure?
     var onDidPlayToEndClosure: CompletionClosure?
     var onPlayerLayerClosure: LayerClosure?
+    var onTimeDidChangeClosure: TimeClosure?
     
     //private
+    fileprivate var isSeekInProgress = false
+    fileprivate var chaseTime = kCMTimeZero
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate lazy var player = AVPlayer()
     fileprivate enum ObservableKeyPaths: String {
@@ -38,12 +41,14 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         playerState = .paused
         player.actionAtItemEnd = .none
       //  addApplicationObservers()
+        trackTimeProgress()
         addPlayerObservers()
     }
     
     fileprivate func playVideoForTheFirstTime(_ url: URL) {
         let serviceGroup = DispatchGroup()
         let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
+        
         
         //stop()
         let workItemOne = DispatchWorkItem {
@@ -94,6 +99,12 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
     //MARK: KVO setup
+    fileprivate func trackTimeProgress() {
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 2), queue: DispatchQueue.main) { [weak self] (time) in
+            self?.videoPlayingTimeChangedTo(time.seconds)
+        }
+    }
+    
     private func addPlayerObservers() {
         player.addObserver(self, forKeyPath: ObservableKeyPaths.status.rawValue, options: .new, context: nil)
         player.addObserver(self, forKeyPath: ObservableKeyPaths.rate.rawValue, options: .new, context: nil)
@@ -182,8 +193,16 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
             print("started playing")
         #endif
         
+        guard let duration = player.currentItem?.asset.duration,
+            let transformedTime = CMTimeGetSeconds(duration) as? Double else {
+                #if DEBUG
+                    print("error getting player asset duration")
+                #endif
+            return
+        }
+        
         playerState = .playing
-        onStartPlayingClosure?()
+        onStartPlayingWithDurationClosure?(TimeInterval(transformedTime))
     }
     
     fileprivate func didPlayToEnd() {
@@ -191,9 +210,20 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         configurePlayer(item: nil)
         onDidPlayToEndClosure?()
     }
+    
+    fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {
+        onTimeDidChangeClosure?(time)
+    }
 }
 
 extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
+    
+    func didScrubTo(_ seconds: TimeInterval) {
+        #if DEBUG
+            print("USER SCRUBBED VIDEO TO \(seconds)")
+        #endif
+        stopPlayingAndSeekSmoothlyToTime(newChaseTime: CMTimeMakeWithSeconds(seconds, 1))
+    }
     
     func didMoveOffScreen()  {
         if isPlayerPlaying() {
@@ -209,5 +239,43 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
         case .paused:
             url == currentVideoUrl ? play() : playVideoForTheFirstTime(url)
         }
+    }
+}
+
+//MARK: Time Scrubbing
+extension VPKVideoPlaybackManager {
+    
+    func stopPlayingAndSeekSmoothlyToTime(newChaseTime: CMTime) {
+        player.pause()
+        if CMTimeCompare(newChaseTime, chaseTime) != 0 {
+            chaseTime = newChaseTime
+            if !isSeekInProgress {
+                trySeekToChaseTime()
+            }
+        }
+    }
+    
+    fileprivate func trySeekToChaseTime() {        
+        if player.currentItem?.status == .unknown {
+            // wait until item becomes ready (KVO player.currentItem.status)
+        } else if player.currentItem?.status  == .readyToPlay {
+            actuallySeekToTime()
+        }
+    }
+    
+    fileprivate func actuallySeekToTime() {
+        isSeekInProgress = true
+        let seekTimeInProgress = chaseTime
+        player.seek(to: seekTimeInProgress, toleranceBefore: kCMTimeZero,
+                    toleranceAfter: kCMTimeZero, completionHandler:
+            { (isFinished) -> () in
+                if CMTimeCompare(seekTimeInProgress, self.chaseTime) == 0 {
+                    self.isSeekInProgress = false
+                    self.play()
+                }
+                else {
+                    self.trySeekToChaseTime()
+                }
+        })
     }
 }
