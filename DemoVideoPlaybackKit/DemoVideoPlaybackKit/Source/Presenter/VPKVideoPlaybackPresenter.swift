@@ -17,12 +17,14 @@ public class VPKVideoPlaybackPresenter {
             observeVideoViewLifecycle()
         }
     }
+    
     var playbackBarView: VPKPlaybackControlViewProtocol?
     var interactor: VPKVideoPlaybackInteractorInputProtocol?
     var builder: VPKVideoPlaybackBuilderProtocol?
     var videoSizeState: VideoSizeState?
-    
+    var playbackTheme: ToolBarTheme?
     var videoType: VPKVideoType
+    
     var placeHolderName: String? {
         didSet {
             guard let safeName = placeHolderName else { return }
@@ -33,12 +35,13 @@ public class VPKVideoPlaybackPresenter {
     var shouldAutoplay: Bool?
     var isInCell: Bool?
 
-    required public init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool) {
+    required public init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool, playbackTheme theme: ToolBarTheme = .normal) {
         self.videoType = videoType
         self.placeHolderName = placeHolderName
         self.shouldAutoplay = shouldAutoplay
         self.isInCell = isInCell
         self.videoSizeState = .normal
+        self.playbackTheme = theme
     }
 
     private func observeVideoViewLifecycle() {
@@ -95,6 +98,10 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
     
     func didScrubTo(_ value: TimeInterval) {
         interactor?.didScrubTo(value)
+    }
+    
+    func formattedProgressTime(from seconds: TimeInterval) -> String {
+        return seconds.formattedTimeFromSeconds
     }
 }
 

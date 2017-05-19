@@ -15,7 +15,8 @@ public class VPKPlaybackControlView: UIView {
     
     //Protocol
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
-    var theme: ToolBarTheme? = .normal
+    var theme: ToolBarTheme?
+    
     var progressValue: Float = 0.0 {
         didSet {
             playbackProgressSlider.value = progressValue
@@ -40,11 +41,11 @@ public class VPKPlaybackControlView: UIView {
     convenience init(theme: ToolBarTheme) {
         self.init(frame: .zero)
         self.theme = theme
+        setup()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setup()
         playbackProgressSlider.dataSource = self
     }
     
@@ -56,15 +57,29 @@ public class VPKPlaybackControlView: UIView {
         guard let safeTheme = theme else { return }
         switch safeTheme {
         case .normal:
+            setupBasicColorTheme()
             setupNormalLayout()
-        default:
-            return
+        case let .transparent(backgroundColor: bgColor, foregroundColor: fgColor, alphaValue: alpha):
+            setupTransparentThemeWith(bgColor, foreground: fgColor, atTransparency: alpha)
+            setupNormalLayout()
         }
     }
     
-    private func setupNormalLayout() {
+    private func setupTransparentThemeWith(_ background: UIColor, foreground fg: UIColor, atTransparency alphaValue: CGFloat) {
+        alpha = CGFloat(alphaValue)
+        backgroundColor = background
+        playbackProgressSlider.backgroundColor = fg
+        playbackProgressSlider.popUpViewAnimatedColors = [fg, background, UIColor.white]
+    }
+    
+    private func setupBasicColorTheme() {
         backgroundColor = .purple
         isUserInteractionEnabled = true
+        playbackProgressSlider.backgroundColor = .white
+        playbackProgressSlider.popUpViewAnimatedColors = [UIColor.blue, UIColor.green, UIColor.yellow]
+    }
+    
+    private func setupNormalLayout() {
         
         addSubview(playPauseButton)
         playPauseButton.snp.makeConstraints { (make) in
@@ -99,8 +114,6 @@ public class VPKPlaybackControlView: UIView {
             make.centerY.equalTo(self)
             make.height.equalTo(10.0)
         }
-        playbackProgressSlider.backgroundColor = .white
-        playbackProgressSlider.popUpViewAnimatedColors = [UIColor.blue, UIColor.green, UIColor.yellow]
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
     }
 }
@@ -108,8 +121,7 @@ public class VPKPlaybackControlView: UIView {
 extension VPKPlaybackControlView: ASValueTrackingSliderDataSource {
     
     public func slider(_ slider: ASValueTrackingSlider!, stringForValue value: Float) -> String! {
-        //USE THIS TO FORMAT the string on the bar
-        return String(round(value))
+        return presenter?.formattedProgressTime(from: TimeInterval(value))
     }
 }
 

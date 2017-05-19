@@ -14,6 +14,8 @@ import ASValueTrackingSlider
 
 typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
+//***PUBLIC *** 
+
 //** Styling
 //*
 //*
@@ -42,6 +44,7 @@ public protocol FontTheme {
     // ...
 }
 
+
 //** Use Case
 //*
 //*
@@ -55,16 +58,9 @@ protocol VPKMainPlayerUseCase: class {
 }
 
 /*
- ***** VIPER PROTOCOL CONTRACT ******
+ ***** VIPER FRAMEWORK PROTOCOL CONTRACT ******
  */
- 
 
-//** Builder
-//*
-//*
-public protocol VPKVideoBuilder {
-    func build(videoURL: String, with placeHolderImageURL: String, shouldAutoplay autoPlay: Bool) -> VPKVideoView
-}
 
 //*** View
 //*
@@ -89,11 +85,15 @@ protocol VPKVideoViewProtocol: class {
     func didMoveOffScreen()
 }
 
+protocol VPKViewInCellProtocol: class  {
+    var videoView: VPKVideoView? { get set }
+}
+
 protocol VPKPlaybackControlViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set } //weak
     var theme: ToolBarTheme? { get set }
     var maximumSeconds: Float { get set }
-    var progressValue: Float { get set } 
+    var progressValue: Float { get set }
 
 
     func didTapExpandView()
@@ -110,8 +110,14 @@ protocol VPKPlaybackControlViewProtocol: class {
 //*
 //*
 
+public protocol VPKBuildInCellProtocol: class {
+    var videoModel: VPKVideoType { get set }
+    
+    static func build(videoURL: String, with placeHolderImageURL: String, shouldAutoplay autoPlay: Bool) -> VPKVideoView
+}
+
 public protocol VPKVideoPlaybackBuilderProtocol: class {
-    static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCell: Bool, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCell: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {
@@ -127,13 +133,14 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set } 
     var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
     var videoSizeState: VideoSizeState? { get set }
+    var playbackTheme: ToolBarTheme? { get set }
     
     var videoType: VPKVideoType { get set }
     var placeHolderName: String? { get set } //if nil defaults to framework default
     var shouldAutoplay: Bool? { get set } // if nil defaults to false
     var isInCell: Bool? { get set } //if nil defaults to false
     
-    init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool)
+    init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool, playbackTheme theme: ToolBarTheme)
 
     
     // VIEW -> PRESENTER
@@ -142,6 +149,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     func didTapVideoView()
     func didExpand()
     func didScrubTo(_ value: TimeInterval)
+    func formattedProgressTime(from seconds: TimeInterval) -> String
 }
 
 //*** Interactor

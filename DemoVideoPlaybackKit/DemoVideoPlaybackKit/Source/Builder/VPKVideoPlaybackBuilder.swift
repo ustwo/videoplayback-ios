@@ -16,9 +16,9 @@ public typealias CompletionClosure = () -> ()
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
-    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCell: Bool = false, completion viewCompletion: VideoViewClosure) {
+    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCell: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
-        let presenter:VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withPlaceholder: placeHolderName, withAutoplay: autoPlay, showInCell: isInCell)
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withPlaceholder: placeHolderName, withAutoplay: autoPlay, showInCell: isInCell, playbackTheme: playbackTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
     
@@ -29,16 +29,16 @@ internal class VPKDependencyManager: VPKDependencyManagerProtocol {
     static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
         
         let videoView = VPKVideoView(frame: .zero)
-        let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: .normal) //TODO: ADD THEME TO BUILDER *make dynamic*
+        let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: presenter.playbackTheme ?? .normal)
         let interactor : VPKVideoPlaybackInteractorInputProtocol = VPKVideoPlaybackInteractor()
         let videoPlaybackManager: VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol = VPKVideoPlaybackManager()
         
         //Dependency setup
         videoView.presenter = presenter
         videoView.playbackBarView = playbackBarView
+        presenter.playbackBarView = playbackBarView
         playbackBarView.presenter = presenter
         
-        presenter.playbackBarView = playbackBarView
         presenter.videoView = videoView
         presenter.interactor = interactor
         interactor.presenter = presenter
