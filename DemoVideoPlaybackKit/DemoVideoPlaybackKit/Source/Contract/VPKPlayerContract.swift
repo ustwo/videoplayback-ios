@@ -68,8 +68,9 @@ protocol VPKMainPlayerUseCase: class {
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
-    
-    var placeHolderName: String { get set }
+
+    var localPlaceHolderName: String { get set }
+    var remotePlaceHolderURL: URL? { get set }
     var viewWillAppearClosure: CompletionClosure? { get set }
     var playerLayer: AVPlayerLayer? { get set }
     
@@ -79,6 +80,7 @@ protocol VPKVideoViewProtocol: class {
     func showPlaceholder()
     func makeFullScreen()
     func makeNormalScreen()
+    func reloadInterfaceWithoutPlayerlayer()
 
     //VIEW -> PRESENTER
     func didTapView()
@@ -87,6 +89,13 @@ protocol VPKVideoViewProtocol: class {
 
 protocol VPKViewInCellProtocol: class  {
     var videoView: VPKVideoView? { get set }
+    func prepareForVideoReuse()
+}
+
+extension VPKViewInCellProtocol {
+    func prepareForVideoReuse() {
+        
+    }
 }
 
 protocol VPKPlaybackControlViewProtocol: class {
@@ -112,12 +121,12 @@ protocol VPKPlaybackControlViewProtocol: class {
 
 public protocol VPKBuildInCellProtocol: class {
     var videoModel: VPKVideoType { get set }
-    
+
     static func build(videoURL: String, with placeHolderImageURL: String, shouldAutoplay autoPlay: Bool) -> VPKVideoView
 }
 
 public protocol VPKVideoPlaybackBuilderProtocol: class {
-    static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCell: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCellAtIndexPath: NSIndexPath?, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {
@@ -136,12 +145,10 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     var playbackTheme: ToolBarTheme? { get set }
     
     var videoType: VPKVideoType { get set }
-    var placeHolderName: String? { get set } //if nil defaults to framework default
     var shouldAutoplay: Bool? { get set } // if nil defaults to false
-    var isInCell: Bool? { get set } //if nil defaults to false
+    var indexPath: NSIndexPath? { get set } //if nil defaults to false
     
-    init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool, playbackTheme theme: ToolBarTheme)
-
+    init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
     
     // VIEW -> PRESENTER
     func viewDidLoad()
@@ -158,10 +165,11 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
 protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     
     var presenter: VPKVideoPlaybackInteractorOutputProtocol? { get set }
-    var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol)? { get set }
+    var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol)? { get set }
+
 
     // PRESENTER -> INTERACTOR
-    func didTapVideo(videoURL: URL)
+    func didTapVideo(videoURL: URL, at indexPath: NSIndexPath?)
     func didScrubTo(_ timeInSeconds: TimeInterval)
     func didToggleViewExpansion()
     func didMoveOffScreen()
@@ -170,6 +178,7 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
 protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
     
     //INTERACTOR --> PRESENTER
+    func onVideoResetPresentation()
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer)
     func onVideoLoadFail(_ error: String)
     func onVideoDidStartPlayingWith(_ duration: TimeInterval)
@@ -184,6 +193,7 @@ protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
 protocol VPKVideoPlaybackManagerProtocol: class {
     var playerState: PlayerState? { get set }
     var currentVideoUrl: URL? { get set }
+    var delegate: VPKVideoPlaybackDelegate? { get set }
 }
 
 protocol VPKVideoPlaybackManagerOutputProtocol: class {
@@ -192,6 +202,7 @@ protocol VPKVideoPlaybackManagerOutputProtocol: class {
     var onStopPlayingClosure: CompletionClosure? { get set }
     var onDidPlayToEndClosure: CompletionClosure? { get set }
     var onTimeDidChangeClosure: TimeClosure? { get set }
+    
 }
 
 protocol VPKVideoPlaybackManagerInputProtocol: class {

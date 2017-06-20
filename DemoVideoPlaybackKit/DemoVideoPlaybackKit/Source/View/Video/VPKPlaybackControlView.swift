@@ -100,7 +100,7 @@ public class VPKPlaybackControlView: UIView {
         
         addSubview(expandButton)
         expandButton.snp.makeConstraints { (make) in
-            make.right.equalTo(snp.right).offset(-8.0)
+            make.right.equalTo(snp.right).offset(-12.0)
             make.centerY.equalTo(self)
             make.width.height.equalTo(30)
         }

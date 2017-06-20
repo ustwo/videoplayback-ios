@@ -10,6 +10,7 @@ import Foundation
 import AVKit
 import AVFoundation
 import SnapKit
+import AlamofireImage
 
 private enum LayerHierachy: CGFloat {
     case bottom = 0, middle, top
@@ -25,12 +26,19 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     }
     
     var viewWillAppearClosure: CompletionClosure?
-    var playerLayer: AVPlayerLayer?
-    var placeHolderName: String = "TODO_Default_image" {
+    weak var playerLayer: AVPlayerLayer?
+    var localPlaceHolderName: String = "TODO_Default_image" {
         didSet {
-            guard let image = UIImage(named: placeHolderName) else { return }
+            guard let image = UIImage(named: localPlaceHolderName) else { return }
             placeHolder.image = image
             layoutIfNeeded()
+        }
+    }
+    
+    var remotePlaceHolderURL: URL? {
+        didSet {
+            guard let safeURL = remotePlaceHolderURL else { return }
+            placeHolder.af_setImage(withURL: safeURL, placeholderImage: nil, filter: nil, progress: nil, progressQueue: DispatchQueue(label: "image_queue"), imageTransition: UIImageView.ImageTransition.crossDissolve(0.3), runImageTransitionIfCached: false, completion: nil)
         }
     }
 
@@ -121,6 +129,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
+        print("PLAYER LAYER \(playerLayer.debugDescription)")
         self.playerLayer = playerLayer
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
@@ -130,6 +139,13 @@ extension VPKVideoView: VPKVideoViewProtocol {
             self.layer.insertSublayer(playerLayer, at: 0)
             self.placeHolder.isHidden = true
         }
+    }
+    
+    func reloadInterfaceWithoutPlayerlayer() {
+        print("removing player layer")
+        self.playerLayer = nil
+        self.placeHolder.isHidden = false
+        //self.placeHolder.layer.zPosition = LayerHierachy.top.rawValue
     }
     
     func makeFullScreen() {

@@ -24,22 +24,13 @@ public class VPKVideoPlaybackPresenter {
     var videoSizeState: VideoSizeState?
     var playbackTheme: ToolBarTheme?
     var videoType: VPKVideoType
-    
-    var placeHolderName: String? {
-        didSet {
-            guard let safeName = placeHolderName else { return }
-            videoView?.placeHolderName = safeName
-        }
-    }
-    
     var shouldAutoplay: Bool?
-    var isInCell: Bool?
+    var indexPath: NSIndexPath?
 
-    required public init(videoType: VPKVideoType, withPlaceholder placeHolderName: String, withAutoplay shouldAutoplay: Bool, showInCell isInCell: Bool, playbackTheme theme: ToolBarTheme = .normal) {
+    required public init(videoType: VPKVideoType,withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme = .normal) {
         self.videoType = videoType
-        self.placeHolderName = placeHolderName
         self.shouldAutoplay = shouldAutoplay
-        self.isInCell = isInCell
+        self.indexPath = indexPath
         self.videoSizeState = .normal
         self.playbackTheme = theme
     }
@@ -59,7 +50,15 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
 
     //VIEW -> PRESENTER    
     func viewDidLoad() {
-        videoView?.placeHolderName = placeHolderName ?? "default_placeholder"
+        
+        switch videoType {
+        case let .local(videoPathName: _, fileType: _, placeholderImageName: imageName):
+            videoView?.localPlaceHolderName = imageName
+        case let .remote(url: _, placeholderURLName: imageURLString):
+            guard let imageURL = URL(string: imageURLString) else { return }
+            videoView?.remotePlaceHolderURL = imageURL
+        }
+    
         if self.shouldAutoplay == true {
             didTapVideoView()
         }
@@ -70,18 +69,20 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
     }
     
     func didTapVideoView() {
+        print("TAPPED VIDEO AT \(indexPath?.row)")
+        
         var videoUrl: URL?
         switch videoType {
-        case let .local(pathName: aName, fileType: aType) where Bundle.main.path(forResource: aName, ofType: aType) != nil:
+        case let .local(videoPathName: aName, fileType: aType, placeholderImageName: _) where Bundle.main.path(forResource: aName, ofType: aType) != nil:
             videoUrl = URL(fileURLWithPath: Bundle.main.path(forResource: aName, ofType: aType)!)
-        case let .remote(url: remoteUrlName) where URL(string: remoteUrlName) != nil:
+        case let .remote(url: remoteUrlName, placeholderURLName: _) where URL(string: remoteUrlName) != nil:
             videoUrl = URL(string: remoteUrlName)
         default:
             break
         }
         
         guard let safeVideoUrl = videoUrl else { return }
-        interactor?.didTapVideo(videoURL: safeVideoUrl)
+        interactor?.didTapVideo(videoURL: safeVideoUrl, at: self.indexPath)
     }
     
     public func didExpand() {
@@ -107,6 +108,10 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
 
 //MARK: INTERACTOR --> Presenter
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
+    
+    func onVideoResetPresentation() {
+        videoView?.reloadInterfaceWithoutPlayerlayer()
+    }
     
     func onVideoDidStartPlayingWith(_ duration: TimeInterval) {
         playbackBarView?.maximumSeconds = Float(duration)

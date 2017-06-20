@@ -16,12 +16,11 @@ public typealias CompletionClosure = () -> ()
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
-    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, withPlaceholder placeHolderName: String, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCell: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
+    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCellAtIndexPath: NSIndexPath? = nil, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
-        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withPlaceholder: placeHolderName, withAutoplay: autoPlay, showInCell: isInCell, playbackTheme: playbackTheme)
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: isInCellAtIndexPath, playbackTheme: playbackTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
-    
 }
 
 internal class VPKDependencyManager: VPKDependencyManagerProtocol {
@@ -31,7 +30,7 @@ internal class VPKDependencyManager: VPKDependencyManagerProtocol {
         let videoView = VPKVideoView(frame: .zero)
         let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: presenter.playbackTheme ?? .normal)
         let interactor : VPKVideoPlaybackInteractorInputProtocol = VPKVideoPlaybackInteractor()
-        let videoPlaybackManager: VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol = VPKVideoPlaybackManager()
+        let videoPlaybackManager: VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol = VPKVideoPlaybackManager.shared
         
         //Dependency setup
         videoView.presenter = presenter

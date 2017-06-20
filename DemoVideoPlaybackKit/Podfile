@@ -4,6 +4,8 @@ use_frameworks!
 
 target 'DemoVideoPlaybackKit' do
 	pod 'ASValueTrackingSlider'
+	pod 'Alamofire', '~> 4.4'
+	pod 'AlamofireImage', '~> 3.1'
 end
 
 post_install do |installer|

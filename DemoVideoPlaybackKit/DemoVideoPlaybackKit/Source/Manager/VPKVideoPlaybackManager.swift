@@ -14,6 +14,12 @@ import RxSwift
 
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
+    
+    //*** TEST ***
+    weak var delegate: VPKVideoPlaybackDelegate?
+    
+    static let shared = VPKVideoPlaybackManager()
+    
     //state
     var playerState: PlayerState?
     var currentVideoUrl: URL?
@@ -50,11 +56,14 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
         
         
-        //stop()
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
-                //  self.currentlyPlayingView?.resetView()
+                //   self.currentInteractor?.resetPresentation()
+                
+              //  self.delegate?.playbackManagerDidPlayNewVideo(self)
+                //self.reset()
+                
             })
             serviceGroup.leave()
         }
@@ -84,7 +93,10 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     //MARK: Configuration
     fileprivate func configurePlayer(item: AVPlayerItem?) {
-        player.replaceCurrentItem(with: item)
+        let queue = DispatchQueue(label: "item_exchange")
+        queue.async {
+            self.player.replaceCurrentItem(with: item)
+        }
     }
     
     //MARK: Playback 
@@ -123,7 +135,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         player.removeObserver(self, forKeyPath: ObservableKeyPaths.timeControlStatus.rawValue)
     }
     
-    private func removePlayerItemObservers() {
+    fileprivate func removePlayerItemObservers() {
         if player.currentItem != nil {
             let itemQueue = DispatchQueue(label: "com.vpk.playerItemQueue", qos: .background, attributes: DispatchQueue.Attributes.concurrent, autoreleaseFrequency: DispatchQueue.AutoreleaseFrequency.inherit, target: nil)
             itemQueue.async {
@@ -162,7 +174,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             }
         }
     }
-    
+
     //MARK: Helpers
     func isPlayerPlaying() -> Bool {
         return player.rate == 1 && player.error == nil
@@ -176,7 +188,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
 extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     
     fileprivate func didPreparePlayerLayer(_ playerLayer: AVPlayerLayer) {
-        onPlayerLayerClosure?(playerLayer)
+        delegate?.playbackManager(self, didPreparePlayerLayer: playerLayer)
+        //onPlayerLayerClosure?(playerLayer)
     }
     
     fileprivate func didStopPlaying() {
@@ -185,7 +198,8 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         #endif
             
         playerState = .paused
-        onStopPlayingClosure?()
+        //onStopPlayingClosure?()
+        delegate?.playbackManagerDidStopPlaying(self)
     }
     
     fileprivate func didStartPlaying() {
@@ -202,17 +216,21 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         }
         
         playerState = .playing
-        onStartPlayingWithDurationClosure?(TimeInterval(transformedTime))
+        //onStartPlayingWithDurationClosure?(TimeInterval(transformedTime))
+        delegate?.playbackManager(self, didStartPlayingWithDuration: transformedTime)
     }
     
     fileprivate func didPlayToEnd() {
         playerState = .paused
         configurePlayer(item: nil)
-        onDidPlayToEndClosure?()
+        //onDidPlayToEndClosure?()
+        delegate?.playbackManagerDidPlayToEnd(self)
+    
     }
     
     fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {
-        onTimeDidChangeClosure?(time)
+        //onTimeDidChangeClosure?(time)
+        delegate?.playbackManager(self, didChangePlayingTime: time)
     }
 }
 
@@ -232,13 +250,28 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
     }
     
     func didSelectVideoUrl(_ url: URL) {
+        //TODO: REFACTOR
         guard let state = playerState else { return }
         switch state {
-        case .playing:
+        case .paused where currentVideoUrl == nil:
+            playVideoForTheFirstTime(url)
+        case .playing where url == currentVideoUrl:
             stop()
-        case .paused:
-            url == currentVideoUrl ? play() : playVideoForTheFirstTime(url)
+        case .playing where url != currentVideoUrl, .paused where url != currentVideoUrl:
+            cleanup()
+            playVideoForTheFirstTime(url)
+        case .paused where url == currentVideoUrl:
+            play()
+        default:
+            break
         }
+    }
+    
+    fileprivate func cleanup() {
+        stop()
+        configurePlayer(item: nil)
+        removePlayerItemObservers()
+        delegate?.playbackManagerDidPlayNewVideo(self)
     }
 }
 

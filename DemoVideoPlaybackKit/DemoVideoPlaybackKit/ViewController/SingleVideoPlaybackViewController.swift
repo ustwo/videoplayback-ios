@@ -25,9 +25,9 @@ class SingleVideoPlaybackViewController: UIViewController {
     
     private func setup() {
         view.backgroundColor = UIColor.white.withAlphaComponent(0.7)
-        let videoType = VPKVideoType.local(pathName: "Elon_Musk", fileType: "mp4")
+        let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")
         
-        VPKVideoPlaybackBuilder.vpk_buildModuleFor(videoType, withPlaceholder: "elon_1", shouldAutoplay: self.shouldAutoPlay) { (videoView) in
+        VPKVideoPlaybackBuilder.vpk_buildModuleFor(videoType, shouldAutoplay: self.shouldAutoPlay) { (videoView) in
             self.view.addSubview(videoView)
             videoView.snp.makeConstraints({ (make) in
                 make.height.equalTo(view.snp.height).dividedBy(2)
