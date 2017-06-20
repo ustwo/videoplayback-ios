@@ -64,12 +64,15 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
         }
     }
     
+    func reuseInCell() {
+        interactor?.didReuseInCell()
+    }
+    
     func didMoveOffScreen() {
         interactor?.didMoveOffScreen()
     }
     
     func didTapVideoView() {
-        print("TAPPED VIDEO AT \(indexPath?.row)")
         
         var videoUrl: URL?
         switch videoType {

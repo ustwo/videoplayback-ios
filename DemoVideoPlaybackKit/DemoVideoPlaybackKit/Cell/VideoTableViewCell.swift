@@ -33,13 +33,12 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
         addSubview(safeView)
         safeView.snp.makeConstraints { (make) in
             make.edges.equalTo(contentView)
+            make.height.equalTo(300)
         }
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        prepareForVideoReuse() //EXTENSION DEFAULT
     }
-
 }

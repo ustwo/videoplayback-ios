@@ -75,7 +75,7 @@ protocol VPKVideoViewProtocol: class {
     var playerLayer: AVPlayerLayer? { get set }
     
     // PRESENTER -> VIEW
-    func reuseInCell(_ shouldReuse: Bool)
+    func reuseInCell()
     func reloadInterface(with playerLayer: AVPlayerLayer)
     func showPlaceholder()
     func makeFullScreen()
@@ -92,9 +92,9 @@ protocol VPKViewInCellProtocol: class  {
     func prepareForVideoReuse()
 }
 
-extension VPKViewInCellProtocol {
+extension VPKViewInCellProtocol where Self: UITableViewCell {
     func prepareForVideoReuse() {
-        
+        videoView?.reuseInCell()
     }
 }
 
@@ -151,6 +151,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
     
     // VIEW -> PRESENTER
+    func reuseInCell()
     func viewDidLoad()
     func didMoveOffScreen()
     func didTapVideoView()
@@ -173,6 +174,7 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     func didScrubTo(_ timeInSeconds: TimeInterval)
     func didToggleViewExpansion()
     func didMoveOffScreen()
+    func didReuseInCell()
 }
 
 protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
@@ -194,6 +196,9 @@ protocol VPKVideoPlaybackManagerProtocol: class {
     var playerState: PlayerState? { get set }
     var currentVideoUrl: URL? { get set }
     var delegate: VPKVideoPlaybackDelegate? { get set }
+    var isPlaying: Bool { get }
+    
+    func stop()
 }
 
 protocol VPKVideoPlaybackManagerOutputProtocol: class {
@@ -209,4 +214,5 @@ protocol VPKVideoPlaybackManagerInputProtocol: class {
     func didSelectVideoUrl(_ url: URL)
     func didMoveOffScreen()
     func didScrubTo(_ seconds: TimeInterval)
+    func didReuseInVideoCell()
 }

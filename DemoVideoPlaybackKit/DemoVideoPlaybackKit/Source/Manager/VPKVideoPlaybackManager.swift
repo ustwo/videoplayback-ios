@@ -15,7 +15,6 @@ import RxSwift
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
-    //*** TEST ***
     weak var delegate: VPKVideoPlaybackDelegate?
     
     static let shared = VPKVideoPlaybackManager()
@@ -23,6 +22,9 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     //state
     var playerState: PlayerState?
     var currentVideoUrl: URL?
+    var isPlaying: Bool {
+        return self.isPlayerPlaying()
+    }
     
     //output
     var onStartPlayingWithDurationClosure: StartWithDurationClosure?
@@ -100,7 +102,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     }
     
     //MARK: Playback 
-    fileprivate func stop() {
+    public func stop() {
         player.pause()
     }
     
@@ -241,6 +243,12 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
             print("USER SCRUBBED VIDEO TO \(seconds)")
         #endif
         stopPlayingAndSeekSmoothlyToTime(newChaseTime: CMTimeMakeWithSeconds(seconds, 1))
+    }
+    
+    func didReuseInVideoCell() {
+        if isPlayerPlaying() {
+          cleanup()
+        }
     }
     
     func didMoveOffScreen()  {

@@ -119,9 +119,10 @@ extension VPKVideoView: VPKVideoViewProtocol {
         presenter?.didTapVideoView()
     }
     
-    
-    func reuseInCell(_ shouldReuse: Bool) {
-        
+    func reuseInCell() {
+        self.placeHolder.isHidden = false
+        self.playerLayer = nil
+        presenter?.reuseInCell()
     }
     
     func showPlaceholder() {
@@ -129,7 +130,6 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
-        print("PLAYER LAYER \(playerLayer.debugDescription)")
         self.playerLayer = playerLayer
         playerLayer.frame = placeHolder.bounds
         playerLayer.needsDisplayOnBoundsChange = true
@@ -142,10 +142,10 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reloadInterfaceWithoutPlayerlayer() {
-        print("removing player layer")
         self.playerLayer = nil
-        self.placeHolder.isHidden = false
-        //self.placeHolder.layer.zPosition = LayerHierachy.top.rawValue
+        showPlaceholder()
+        guard let playbackView = playbackBarView as? UIView else { return }
+        bringSubview(toFront: playbackView)
     }
     
     func makeFullScreen() {
