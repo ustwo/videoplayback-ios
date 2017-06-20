@@ -126,7 +126,12 @@ public protocol VPKBuildInCellProtocol: class {
 }
 
 public protocol VPKVideoPlaybackBuilderProtocol: class {
-    static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, shouldReuseInCell isInCellAtIndexPath: NSIndexPath?, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    
+    //Single View
+    static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    
+    //View in Feed
+    static func vpk_buildVideoInFeedModuleFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath, shouldAutoPlayTop autoPlay: Bool, with playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {

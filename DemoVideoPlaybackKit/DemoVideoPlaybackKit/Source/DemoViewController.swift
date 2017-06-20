@@ -55,6 +55,10 @@ class DemoViewController: UIViewController {
                 self.navigationController?.pushViewController(SingleVideoPlaybackViewController(shouldAutoPlay: true), animated: true)
             case .FeedView:
                 self.navigationController?.pushViewController(FeedViewController(), animated: true)
+            case .FeedAutoplayView:
+                let feedVC = FeedViewController()
+                feedVC.shouldAutoplayVideos = true
+                self.navigationController?.pushViewController(FeedViewController(), animated: true)
             default:
                 print("not ready")
                 break

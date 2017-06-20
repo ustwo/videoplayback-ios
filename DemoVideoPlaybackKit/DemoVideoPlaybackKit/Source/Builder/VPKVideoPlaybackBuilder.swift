@@ -16,9 +16,17 @@ public typealias CompletionClosure = () -> ()
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
-    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, shouldReuseInCell isInCellAtIndexPath: NSIndexPath? = nil, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
+    //Feed
+    public static func vpk_buildVideoInFeedModuleFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath, shouldAutoPlayTop autoPlay: Bool = false, with playbackTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
-        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: isInCellAtIndexPath, playbackTheme: playbackTheme)
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: indexPath, playbackTheme: playbackTheme)
+        viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
+    }
+
+    //Single View
+    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
+        
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
 }

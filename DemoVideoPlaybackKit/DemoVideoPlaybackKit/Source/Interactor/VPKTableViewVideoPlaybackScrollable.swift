@@ -49,7 +49,8 @@ extension ScrollInteractor where Self: UIScrollViewDelegate {
 protocol VPKTableViewVideoPlaybackScrollable: ScrollInteractor {
     var tableView: UITableView { get set }
     static var scrollAcceptableOffset: Int { get }
-    func trackVideoPlayerCellScrolling() //Use with scrollViewDidScroll
+    func trackVideoViewCellScrolling() //Use with scrollViewDidScroll
+    func handleAutoplayInTopVideoCell()
 }
 
 extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
@@ -58,7 +59,7 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
         return 5
     }
     
-    func trackVideoPlayerCellScrolling() {
+    func trackVideoViewCellScrolling() {
         
         let sharedVideoManager = VPKVideoPlaybackManager.shared
         
@@ -68,7 +69,7 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
             return
         }
         
-        //We only care if the video player is playing
+        //We only care if the video player is playing and we want to stop it as it scrolls off screen
         if sharedVideoManager.isPlaying {
         
             //Data structure for potential video cell thats currently playing a video
@@ -104,4 +105,13 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
             }
         }
     }
+    
+    func handleAutoplayInTopVideoCell() {
+        guard let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0],
+            let topCell = tableView.cellForRow(at: firstVisibleIndexPath) as? VPKViewInCellProtocol else { return }
+        
+        topCell.videoView?.didTapView()
+    }
 }
+
+

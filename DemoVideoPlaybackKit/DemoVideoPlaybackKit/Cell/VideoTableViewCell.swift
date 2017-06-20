@@ -33,7 +33,7 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
         addSubview(safeView)
         safeView.snp.makeConstraints { (make) in
             make.edges.equalTo(contentView)
-            make.height.equalTo(300)
+            make.height.equalTo(400)
         }
     }
     

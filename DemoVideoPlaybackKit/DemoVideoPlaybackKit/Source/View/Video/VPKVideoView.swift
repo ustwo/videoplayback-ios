@@ -120,7 +120,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reuseInCell() {
-        self.placeHolder.isHidden = false
+        self.placeHolder.image = nil 
         self.playerLayer = nil
         presenter?.reuseInCell()
     }

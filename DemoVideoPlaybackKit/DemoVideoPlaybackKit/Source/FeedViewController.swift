@@ -12,6 +12,8 @@ import RxSwift
 class FeedViewController: UIViewController {
 
     var tableView = UITableView(frame: .zero)
+    var shouldAutoplayVideos: Bool = false
+    
     private let disposeBag = DisposeBag()
 
     let datasource = Variable([
@@ -39,10 +41,13 @@ class FeedViewController: UIViewController {
         
         datasource.asObservable().bindTo(tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
-            VPKVideoPlaybackBuilder.vpk_buildModuleFor(model, shouldAutoplay: false, shouldReuseInCell: NSIndexPath(item: index, section: 0), playbackBarTheme: ToolBarTheme.transparent(backgroundColor: .orange, foregroundColor: .lightGray, alphaValue: 0.7), completion: { (videoView) in
+            
+            VPKVideoPlaybackBuilder.vpk_buildVideoInFeedModuleFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), shouldAutoPlayTop: self.shouldAutoplayVideos, with: .normal, completion: { (videoView) in
                 cell.videoView = videoView
                 cell.layoutIfNeeded()
             })}.addDisposableTo(disposeBag)
+            
+
         
         tableView.rx.setDelegate(self)
     }
@@ -50,18 +55,14 @@ class FeedViewController: UIViewController {
 }
 
 extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
-    internal func scrollDidHit(targetMidPoint: Int, acceptableOffset: Int, direction: ScrollDirection, tableView: UITableView, view: UIView, cell: UITableViewCell) -> Bool {
-        return true 
-    }
-
-  
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        trackVideoPlayerCellScrolling() 
+        trackVideoViewCellScrolling() // default implementation 
     }
 }
 
 extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 320.0
+        return 450.0
     }
 }
