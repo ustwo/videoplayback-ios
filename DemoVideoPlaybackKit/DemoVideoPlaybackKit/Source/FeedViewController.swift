@@ -11,7 +11,7 @@ import RxSwift
 
 class FeedViewController: UIViewController {
 
-    private let tableView = UITableView(frame: .zero)
+    var tableView = UITableView(frame: .zero)
     private let disposeBag = DisposeBag()
 
     let datasource = Variable([
@@ -47,6 +47,17 @@ class FeedViewController: UIViewController {
         tableView.rx.setDelegate(self)
     }
 
+}
+
+extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
+    internal func scrollDidHit(targetMidPoint: Int, acceptableOffset: Int, direction: ScrollDirection, tableView: UITableView, view: UIView, cell: UITableViewCell) -> Bool {
+        return true 
+    }
+
+  
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        trackVideoPlayerCellScrolling() 
+    }
 }
 
 extension FeedViewController: UITableViewDelegate {

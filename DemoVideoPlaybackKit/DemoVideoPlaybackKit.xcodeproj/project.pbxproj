@@ -36,6 +36,7 @@
 		273EC3A21EBB89E200F9D38F /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */; };
 		273EC3A41EBBC92C00F9D38F /* VPKEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A31EBBC92C00F9D38F /* VPKEnum.swift */; };
 		273EC3A71EBBCF7300F9D38F /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC3A61EBBCF7300F9D38F /* VideoViewAnimator.swift */; };
+		274C4EF41EF9752000C9FA2F /* VPKTableViewVideoPlaybackScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274C4EF31EF9752000C9FA2F /* VPKTableViewVideoPlaybackScrollable.swift */; };
 		27C945B51EC21E8600E6D113 /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C945B31EC21E8600E6D113 /* VPKPlaybackControlView.swift */; };
 		27C945B61EC21E8600E6D113 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C945B41EC21E8600E6D113 /* VPKVideoView.swift */; };
 		27C945B81EC4C16C00E6D113 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C945B71EC4C16C00E6D113 /* FeedViewController.swift */; };
@@ -107,6 +108,7 @@
 		273EC3A11EBB89E200F9D38F /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
 		273EC3A31EBBC92C00F9D38F /* VPKEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKEnum.swift; sourceTree = "<group>"; };
 		273EC3A61EBBCF7300F9D38F /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
+		274C4EF31EF9752000C9FA2F /* VPKTableViewVideoPlaybackScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewVideoPlaybackScrollable.swift; sourceTree = "<group>"; };
 		27C945B31EC21E8600E6D113 /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
 		27C945B41EC21E8600E6D113 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
 		27C945B71EC4C16C00E6D113 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				273EC3911EBB89C300F9D38F /* VPKVideoPlaybackInteractor.swift */,
+				274C4EF31EF9752000C9FA2F /* VPKTableViewVideoPlaybackScrollable.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -591,6 +594,7 @@
 				27C945BA1EC4C25900E6D113 /* VideoTableViewCell.swift in Sources */,
 				27C945B61EC21E8600E6D113 /* VPKVideoView.swift in Sources */,
 				27C945B51EC21E8600E6D113 /* VPKPlaybackControlView.swift in Sources */,
+				274C4EF41EF9752000C9FA2F /* VPKTableViewVideoPlaybackScrollable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

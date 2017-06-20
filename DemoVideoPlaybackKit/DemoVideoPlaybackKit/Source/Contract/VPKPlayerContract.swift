@@ -199,6 +199,7 @@ protocol VPKVideoPlaybackManagerProtocol: class {
     var isPlaying: Bool { get }
     
     func stop()
+    func cleanup()
 }
 
 protocol VPKVideoPlaybackManagerOutputProtocol: class {

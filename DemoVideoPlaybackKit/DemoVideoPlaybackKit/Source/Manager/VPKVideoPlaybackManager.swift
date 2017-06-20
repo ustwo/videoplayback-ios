@@ -16,7 +16,6 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
     weak var delegate: VPKVideoPlaybackDelegate?
-    
     static let shared = VPKVideoPlaybackManager()
     
     //state
@@ -275,7 +274,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
         }
     }
     
-    fileprivate func cleanup() {
+    func cleanup() {
         stop()
         configurePlayer(item: nil)
         removePlayerItemObservers()
