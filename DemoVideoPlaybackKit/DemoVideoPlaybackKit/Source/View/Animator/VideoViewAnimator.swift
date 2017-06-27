@@ -12,7 +12,6 @@ import AVKit
 import AVFoundation
 
 
-
 //MARK: Animator
 struct VideoViewAnimator {
     
@@ -28,15 +27,8 @@ struct VideoViewAnimator {
         
     }
     
-    
-    /*func minimizeToFrame(_ frame: CGRect) {
-        UIView.animate(withDuration: fullScreenAnimationDuration) {
-            self.layer.setAffineTransform(.identity)
-            self.frame = frame
-        }
-    }*/
-    
     static func animateVideoPlayerView(_ videoView: VPKVideoView, fromState initialState: PlayerState, toState finalState: PlayerState, withCompletion completion: CompletionClosure?) {
+        
     }
 }
 
@@ -44,23 +36,56 @@ struct VideoViewAnimator {
 extension VPKVideoViewProtocol where Self: UIView {
     
     func fullScreenMode() {
-        guard  let window = UIApplication.shared.delegate?.window,
-            let safePlayerLayer = self.playerLayer else { return }
+        print("Animating to full screen")
         
-        window?.addSubview(self)
-        var sx: CGFloat = 0
-        var sy: CGFloat = 0
-        
-        if self.frame.size.width > self.frame.size.height {
-            sx = self.frame.size.width/safePlayerLayer.frame.size.width
-            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
-        } else {
-            sy = self.frame.size.height/safePlayerLayer.frame.size.height
-            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
+        guard   let appDelagate = UIApplication.shared.delegate,
+                let safeWindow = appDelagate.window,
+                let windowSize = safeWindow?.frame.size, self.playerLayer != nil else { return }
+    
+        let bgView = UIView(frame: .zero)
+        safeWindow?.addSubview(bgView)
+        bgView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
         }
-        UIView.animate(withDuration: 0.5, animations: { () -> Void in
-            safePlayerLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(scaleX: sx, y: sy))
-        })
+        
+        bgView.backgroundColor = .black
+        bgView.addSubview(self)
+        
+        switch UIDevice.current.orientation {
+        case .portrait:
+            UIView.animate(withDuration: 0.5, animations: { 
+                self.snp.remakeConstraints({ (make) in
+                    make.edges.equalToSuperview()
+                })
+                self.resize(self.playerLayer!, to: windowSize)
+                self.layoutIfNeeded()
+            }, completion: nil)
+        case .landscapeLeft, .landscapeRight:
+            UIView.animate(withDuration: 0.5, animations: {
+                self.snp.remakeConstraints({ (make) in
+                    make.edges.equalToSuperview()
+                })
+                self.resize(self.playerLayer!, to: windowSize)
+                self.layoutIfNeeded()
+            }, completion: nil)
+            
+        default:
+            break
+        }
+        
+        
+    }
+    
+    
+    func resize(_ layer: AVPlayerLayer,to size: CGSize) {
+        let oldBounds = layer.bounds
+        var newBounds = oldBounds
+        newBounds.size = size
+        let animation = CABasicAnimation(keyPath: "bounds")
+        animation.fromValue = NSValue(cgRect: oldBounds)
+        animation.toValue = NSValue(cgRect: newBounds)
+        layer.bounds = newBounds
+        layer.add(animation, forKey: "bounds")
     }
 }
 

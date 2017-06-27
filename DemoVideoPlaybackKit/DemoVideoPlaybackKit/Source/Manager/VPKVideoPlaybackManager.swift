@@ -16,6 +16,26 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     weak var delegate: VPKVideoPlaybackDelegate?
     static let shared = VPKVideoPlaybackManager()
+
+    static let assetKeysRequiredToPlay = [
+        "playable",
+        "hasProtectedContent"
+    ]
+
+    
+    private var asset: AVAsset? {
+        didSet {
+            guard let newAsset = asset else { return }
+            asynchronouslyLoadURLAsset(newAsset)
+        }
+    }
+    
+    private var playerItem: AVPlayerItem? = nil {
+        didSet {
+
+            player.replaceCurrentItem(with: self.playerItem)
+        }
+    }
     
     //state
     var playerState: PlayerState?
@@ -66,11 +86,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
-                //   self.currentInteractor?.resetPresentation()
-                
-              //  self.delegate?.playbackManagerDidPlayNewVideo(self)
-                //self.reset()
-                
+                self.asset = AVAsset(url: url)
+                self.currentVideoUrl = url
             })
             serviceGroup.leave()
         }
@@ -80,15 +97,9 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         
         //Player Asset + Layer setup
         let workItemTwo = DispatchWorkItem {
-            let playerAsset = AVAsset(url: url)
-            let playerItem = AVPlayerItem(asset: playerAsset)
-            self.currentVideoUrl = url
-            //let playerLayer = AVPlayerLayer(player: self.player)
-            
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
                 self.didPreparePlayerLayer(self.playerLayer)
                 self.play()
-                self.configurePlayer(item: playerItem)
                 self.addPlayerItemObservers()
             })
         }
@@ -96,7 +107,70 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         serviceGroup.notify(queue: backgroundQueue, work: workItemTwo)
         backgroundQueue.async(group: serviceGroup, execute: workItemTwo)
     }
-
+    
+    // MARK: - Asset Loading
+    
+    func asynchronouslyLoadURLAsset(_ newAsset: AVAsset) {
+        /*
+         Using AVAsset now runs the risk of blocking the current thread (the
+         main UI thread) whilst I/O happens to populate the properties. It's
+         prudent to defer our work until the properties we need have been loaded.
+         */
+        newAsset.loadValuesAsynchronously(forKeys: VPKVideoPlaybackManager.assetKeysRequiredToPlay) {
+            /*
+             The asset invokes its completion handler on an arbitrary queue.
+             To avoid multiple threads using our internal state at the same time
+             we'll elect to use the main thread at all times, let's dispatch
+             our handler to the main queue.
+             */
+            DispatchQueue.main.async {
+                /*
+                 `self.asset` has already changed! No point continuing because
+                 another `newAsset` will come along in a moment.
+                 */
+                guard newAsset == self.asset else { return }
+                
+                /*
+                 Test whether the values of each of the keys we need have been
+                 successfully loaded.
+                 */
+                for key in VPKVideoPlaybackManager.assetKeysRequiredToPlay {
+                    var error: NSError?
+                    
+                    if newAsset.statusOfValue(forKey: key, error: &error) == .failed {
+                        let stringFormat = NSLocalizedString("error.asset_key_%@_failed.description", comment: "Can't use this AVAsset because one of it's keys failed to load")
+                        
+                        let message = String.localizedStringWithFormat(stringFormat, key)
+                        self.handleErrorWithMessage(message, error: error)
+                        return
+                    }
+                }
+                
+                // We can't play this asset.
+                if !newAsset.isPlayable || newAsset.hasProtectedContent {
+                    let message = NSLocalizedString("error.asset_not_playable.description", comment: "Can't use this AVAsset because it isn't playable or has protected content")
+                    
+                    self.handleErrorWithMessage(message)
+                    
+                    return
+                }
+                
+                /*
+                 We can play this asset. Create a new `AVPlayerItem` and make
+                 it our player's current item.
+                 */
+                self.playerItem = AVPlayerItem(asset: newAsset)
+            }
+        }
+    }
+    
+    // MARK: - Error Handling
+    func handleErrorWithMessage(_ message: String?, error: Error? = nil) {
+        NSLog("Error occured with message: \(String(describing: message)), error: \(String(describing: error)).")
+        guard let safeError = error else { return }
+        delegate?.playbackManager(VPKVideoPlaybackManager.shared, didFailWithError: safeError)
+    }
+    
     
     //MARK: Configuration
     fileprivate func configurePlayer(item: AVPlayerItem?) {
@@ -195,7 +269,6 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     
     fileprivate func didPreparePlayerLayer(_ playerLayer: AVPlayerLayer) {
         delegate?.playbackManager(self, didPreparePlayerLayer: playerLayer)
-        //onPlayerLayerClosure?(playerLayer)
     }
     
     fileprivate func didStopPlaying() {
@@ -204,7 +277,6 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         #endif
             
         playerState = .paused
-        //onStopPlayingClosure?()
         delegate?.playbackManagerDidStopPlaying(self)
     }
     
@@ -222,20 +294,16 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         }
         
         playerState = .playing
-        //onStartPlayingWithDurationClosure?(TimeInterval(transformedTime))
         delegate?.playbackManager(self, didStartPlayingWithDuration: transformedTime)
     }
     
     fileprivate func didPlayToEnd() {
         playerState = .paused
         configurePlayer(item: nil)
-        //onDidPlayToEndClosure?()
         delegate?.playbackManagerDidPlayToEnd(self)
-    
     }
     
     fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {
-        //onTimeDidChangeClosure?(time)
         delegate?.playbackManager(self, didChangePlayingTime: time)
     }
 }

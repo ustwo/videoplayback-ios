@@ -48,11 +48,16 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     fileprivate let placeHolder = UIImageView(frame: .zero)
     private let tap = UITapGestureRecognizer()
     
+   
     
     //MARK: Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+    }
+    
+    override public class var layerClass: AnyClass {
+        return AVPlayerLayer.self
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -80,6 +85,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             make.edges.equalTo(self)
         }
         placeHolder.contentMode = .scaleAspectFit
+        placeHolder.autoresizingMask = .flexibleWidth
         
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
@@ -100,8 +106,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         addSubview(safePlaybackBarView)
         safePlaybackBarView.snp.makeConstraints { (make) in
             make.left.right.equalTo(self)
-            make.bottom.equalTo(self)
             make.height.equalTo(60)
+            make.bottom.equalTo(placeHolder.snp.bottom)
         }
         safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
     }
@@ -155,6 +161,6 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func makeNormalScreen() {
-        
+        VideoViewAnimator.animateToNormalScreen(self)
     }
 }
