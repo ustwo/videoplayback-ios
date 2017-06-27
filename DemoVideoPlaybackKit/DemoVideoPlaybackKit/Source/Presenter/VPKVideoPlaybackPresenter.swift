@@ -27,7 +27,7 @@ public class VPKVideoPlaybackPresenter {
     var shouldAutoplay: Bool?
     var indexPath: NSIndexPath?
 
-    required public init(videoType: VPKVideoType,withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme = .normal) {
+    required public init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme = .normal) {
         self.videoType = videoType
         self.shouldAutoplay = shouldAutoplay
         self.indexPath = indexPath

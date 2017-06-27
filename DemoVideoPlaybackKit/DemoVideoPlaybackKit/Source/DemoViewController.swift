@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import SnapKit
 import RxSwift
-import RxCocoa
 
 private enum DemoOption: String {
     case SingleVideoView, SingleViewViewAutoplay, CustomToolBar, FeedView, FeedAutoplayView
@@ -42,7 +40,7 @@ class DemoViewController: UIViewController {
     
     
     private func setupDemoList() {
-        demoList.asObservable().bindTo(tableView.rx.items(cellIdentifier: BasicTableViewCell.identifier)) { index, model, cell in
+        demoList.asObservable().bind(to: tableView.rx.items(cellIdentifier: BasicTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? BasicTableViewCell else { return }
             cell.titleText = model.rawValue
         }.addDisposableTo(disposeBag)
@@ -56,9 +54,8 @@ class DemoViewController: UIViewController {
             case .FeedView:
                 self.navigationController?.pushViewController(FeedViewController(), animated: true)
             case .FeedAutoplayView:
-                let feedVC = FeedViewController()
-                feedVC.shouldAutoplayVideos = true
-                self.navigationController?.pushViewController(FeedViewController(), animated: true)
+                let feedVC = FeedViewController(true)
+                self.navigationController?.pushViewController(feedVC, animated: true)
             default:
                 print("not ready")
                 break

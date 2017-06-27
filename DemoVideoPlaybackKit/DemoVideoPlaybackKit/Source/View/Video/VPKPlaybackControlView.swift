@@ -87,26 +87,20 @@ public class VPKPlaybackControlView: UIView {
             make.centerY.equalTo(self)
             make.height.width.equalTo(30)
         }
-        
         playPauseButton.setBackgroundImage(UIImage(named: PlayerState.paused.buttonImageName), for: .normal)
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
         
-        addSubview(volumeCtrl)
-        volumeCtrl.snp.makeConstraints { (make) in
-            make.right.equalTo(self).offset(-8.0)
-            make.height.width.equalTo(50)
-            make.centerY.equalTo(self)
-        }
-        
         addSubview(expandButton)
         expandButton.snp.makeConstraints { (make) in
-            make.right.equalTo(snp.right).offset(-12.0)
             make.centerY.equalTo(self)
             make.width.height.equalTo(30)
+            make.right.equalTo(self.snp.right).offset(-8)
         }
         expandButton.setBackgroundImage(#imageLiteral(resourceName: "fullScreenDefault"), for: .normal)
         expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
-        
+        expandButton.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+
+
         addSubview(playbackProgressSlider)
         playbackProgressSlider.snp.makeConstraints { (make) in
             make.left.equalTo(playPauseButton.snp.right).offset(8.0)
@@ -115,6 +109,9 @@ public class VPKPlaybackControlView: UIView {
             make.height.equalTo(10.0)
         }
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
+        playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        
+        
     }
 }
 

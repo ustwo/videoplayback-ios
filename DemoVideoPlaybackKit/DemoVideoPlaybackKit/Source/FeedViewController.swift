@@ -8,6 +8,8 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+
 
 class FeedViewController: UIViewController {
 
@@ -22,6 +24,11 @@ class FeedViewController: UIViewController {
         VPKVideoType.remote(url: "http://wbellentube-a.akamaihd.net/20160404/1656/0_8x73t27s_0_hrxcpjv7_2.mp4", placeholderURLName: "http://media.ellentv.com/2016/04/05/john-travolta-talks-the-o-j-1362x1002-1.jpg"),
         VPKVideoType.remote(url: "http://wbellentube-a.akamaihd.net/20150603/1656/0_vmfukdeo_0_2tkvjd50_2.mp4", placeholderURLName: "http://media.ellentv.com/2015/06/04/a-exclusive-sneak-peek-at-the-magic-mikea-sequel-1362x1002.jpg")
     ])
+    
+    convenience init(_ autoPlay: Bool) {
+        self.init()
+        self.shouldAutoplayVideos = autoPlay
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,15 +46,13 @@ class FeedViewController: UIViewController {
     private func setupTableView() {
         tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
         
-        datasource.asObservable().bindTo(tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
+        datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
             
-            VPKVideoPlaybackBuilder.vpk_buildVideoInFeedModuleFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), shouldAutoPlayTop: self.shouldAutoplayVideos, with: .normal, completion: { (videoView) in
+            VPKVideoPlaybackBuilder.vpk_buildInFeedModuleFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), completion: { (videoView) in
                 cell.videoView = videoView
                 cell.layoutIfNeeded()
             })}.addDisposableTo(disposeBag)
-            
-
         
         tableView.rx.setDelegate(self)
     }
@@ -59,10 +64,16 @@ extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         trackVideoViewCellScrolling() // default implementation 
     }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if shouldAutoplayVideos {
+            handleAutoplayInTopVideoCell()
+        }
+    }
 }
 
 extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450.0
+        return 440
     }
 }

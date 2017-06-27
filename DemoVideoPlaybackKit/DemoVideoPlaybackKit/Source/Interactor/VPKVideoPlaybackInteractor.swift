@@ -9,7 +9,6 @@
 import Foundation
 import AVKit
 import AVFoundation
-import RxSwift
 
 
 public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {

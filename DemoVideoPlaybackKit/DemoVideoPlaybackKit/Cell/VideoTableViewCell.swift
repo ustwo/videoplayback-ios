@@ -14,6 +14,7 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
     var videoView: VPKVideoView? {
         didSet {
             self.setupVideoViewConstraints()
+            layoutIfNeeded()
         }
     }
     override func awakeFromNib() {
@@ -32,13 +33,14 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
         guard let safeView = videoView else { return }
         addSubview(safeView)
         safeView.snp.makeConstraints { (make) in
-            make.edges.equalTo(contentView)
-            make.height.equalTo(400)
+            make.edges.equalTo(self)
         }
+        safeView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        self.setNeedsDisplay()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        prepareForVideoReuse() //EXTENSION DEFAULT
+        prepareForVideoReuse() //Extension default
     }
 }

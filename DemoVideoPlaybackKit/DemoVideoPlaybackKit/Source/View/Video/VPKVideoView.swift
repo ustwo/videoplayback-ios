@@ -9,7 +9,6 @@
 import Foundation
 import AVKit
 import AVFoundation
-import SnapKit
 import AlamofireImage
 
 private enum LayerHierachy: CGFloat {
@@ -22,11 +21,13 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     weak var playbackBarView: VPKPlaybackControlViewProtocol? {
         didSet {
             addPlaybackControlView()
+            layoutIfNeeded()
         }
     }
     
     var viewWillAppearClosure: CompletionClosure?
     weak var playerLayer: AVPlayerLayer?
+    
     var localPlaceHolderName: String = "TODO_Default_image" {
         didSet {
             guard let image = UIImage(named: localPlaceHolderName) else { return }
@@ -83,6 +84,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { (make) in
             make.center.equalTo(self.snp.center)
+            make.width.height.equalTo(40)
         }
         activityIndicator.color = .white
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
@@ -100,8 +102,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             make.left.right.equalTo(self)
             make.bottom.equalTo(self)
             make.height.equalTo(60)
-            
         }
+        safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
     }
 }
 

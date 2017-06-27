@@ -107,10 +107,25 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
     }
     
     func handleAutoplayInTopVideoCell() {
-        guard let firstVisibleIndexPath = self.tableView.indexPathsForVisibleRows?[0],
-            let topCell = tableView.cellForRow(at: firstVisibleIndexPath) as? VPKViewInCellProtocol else { return }
-        
-        topCell.videoView?.didTapView()
+        if(!tableView.isDecelerating && !tableView.isDragging) {
+            
+            tableView.visibleCells.forEach { (cell) in
+                guard let indexPath = tableView.indexPath(for: cell) else { return }
+                let cellRect = tableView.rectForRow(at: indexPath)
+                let superView = tableView.superview
+                
+                let convertedRect = tableView.convert(cellRect, to: superView)
+                let intersect = tableView.frame.intersection(convertedRect)
+                let visibleHeight = intersect.height
+                
+                if visibleHeight > self.view.bounds.size.height * 0.6 {
+                    //cell is visible more than 60%
+                    guard let videoCell = cell as? VPKViewInCellProtocol else { return }
+                    videoCell.videoView?.didTapView()
+                    print("autoplay cell at \(indexPath.row)")
+                }
+            }
+        }
     }
 }
 

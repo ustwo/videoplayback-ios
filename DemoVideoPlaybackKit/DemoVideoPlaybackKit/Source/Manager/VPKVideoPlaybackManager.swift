@@ -9,7 +9,6 @@
 import Foundation
 import AVKit
 import AVFoundation
-import RxSwift
 
 
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
@@ -37,6 +36,13 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate var chaseTime = kCMTimeZero
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate lazy var player = AVPlayer()
+    fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
+    
+//    fileprivate lazy var playerLayer = {
+//        return AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
+//    }
+    
+
     fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus
         static let allValues = [status, rate, timeControlStatus]
@@ -77,10 +83,10 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             let playerAsset = AVAsset(url: url)
             let playerItem = AVPlayerItem(asset: playerAsset)
             self.currentVideoUrl = url
-            let playerLayer = AVPlayerLayer(player: self.player)
+            //let playerLayer = AVPlayerLayer(player: self.player)
             
             serviceGroup.notify(queue: DispatchQueue.main, execute: {
-                self.didPreparePlayerLayer(playerLayer)
+                self.didPreparePlayerLayer(self.playerLayer)
                 self.play()
                 self.configurePlayer(item: playerItem)
                 self.addPlayerItemObservers()
@@ -106,8 +112,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     }
     
     fileprivate func play() {
-        player.play()
-        player.rate = 1.0 // sets desired playback rate (full speed)
+        player.playImmediately(atRate: 1.0)
     }
     
     

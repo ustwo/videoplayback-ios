@@ -16,16 +16,6 @@
 		272A1D011EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D001EAFE62F007F5816 /* DemoVideoPlaybackKitUITests.swift */; };
 		272A1D211EAFE75B007F5816 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D201EAFE75B007F5816 /* DemoViewController.swift */; };
 		272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */; };
-		272A1D2A1EAFED10007F5816 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D291EAFED10007F5816 /* Alamofire.framework */; };
-		272A1D2C1EAFED17007F5816 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D2B1EAFED17007F5816 /* AlamofireImage.framework */; };
-		272A1D2E1EAFED20007F5816 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D2D1EAFED20007F5816 /* RxSwift.framework */; };
-		272A1D301EAFED29007F5816 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D2F1EAFED29007F5816 /* SnapKit.framework */; };
-		272A1D321EAFEDA2007F5816 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 272A1D311EAFEDA2007F5816 /* RxCocoa.framework */; };
-		272A1D361EAFF0F8007F5816 /* RxCocoa.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D311EAFEDA2007F5816 /* RxCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		272A1D371EAFF0F8007F5816 /* SnapKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D2F1EAFED29007F5816 /* SnapKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		272A1D381EAFF0F8007F5816 /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D2D1EAFED20007F5816 /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		272A1D391EAFF0F8007F5816 /* AlamofireImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D2B1EAFED17007F5816 /* AlamofireImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		272A1D3A1EAFF0F8007F5816 /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 272A1D291EAFED10007F5816 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1D3C1EAFF316007F5816 /* BasicTableViewCell.swift */; };
 		272A1D461EB108B6007F5816 /* Elon_Musk.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 272A1D451EB108AF007F5816 /* Elon_Musk.mp4 */; };
 		273EC38F1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273EC38E1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift */; };
@@ -67,11 +57,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				272A1D361EAFF0F8007F5816 /* RxCocoa.framework in CopyFiles */,
-				272A1D371EAFF0F8007F5816 /* SnapKit.framework in CopyFiles */,
-				272A1D381EAFF0F8007F5816 /* RxSwift.framework in CopyFiles */,
-				272A1D391EAFF0F8007F5816 /* AlamofireImage.framework in CopyFiles */,
-				272A1D3A1EAFF0F8007F5816 /* Alamofire.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,11 +78,6 @@
 		272A1D021EAFE62F007F5816 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		272A1D201EAFE75B007F5816 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		272A1D221EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleVideoPlaybackViewController.swift; path = DemoVideoPlaybackKit/ViewController/SingleVideoPlaybackViewController.swift; sourceTree = SOURCE_ROOT; };
-		272A1D291EAFED10007F5816 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
-		272A1D2B1EAFED17007F5816 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlamofireImage.framework; sourceTree = "<group>"; };
-		272A1D2D1EAFED20007F5816 /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxSwift.framework; sourceTree = "<group>"; };
-		272A1D2F1EAFED29007F5816 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SnapKit.framework; sourceTree = "<group>"; };
-		272A1D311EAFEDA2007F5816 /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RxCocoa.framework; sourceTree = "<group>"; };
 		272A1D3C1EAFF316007F5816 /* BasicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicTableViewCell.swift; sourceTree = "<group>"; };
 		272A1D451EB108AF007F5816 /* Elon_Musk.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Elon_Musk.mp4; sourceTree = "<group>"; };
 		273EC38E1EBB89BB00F9D38F /* VPKVideoPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackBuilder.swift; sourceTree = "<group>"; };
@@ -122,11 +102,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272A1D2A1EAFED10007F5816 /* Alamofire.framework in Frameworks */,
-				272A1D2C1EAFED17007F5816 /* AlamofireImage.framework in Frameworks */,
-				272A1D2E1EAFED20007F5816 /* RxSwift.framework in Frameworks */,
-				272A1D321EAFEDA2007F5816 /* RxCocoa.framework in Frameworks */,
-				272A1D301EAFED29007F5816 /* SnapKit.framework in Frameworks */,
 				1AFDD25DF61F3E21AF0CCA9D /* Pods_DemoVideoPlaybackKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,7 +151,6 @@
 				272A1D441EB108A2007F5816 /* Resources */,
 				272A1D431EB10386007F5816 /* Service */,
 				272A1D3B1EAFF305007F5816 /* Cell */,
-				272A1D281EAFECF9007F5816 /* Frameworks */,
 				272A1D251EAFE81B007F5816 /* ViewModel */,
 				272A1D1F1EAFE6C2007F5816 /* ViewController */,
 				272A1D0E1EAFE64E007F5816 /* VideoPlayerKitModule */,
@@ -238,19 +212,6 @@
 			children = (
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		272A1D281EAFECF9007F5816 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				272A1D311EAFEDA2007F5816 /* RxCocoa.framework */,
-				272A1D2F1EAFED29007F5816 /* SnapKit.framework */,
-				272A1D2D1EAFED20007F5816 /* RxSwift.framework */,
-				272A1D2B1EAFED17007F5816 /* AlamofireImage.framework */,
-				272A1D291EAFED10007F5816 /* Alamofire.framework */,
-			);
-			name = Frameworks;
-			path = ViewModel/Frameworks;
 			sourceTree = "<group>";
 		};
 		272A1D3B1EAFF305007F5816 /* Cell */ = {
@@ -381,7 +342,6 @@
 				272A1CD91EAFE62F007F5816 /* Sources */,
 				272A1CDA1EAFE62F007F5816 /* Frameworks */,
 				272A1CDB1EAFE62F007F5816 /* Resources */,
-				272A1D341EAFF0A7007F5816 /* Carthage Run Script */,
 				272A1D351EAFF0EC007F5816 /* CopyFiles */,
 				F452070E7DB2F292706AEB29 /* [CP] Embed Pods Frameworks */,
 				11B3DA2FCD5590DFA322B273 /* [CP] Copy Pods Resources */,
@@ -438,13 +398,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = ustwo;
 				TargetAttributes = {
 					272A1CDC1EAFE62F007F5816 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = WRHWKXLX7C;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					272A1CF01EAFE62F007F5816 = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -523,23 +483,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DemoVideoPlaybackKit/Pods-DemoVideoPlaybackKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		272A1D341EAFF0A7007F5816 /* Carthage Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Snapkit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-			);
-			name = "Carthage Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
 		};
 		5E3BA80C1568E79DEC9BB9C2 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -746,16 +689,20 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B43F7CF60D932963CC31A687 /* Pods-DemoVideoPlaybackKit.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DemoVideoPlaybackKit/ViewModel/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoVideoPlaybackKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ustwo.com.DemoVideoPlaybackKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "60e9b7bf-2c58-4473-9d34-c0d848654d98";
+				PROVISIONING_PROFILE_SPECIFIER = "Root Development Profile";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -764,16 +711,21 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 11A171081A5A92A1C8085A44 /* Pods-DemoVideoPlaybackKit.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEVELOPMENT_TEAM = WRHWKXLX7C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/DemoVideoPlaybackKit/ViewModel/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoVideoPlaybackKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ustwo.com.DemoVideoPlaybackKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f8352ca0-bb24-41c4-adf3-943f213d4dae";
+				PROVISIONING_PROFILE_SPECIFIER = "Root In House";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
