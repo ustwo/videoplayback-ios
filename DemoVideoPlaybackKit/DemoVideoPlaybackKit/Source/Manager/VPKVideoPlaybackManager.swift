@@ -22,7 +22,6 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         "hasProtectedContent"
     ]
 
-    
     private var asset: AVAsset? {
         didSet {
             guard let newAsset = asset else { return }
@@ -32,7 +31,6 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     private var playerItem: AVPlayerItem? = nil {
         didSet {
-
             player.replaceCurrentItem(with: self.playerItem)
         }
     }
@@ -57,12 +55,6 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate lazy var player = AVPlayer()
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
-    
-//    fileprivate lazy var playerLayer = {
-//        return AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
-//    }
-    
-
     fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus
         static let allValues = [status, rate, timeControlStatus]
@@ -81,7 +73,6 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate func playVideoForTheFirstTime(_ url: URL) {
         let serviceGroup = DispatchGroup()
         let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
-        
         
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
@@ -111,6 +102,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     // MARK: - Asset Loading
     
     func asynchronouslyLoadURLAsset(_ newAsset: AVAsset) {
+        //*** Based on Apple's demo AVFoundation sample code **** 
+        
         /*
          Using AVAsset now runs the risk of blocking the current thread (the
          main UI thread) whilst I/O happens to populate the properties. It's
@@ -136,10 +129,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
                  */
                 for key in VPKVideoPlaybackManager.assetKeysRequiredToPlay {
                     var error: NSError?
-                    
                     if newAsset.statusOfValue(forKey: key, error: &error) == .failed {
                         let stringFormat = NSLocalizedString("error.asset_key_%@_failed.description", comment: "Can't use this AVAsset because one of it's keys failed to load")
-                        
                         let message = String.localizedStringWithFormat(stringFormat, key)
                         self.handleErrorWithMessage(message, error: error)
                         return
@@ -149,9 +140,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
                 // We can't play this asset.
                 if !newAsset.isPlayable || newAsset.hasProtectedContent {
                     let message = NSLocalizedString("error.asset_not_playable.description", comment: "Can't use this AVAsset because it isn't playable or has protected content")
-                    
                     self.handleErrorWithMessage(message)
-                    
                     return
                 }
                 
@@ -189,10 +178,10 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         player.playImmediately(atRate: 1.0)
     }
     
-    
     //MARK: KVO setup
     fileprivate func trackTimeProgress() {
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 2), queue: DispatchQueue.main) { [weak self] (time) in
+        let timeQueue = DispatchQueue(label: "time_tracking")
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 2), queue: timeQueue) { [weak self] (time) in
             self?.videoPlayingTimeChangedTo(time.seconds)
         }
     }

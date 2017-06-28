@@ -23,8 +23,8 @@ struct VideoViewAnimator {
         videoView.fullScreenMode()
     }
     
-    static func animateToNormalScreen(_ videoView: VPKVideoViewProtocol) {
-        
+    static func animateToNormalScreen<T: UIView>(_ videoView: T) where T: VPKVideoViewProtocol {
+        videoView.normalScreenMode()
     }
     
     static func animateVideoPlayerView(_ videoView: VPKVideoView, fromState initialState: PlayerState, toState finalState: PlayerState, withCompletion completion: CompletionClosure?) {
@@ -35,6 +35,10 @@ struct VideoViewAnimator {
 //TODO: CLEAN UP
 extension VPKVideoViewProtocol where Self: UIView {
     
+    func normalScreenMode() {
+        fullScreenBackgroundView.removeFromSuperview()
+    }
+    
     func fullScreenMode() {
         print("Animating to full screen")
         
@@ -42,14 +46,17 @@ extension VPKVideoViewProtocol where Self: UIView {
                 let safeWindow = appDelagate.window,
                 let windowSize = safeWindow?.frame.size, self.playerLayer != nil else { return }
     
-        let bgView = UIView(frame: .zero)
-        safeWindow?.addSubview(bgView)
-        bgView.snp.makeConstraints { (make) in
+        safeWindow?.addSubview(fullScreenBackgroundView)
+        fullScreenBackgroundView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         
-        bgView.backgroundColor = .black
-        bgView.addSubview(self)
+        fullScreenBackgroundView.backgroundColor = .green
+        fullScreenBackgroundView.addSubview(self)
+        
+        /*let transform = CGAffineTransform.affineTransformFromRect(sourceRect: self.frame, toRect: fullScreenBackgroundView.frame)
+        self.transform = transform*/
+        
         
         switch UIDevice.current.orientation {
         case .portrait:
@@ -72,8 +79,6 @@ extension VPKVideoViewProtocol where Self: UIView {
         default:
             break
         }
-        
-        
     }
     
     
@@ -92,4 +97,11 @@ extension VPKVideoViewProtocol where Self: UIView {
 extension CGAffineTransform {
     
     static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
+    
+    static func affineTransformFromRect(sourceRect: CGRect, toRect finalRect:CGRect) -> CGAffineTransform {
+        var transform = CGAffineTransform.identity
+        transform = transform.translatedBy(x: -(sourceRect.midX - finalRect.midX), y: -(sourceRect.midY - finalRect.midY))
+        transform = transform.scaledBy(x: finalRect.size.width / sourceRect.size.width, y: finalRect.size.height / sourceRect.size.height)
+        return transform
+    }
 }

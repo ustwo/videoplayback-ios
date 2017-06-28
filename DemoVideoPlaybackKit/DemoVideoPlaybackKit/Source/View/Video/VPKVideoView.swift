@@ -18,6 +18,8 @@ private enum LayerHierachy: CGFloat {
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
+    var fullScreenBackgroundView = UIView(frame: .zero)
+    
     weak var playbackBarView: VPKPlaybackControlViewProtocol? {
         didSet {
             addPlaybackControlView()
@@ -40,6 +42,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         didSet {
             guard let safeURL = remotePlaceHolderURL else { return }
             placeHolder.af_setImage(withURL: safeURL, placeholderImage: nil, filter: nil, progress: nil, progressQueue: DispatchQueue(label: "image_queue"), imageTransition: UIImageView.ImageTransition.crossDissolve(0.3), runImageTransitionIfCached: false, completion: nil)
+            layoutIfNeeded()
         }
     }
 
@@ -74,6 +77,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     //MARK: UI
     private func setup() {
         isUserInteractionEnabled = true
+        
+        self.backgroundColor = .orange
         
         tap.delegate = self
         tap.addTarget(self, action: #selector(didTapView))
@@ -139,7 +144,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
         self.playerLayer = playerLayer
-        playerLayer.frame = placeHolder.bounds
+        playerLayer.frame = self.bounds
         playerLayer.needsDisplayOnBoundsChange = true
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer.zPosition = -1.0

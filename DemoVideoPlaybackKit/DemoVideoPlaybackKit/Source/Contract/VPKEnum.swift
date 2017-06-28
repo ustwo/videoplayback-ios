@@ -54,7 +54,7 @@ public enum PlayerState {
     var buttonImageName: String {
         switch self {
         case .playing:
-            return "pauseDefault"
+            return "defaultPause"
         case .paused:
             return "playDefault"
         }

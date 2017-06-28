@@ -68,6 +68,7 @@ protocol VPKMainPlayerUseCase: class {
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
+    var fullScreenBackgroundView: UIView { get set }
 
     var localPlaceHolderName: String { get set }
     var remotePlaceHolderURL: URL? { get set }
@@ -173,7 +174,6 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     var presenter: VPKVideoPlaybackInteractorOutputProtocol? { get set }
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol)? { get set }
 
-
     // PRESENTER -> INTERACTOR
     func didTapVideo(videoURL: URL, at indexPath: NSIndexPath?)
     func didScrubTo(_ timeInSeconds: TimeInterval)
@@ -202,7 +202,7 @@ protocol VPKVideoPlaybackManagerProtocol: class {
     var currentVideoUrl: URL? { get set }
     var delegate: VPKVideoPlaybackDelegate? { get set }
     var isPlaying: Bool { get }
-    
+
     func stop()
     func cleanup()
 }
