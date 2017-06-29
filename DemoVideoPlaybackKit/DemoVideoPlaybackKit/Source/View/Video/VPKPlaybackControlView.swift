@@ -19,7 +19,9 @@ public class VPKPlaybackControlView: UIView {
     var theme: ToolBarTheme = .normal
     var progressValue: Float = 0.0 {
         didSet {
-            playbackProgressSlider.value = progressValue
+            DispatchQueue.main.async {
+                self.playbackProgressSlider.value = self.progressValue   
+            }
         }
     }
     var maximumSeconds: Float = 0.0 {
@@ -132,6 +134,7 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
         playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         
+        playbackProgressSlider.textColor = VPKColor.borderiOS11Default.rgbColor
         playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
         playbackProgressSlider.popUpViewColor = .white
     }
@@ -156,7 +159,7 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     }
 
     func updateTimePlayingCompletedTo(_ time: Float) {
-        
+        progressValue = time
     }
     
     func didScrub() {

@@ -123,7 +123,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     }
     
     func onVideoPlayingFor(_ seconds: TimeInterval) {
-        playbackBarView?.progressValue = roundf(Float(seconds))
+        playbackBarView?.updateTimePlayingCompletedTo(roundf(Float(seconds)))
     }
     
     func onVideoDidPlayToEnd() {

@@ -19,6 +19,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
     var originalFrame: CGRect?
+    var fullScreenBGView = UIView(frame: .zero)
+    var originalSuperview = UIView(frame: .zero)
     
     weak var playbackBarView: VPKPlaybackControlViewProtocol? {
         didSet {
@@ -60,10 +62,6 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        if originalFrame != nil {
-            originalFrame = self.frame
-        }
-        
         self.playerLayer?.frame = self.bounds //Ensures the player layer will change as the view changes 
     }
     
@@ -86,7 +84,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     private func setup() {
         isUserInteractionEnabled = true
         
-        self.backgroundColor = .orange
+        self.backgroundColor = .clear
         
         tap.delegate = self
         tap.addTarget(self, action: #selector(didTapView))
@@ -107,6 +105,15 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         }
         activityIndicator.color = .white
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
+        
+        addSubview(fullScreenBGView)
+        fullScreenBGView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
+        fullScreenBGView.backgroundColor = .black
+        fullScreenBGView.isHidden = true
+        sendSubview(toBack: fullScreenBGView)
+        fullScreenBGView.layer.zPosition = -10
     }
     
     override public func removeFromSuperview() {

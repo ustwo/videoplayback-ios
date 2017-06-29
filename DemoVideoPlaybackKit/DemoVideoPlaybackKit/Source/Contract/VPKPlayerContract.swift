@@ -68,7 +68,9 @@ protocol VPKMainPlayerUseCase: class {
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
+    var fullScreenBGView: UIView { get set } 
     var originalFrame: CGRect? { get set }
+    var originalSuperview: UIView { get set } 
 
     var localPlaceHolderName: String { get set }
     var remotePlaceHolderURL: URL? { get set }

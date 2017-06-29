@@ -292,7 +292,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         delegate?.playbackManagerDidPlayToEnd(self)
     }
     
-    fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {
+    fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {        
         delegate?.playbackManager(self, didChangePlayingTime: time)
     }
 }
