@@ -35,8 +35,11 @@ public class VPKPlaybackControlView: UIView {
     private let fullScreen = UIButton(frame: .zero)
     private let volumeCtrl = MPVolumeView()
     private let expandButton = UIButton(frame: .zero)
-    private let timeProgressLabel = UILabel(frame: .zero)
-    private let durationLabel = UILabel(frame: .zero)
+    fileprivate let timeProgressLabel = UILabel(frame: .zero)
+    fileprivate let durationLabel = UILabel(frame: .zero)
+    private let skipBackButton = UIButton(frame: .zero)
+    private let skipForwardButton = UIButton(frame: .zero)
+    
     fileprivate let playbackProgressSlider = ASValueTrackingSlider(frame: .zero)
 
     
@@ -59,7 +62,6 @@ public class VPKPlaybackControlView: UIView {
     private func setup() {
         switch theme {
         case .normal:
-            setupDefaultTheme()
             setupNormalLayout()
         case let .transparent(backgroundColor: bgColor, foregroundColor: fgColor, alphaValue: alpha):
             setupTransparentThemeWith(bgColor, foreground: fgColor, atTransparency: alpha)
@@ -74,61 +76,90 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.popUpViewAnimatedColors = [fg, background, UIColor.white]
     }
     
-    private func setupDefaultTheme() {
-        backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
-        layer.borderColor = VPKColor.borderiOS11Default.rgbColor.cgColor
-        layer.borderWidth = 0.5
-        layer.cornerRadius = 16.0
-        isUserInteractionEnabled = true
-    }
-    
     private func setupNormalLayout() {
         
-        let blurContainer = UIView(frame: .zero)
-        addSubview(blurContainer)
-        blurContainer.snp.makeConstraints { (make) in
-            make.edges.equalTo(self)
+        isUserInteractionEnabled = true
+
+        let bottomControlContainer = UIView(frame: .zero)
+        addSubview(bottomControlContainer)
+        bottomControlContainer.backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
+        bottomControlContainer.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(6.5)
+            make.right.equalTo(self).offset(-6.5)
+            make.height.equalTo(47)
+            make.bottom.equalTo(self.snp.bottom).offset(-6.5)
         }
         
+        bottomControlContainer.layer.cornerRadius = 16.0
+        bottomControlContainer.layer.borderColor = VPKColor.borderiOS11Default.rgbColor.cgColor
+        bottomControlContainer.layer.borderWidth = 0.5
+
+        let blurContainer = UIView(frame: .zero)
+        bottomControlContainer.addSubview(blurContainer)
+        blurContainer.snp.makeConstraints { (make) in
+            make.edges.equalTo(bottomControlContainer)
+        }
         blurContainer.backgroundColor = .clear
         blurContainer.isUserInteractionEnabled = true
         blurContainer.clipsToBounds = true
         
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurContainer.addSubview(blurEffectView)
-        blurEffectView.snp.makeConstraints { (make) in
+        let blurEffect = self.defaultBlurEffect()
+        blurContainer.addSubview(blurEffect)
+        blurEffect.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView.clipsToBounds = true
-        blurContainer.layer.cornerRadius = self.layer.cornerRadius
+        blurContainer.layer.cornerRadius = bottomControlContainer.layer.cornerRadius
     
-        addSubview(playPauseButton)
-        playPauseButton.snp.makeConstraints { (make) in
-            make.left.equalTo(self).offset(8.0)
-            make.centerY.equalTo(self)
+        bottomControlContainer.addSubview(skipBackButton)
+        skipBackButton.snp.makeConstraints { (make) in
+            make.left.equalTo(bottomControlContainer).offset(10)
+            make.centerY.equalTo(bottomControlContainer)
             make.height.width.equalTo(30)
         }
+        skipBackButton.setBackgroundImage(#imageLiteral(resourceName: "defaultSkipBack15"), for: .normal)
+        skipBackButton.addTarget(self, action: #selector(didSkipBack(_:)), for: .touchUpInside)
+        
+        
+        bottomControlContainer.addSubview(playPauseButton)
+        playPauseButton.snp.makeConstraints { (make) in
+            make.left.equalTo(skipBackButton.snp.right).offset(8.0)
+            make.centerY.equalTo(bottomControlContainer)
+            make.height.width.equalTo(28)
+        }
         playPauseButton.setBackgroundImage(UIImage(named: PlayerState.paused.buttonImageName), for: .normal)
+        playPauseButton.contentMode = .scaleAspectFit
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
         
-        addSubview(expandButton)
-        expandButton.snp.makeConstraints { (make) in
-            make.centerY.equalTo(self)
-            make.width.height.equalTo(30)
-            make.right.equalTo(self.snp.right).offset(-8)
-        }
-        expandButton.setBackgroundImage(#imageLiteral(resourceName: "fullScreenDefault"), for: .normal)
-        expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
-        expandButton.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-
-
-        addSubview(playbackProgressSlider)
-        playbackProgressSlider.snp.makeConstraints { (make) in
+        bottomControlContainer.addSubview(skipForwardButton)
+        skipForwardButton.snp.makeConstraints { (make) in
             make.left.equalTo(playPauseButton.snp.right).offset(8.0)
-            make.right.equalTo(expandButton.snp.left).offset(-8.0)
-            make.centerY.equalTo(self)
+            make.centerY.equalTo(bottomControlContainer)
+            make.height.width.equalTo(28)
+        }
+        
+        skipForwardButton.setBackgroundImage(#imageLiteral(resourceName: "defaultSkipForward15"), for: .normal)
+        skipForwardButton.addTarget(self, action: #selector(didSkipForward(_:)), for: .touchUpInside)
+        
+        
+        bottomControlContainer.addSubview(timeProgressLabel)
+        bottomControlContainer.addSubview(playbackProgressSlider)
+        
+        timeProgressLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(skipForwardButton.snp.right).offset(8.0)
+            make.centerY.equalTo(bottomControlContainer)
+            make.right.equalTo(playbackProgressSlider.snp.left).offset(-6.0)
+        }
+        
+        timeProgressLabel.textColor = UIColor(white: 1.0, alpha: 0.75)
+        timeProgressLabel.text = "0:00"
+        //TODO: ADD FONT
+        
+        
+        bottomControlContainer.addSubview(durationLabel)
+        playbackProgressSlider.snp.makeConstraints { (make) in
+            make.left.equalTo(timeProgressLabel.snp.right).offset(5.0)
+            make.right.equalTo(durationLabel.snp.left).offset(5.0)
+            make.centerY.equalTo(bottomControlContainer)
             make.height.equalTo(5.0)
         }
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
@@ -137,6 +168,32 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.textColor = VPKColor.borderiOS11Default.rgbColor
         playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
         playbackProgressSlider.popUpViewColor = .white
+        
+        playbackProgressSlider.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        
+        
+        bottomControlContainer.addSubview(durationLabel)
+        durationLabel.snp.makeConstraints { (make) in
+            make.right.equalTo(bottomControlContainer.snp.right).offset(-8.0)
+            make.centerY.equalTo(bottomControlContainer)
+        }
+        durationLabel.textColor = UIColor(white: 1.0, alpha: 0.75)
+        durationLabel.text = ""
+        durationLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        
+        
+        addSubview(expandButton)
+        expandButton.layer.cornerRadius = 16.0
+        expandButton.backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
+        expandButton.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(8.0)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.top.equalTo(self).offset(23)
+        }
+        expandButton.setBackgroundImage(#imageLiteral(resourceName: "defaultExpand"), for: .normal)
+        expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
     }
 }
 
@@ -151,15 +208,23 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     
     
     func showDurationWith(_ time: String) {
-        
+        durationLabel.text = time
     }
     
     func setMaximumDurationIn(_ seconds: Float) {
         
     }
+    
+    func didSkipBack(_ seconds: Float = 15.0) {
+        presenter?.didSkipBack(seconds)
+    }
+    
+    func didSkipForward(_ seconds: Float = 15.0) {
+        presenter?.didSkipForward(seconds)
+    }
 
-    func updateTimePlayingCompletedTo(_ time: Float) {
-        progressValue = time
+    func updateTimePlayingCompletedTo(_ time: String) {
+        timeProgressLabel.text = time
     }
     
     func didScrub() {
@@ -179,5 +244,16 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     
     func didTapPlayPause() {
         presenter?.didTapVideoView()
+    }
+}
+
+extension VPKPlaybackControlView {
+    
+    func defaultBlurEffect() -> UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.clipsToBounds = true
+        return blurEffectView
     }
 }

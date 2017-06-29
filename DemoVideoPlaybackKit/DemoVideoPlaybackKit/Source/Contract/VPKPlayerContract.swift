@@ -109,10 +109,12 @@ protocol VPKPlaybackControlViewProtocol: class {
 
     func didTapExpandView()
     func didTapPlayPause()
+    func didSkipBack(_ seconds: Float) //defaults to 15
+    func didSkipForward(_ seconds: Float) // defaults to 15 
     
     func toggleActionButton(_ imageName: String)
     func showDurationWith(_ time: String)
-    func updateTimePlayingCompletedTo(_ time: Float)
+    func updateTimePlayingCompletedTo(_ time: String)
     func didScrub()
 }
 
@@ -164,6 +166,8 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     func didTapVideoView()
     func didExpand()
     func didScrubTo(_ value: TimeInterval)
+    func didSkipBack(_ seconds: Float)
+    func didSkipForward(_ seconds: Float)
     func formattedProgressTime(from seconds: TimeInterval) -> String
 }
 
@@ -178,6 +182,8 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     // PRESENTER -> INTERACTOR
     func didTapVideo(videoURL: URL, at indexPath: NSIndexPath?)
     func didScrubTo(_ timeInSeconds: TimeInterval)
+    func didSkipBack(_ seconds: Float)
+    func didSkipForward(_ seconds: Float)
     func didToggleViewExpansion()
     func didMoveOffScreen()
     func didReuseInCell()

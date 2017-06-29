@@ -100,6 +100,15 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
       videoSizeState?.toggle()
     }
     
+    
+    func didSkipBack(_ seconds: Float) {
+        didScrubTo(TimeInterval(seconds))
+    }
+
+    func didSkipForward(_ seconds: Float) {
+        didScrubTo(TimeInterval(seconds))
+    }
+    
     func didScrubTo(_ value: TimeInterval) {
         interactor?.didScrubTo(value)
     }
@@ -123,7 +132,8 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     }
     
     func onVideoPlayingFor(_ seconds: TimeInterval) {
-        playbackBarView?.updateTimePlayingCompletedTo(roundf(Float(seconds)))
+        playbackBarView?.progressValue = Float(seconds)
+        playbackBarView?.updateTimePlayingCompletedTo(seconds.formattedTimeFromSeconds)
     }
     
     func onVideoDidPlayToEnd() {

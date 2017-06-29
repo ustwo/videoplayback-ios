@@ -12,6 +12,7 @@ import AVFoundation
 
 
 public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {
+
     
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol)?
     weak var presenter: VPKVideoPlaybackInteractorOutputProtocol?
@@ -28,6 +29,14 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol
     
     func didScrubTo(_ timeInSeconds: TimeInterval) {
         playbackManager?.didScrubTo(timeInSeconds)                
+    }
+    
+    func didSkipBack(_ seconds: Float) {
+    
+    }
+    
+    func didSkipForward(_ seconds: Float) {
+        
     }
     
     func didToggleViewExpansion() {

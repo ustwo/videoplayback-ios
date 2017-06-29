@@ -95,7 +95,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         placeHolder.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
-        placeHolder.contentMode = .scaleAspectFill
+        placeHolder.contentMode = .scaleAspectFit
         placeHolder.autoresizingMask = .flexibleWidth
         
         addSubview(activityIndicator)
@@ -128,10 +128,11 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         switch playbackBarView!.theme {
         case ToolBarTheme.normal:
             safePlaybackBarView.snp.makeConstraints { (make) in
-                make.left.equalTo(self).offset(6.5)
+                make.edges.equalTo(self)
+                /*make.left.equalTo(self).offset(6.5)
                 make.right.equalTo(self).offset(-6.5)
                 make.height.equalTo(47)
-                make.bottom.equalTo(placeHolder.snp.bottom).offset(-6.5)
+                make.bottom.equalTo(placeHolder.snp.bottom).offset(-6.5)*/
             }
             
             safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
