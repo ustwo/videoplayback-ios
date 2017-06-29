@@ -56,7 +56,7 @@ public enum PlayerState {
         case .playing:
             return "defaultPause"
         case .paused:
-            return "playDefault"
+            return "defaultPlay"
         }
     }
 }

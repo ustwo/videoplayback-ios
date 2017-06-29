@@ -15,15 +15,19 @@ import AVFoundation
 //MARK: Animator
 struct VideoViewAnimator {
     
+    fileprivate var originalVideoViewRect = CGRect.zero
+    
     private var fullScreenAnimationDuration: TimeInterval {
         return 0.15
     }
     
     static func animateToFullScreen<T: UIView>(_ videoView: T) where T: VPKVideoViewProtocol {
+
         videoView.fullScreenMode()
     }
     
     static func animateToNormalScreen<T: UIView>(_ videoView: T) where T: VPKVideoViewProtocol {
+        print("video view frame \(videoView.frame)")
         videoView.normalScreenMode()
     }
     
@@ -36,27 +40,55 @@ struct VideoViewAnimator {
 extension VPKVideoViewProtocol where Self: UIView {
     
     func normalScreenMode() {
-        fullScreenBackgroundView.removeFromSuperview()
+        #if DEBUG
+            print("collapsing into original screen")
+        #endif
+        
+        guard let sourceFrame = originalFrame else { return }
+        
+        #if DEBUG
+            print("source frame \(sourceFrame)")
+        #endif
+    
+        UIView.animate(withDuration: 0.5) {
+            self.snp.remakeConstraints { (make) in
+                make.left.equalTo(sourceFrame.origin.x)
+                make.right.equalTo(sourceFrame.width)
+                make.top.equalTo(sourceFrame.origin.y)
+                make.bottom.equalTo(sourceFrame.height)
+            }
+            self.layoutIfNeeded()
+        }
     }
     
     func fullScreenMode() {
-        print("Animating to full screen")
+        //Expand the video
+        #if DEBUG
+            print("expanding into full screen")
+        #endif
         
         guard   let appDelagate = UIApplication.shared.delegate,
                 let safeWindow = appDelagate.window,
                 let windowSize = safeWindow?.frame.size, self.playerLayer != nil else { return }
-    
-        safeWindow?.addSubview(fullScreenBackgroundView)
+ 
+        self.originalFrame = self.frame //Set original frame before changing it        
+        UIView.animate(withDuration: 0.5) { 
+            self.snp.remakeConstraints { (make) in
+                make.edges.equalTo(safeWindow!)
+            }
+            self.layoutIfNeeded()
+        }
+        
+        
+        
+       /* safeWindow?.addSubview(fullScreenBackgroundView)
         fullScreenBackgroundView.snp.makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.edges.equalTo(safeWindow!)
         }
         
         fullScreenBackgroundView.backgroundColor = .green
         fullScreenBackgroundView.addSubview(self)
-        
-        /*let transform = CGAffineTransform.affineTransformFromRect(sourceRect: self.frame, toRect: fullScreenBackgroundView.frame)
-        self.transform = transform*/
-        
+
         
         switch UIDevice.current.orientation {
         case .portrait:
@@ -64,7 +96,7 @@ extension VPKVideoViewProtocol where Self: UIView {
                 self.snp.remakeConstraints({ (make) in
                     make.edges.equalToSuperview()
                 })
-                self.resize(self.playerLayer!, to: windowSize)
+                //self.resize(self.playerLayer!, to: windowSize)
                 self.layoutIfNeeded()
             }, completion: nil)
         case .landscapeLeft, .landscapeRight:
@@ -72,25 +104,13 @@ extension VPKVideoViewProtocol where Self: UIView {
                 self.snp.remakeConstraints({ (make) in
                     make.edges.equalToSuperview()
                 })
-                self.resize(self.playerLayer!, to: windowSize)
+                //self.resize(self.playerLayer!, to: windowSize)
                 self.layoutIfNeeded()
             }, completion: nil)
             
         default:
             break
-        }
-    }
-    
-    
-    func resize(_ layer: AVPlayerLayer,to size: CGSize) {
-        let oldBounds = layer.bounds
-        var newBounds = oldBounds
-        newBounds.size = size
-        let animation = CABasicAnimation(keyPath: "bounds")
-        animation.fromValue = NSValue(cgRect: oldBounds)
-        animation.toValue = NSValue(cgRect: newBounds)
-        layer.bounds = newBounds
-        layer.add(animation, forKey: "bounds")
+        }*/
     }
 }
 

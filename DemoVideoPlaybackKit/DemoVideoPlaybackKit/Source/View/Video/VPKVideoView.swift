@@ -18,7 +18,7 @@ private enum LayerHierachy: CGFloat {
 public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
-    var fullScreenBackgroundView = UIView(frame: .zero)
+    var originalFrame: CGRect?
     
     weak var playbackBarView: VPKPlaybackControlViewProtocol? {
         didSet {
@@ -51,12 +51,20 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     fileprivate let placeHolder = UIImageView(frame: .zero)
     private let tap = UITapGestureRecognizer()
     
-   
     
     //MARK: Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
+    }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        if originalFrame != nil {
+            originalFrame = self.frame
+        }
+        
+        self.playerLayer?.frame = self.bounds //Ensures the player layer will change as the view changes 
     }
     
     override public class var layerClass: AnyClass {
@@ -89,7 +97,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         placeHolder.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
-        placeHolder.contentMode = .scaleAspectFit
+        placeHolder.contentMode = .scaleAspectFill
         placeHolder.autoresizingMask = .flexibleWidth
         
         addSubview(activityIndicator)
@@ -109,12 +117,21 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     func addPlaybackControlView() {
         guard let safePlaybackBarView = playbackBarView as? UIView else { return } // cannot complete playback view with no playback controls
         addSubview(safePlaybackBarView)
-        safePlaybackBarView.snp.makeConstraints { (make) in
-            make.left.right.equalTo(self)
-            make.height.equalTo(60)
-            make.bottom.equalTo(placeHolder.snp.bottom)
+        
+        switch playbackBarView!.theme {
+        case ToolBarTheme.normal:
+            safePlaybackBarView.snp.makeConstraints { (make) in
+                make.left.equalTo(self).offset(6.5)
+                make.right.equalTo(self).offset(-6.5)
+                make.height.equalTo(47)
+                make.bottom.equalTo(placeHolder.snp.bottom).offset(-6.5)
+            }
+            
+            safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        default:
+            //TODO: Add support for custom theme positioning & constraint layout
+            break
         }
-        safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
     }
 }
 

@@ -15,8 +15,8 @@ public class VPKPlaybackControlView: UIView {
     
     //Protocol
     weak var presenter: VPKVideoPlaybackPresenterProtocol?
-    var theme: ToolBarTheme?
     
+    var theme: ToolBarTheme = .normal
     var progressValue: Float = 0.0 {
         didSet {
             playbackProgressSlider.value = progressValue
@@ -49,15 +49,15 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.dataSource = self
     }
     
+    
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setup() {
-        guard let safeTheme = theme else { return }
-        switch safeTheme {
+        switch theme {
         case .normal:
-            setupBasicColorTheme()
+            setupDefaultTheme()
             setupNormalLayout()
         case let .transparent(backgroundColor: bgColor, foregroundColor: fgColor, alphaValue: alpha):
             setupTransparentThemeWith(bgColor, foreground: fgColor, atTransparency: alpha)
@@ -72,15 +72,36 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.popUpViewAnimatedColors = [fg, background, UIColor.white]
     }
     
-    private func setupBasicColorTheme() {
-        backgroundColor = .purple
+    private func setupDefaultTheme() {
+        backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
+        layer.borderColor = VPKColor.borderiOS11Default.rgbColor.cgColor
+        layer.borderWidth = 0.5
+        layer.cornerRadius = 16.0
         isUserInteractionEnabled = true
-        playbackProgressSlider.backgroundColor = .white
-        playbackProgressSlider.popUpViewAnimatedColors = [UIColor.blue, UIColor.green, UIColor.yellow]
     }
     
     private func setupNormalLayout() {
         
+        let blurContainer = UIView(frame: .zero)
+        addSubview(blurContainer)
+        blurContainer.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
+        }
+        
+        blurContainer.backgroundColor = .clear
+        blurContainer.isUserInteractionEnabled = true
+        blurContainer.clipsToBounds = true
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurContainer.addSubview(blurEffectView)
+        blurEffectView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView.clipsToBounds = true
+        blurContainer.layer.cornerRadius = self.layer.cornerRadius
+    
         addSubview(playPauseButton)
         playPauseButton.snp.makeConstraints { (make) in
             make.left.equalTo(self).offset(8.0)
@@ -106,12 +127,13 @@ public class VPKPlaybackControlView: UIView {
             make.left.equalTo(playPauseButton.snp.right).offset(8.0)
             make.right.equalTo(expandButton.snp.left).offset(-8.0)
             make.centerY.equalTo(self)
-            make.height.equalTo(10.0)
+            make.height.equalTo(5.0)
         }
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
         playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         
-        
+        playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
+        playbackProgressSlider.popUpViewColor = .white
     }
 }
 

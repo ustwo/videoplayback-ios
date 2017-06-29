@@ -68,7 +68,7 @@ protocol VPKMainPlayerUseCase: class {
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
-    var fullScreenBackgroundView: UIView { get set }
+    var originalFrame: CGRect? { get set }
 
     var localPlaceHolderName: String { get set }
     var remotePlaceHolderURL: URL? { get set }
@@ -101,10 +101,9 @@ extension VPKViewInCellProtocol where Self: UITableViewCell {
 
 protocol VPKPlaybackControlViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set } //weak
-    var theme: ToolBarTheme? { get set }
+    var theme: ToolBarTheme { get set }
     var maximumSeconds: Float { get set }
     var progressValue: Float { get set }
-
 
     func didTapExpandView()
     func didTapPlayPause()

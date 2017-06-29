@@ -40,11 +40,13 @@ class DemoViewController: UIViewController {
     
     
     private func setupDemoList() {
+
         demoList.asObservable().bind(to: tableView.rx.items(cellIdentifier: BasicTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? BasicTableViewCell else { return }
             cell.titleText = model.rawValue
         }.addDisposableTo(disposeBag)
         
+
         tableView.rx.modelSelected(DemoOption.self).subscribe(onNext: { demoOption in
             switch demoOption {
             case .SingleVideoView:
