@@ -95,7 +95,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         placeHolder.snp.makeConstraints { (make) in
             make.edges.equalTo(self)
         }
-        placeHolder.contentMode = .scaleAspectFit
+        placeHolder.contentMode = .scaleToFill
         placeHolder.autoresizingMask = .flexibleWidth
         
         addSubview(activityIndicator)
@@ -129,13 +129,10 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         case ToolBarTheme.normal:
             safePlaybackBarView.snp.makeConstraints { (make) in
                 make.edges.equalTo(self)
-                /*make.left.equalTo(self).offset(6.5)
-                make.right.equalTo(self).offset(-6.5)
-                make.height.equalTo(47)
-                make.bottom.equalTo(placeHolder.snp.bottom).offset(-6.5)*/
             }
             
             safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+            safePlaybackBarView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         default:
             //TODO: Add support for custom theme positioning & constraint layout
             break
@@ -160,6 +157,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     func reuseInCell() {
         self.placeHolder.image = nil 
         self.playerLayer = nil
+        self.playbackBarView = nil
         presenter?.reuseInCell()
     }
     

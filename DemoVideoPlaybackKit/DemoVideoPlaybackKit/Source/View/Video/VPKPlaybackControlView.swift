@@ -171,7 +171,7 @@ public class VPKPlaybackControlView: UIView {
             make.left.equalTo(self).offset(8.0)
             make.width.equalTo(30)
             make.height.equalTo(30)
-            make.top.equalTo(self).offset(23)
+            make.top.equalTo(self).offset(8.0)
         }
         expandButton.setBackgroundImage(#imageLiteral(resourceName: "defaultExpand"), for: .normal)
         expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)

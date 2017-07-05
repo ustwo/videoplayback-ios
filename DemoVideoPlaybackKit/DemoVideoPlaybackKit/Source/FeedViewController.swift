@@ -45,6 +45,8 @@ class FeedViewController: UIViewController {
     
     private func setupTableView() {
         tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
+        tableView.estimatedRowHeight = 400
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
@@ -75,6 +77,6 @@ extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
 
 extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 440
+        return UITableViewAutomaticDimension
     }
 }

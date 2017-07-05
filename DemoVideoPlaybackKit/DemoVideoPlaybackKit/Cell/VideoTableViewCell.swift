@@ -33,10 +33,15 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
         guard let safeView = videoView else { return }
         addSubview(safeView)
         safeView.snp.makeConstraints { (make) in
-            make.edges.equalTo(self)
+            make.left.top.equalTo(self).offset(20.0)
+            make.right.bottom.equalTo(self).offset(-20.0)
+            
+            make.height.equalTo(250) //Ideally we would use an aspect ratio adjusted height based on data from json
         }
         safeView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
         self.setNeedsDisplay()
+        
     }
     
     override func prepareForReuse() {

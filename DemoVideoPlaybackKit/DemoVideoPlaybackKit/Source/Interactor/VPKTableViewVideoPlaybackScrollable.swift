@@ -117,8 +117,9 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
                 let convertedRect = tableView.convert(cellRect, to: superView)
                 let intersect = tableView.frame.intersection(convertedRect)
                 let visibleHeight = intersect.height
+                print("VISIBLE HEIGHT = \(visibleHeight)")
                 
-                if visibleHeight > self.view.bounds.size.height * 0.6 {
+                if visibleHeight > cellRect.height * 0.6 {
                     //cell is visible more than 60%
                     guard let videoCell = cell as? VPKViewInCellProtocol else { return }
                     videoCell.videoView?.didTapView()

@@ -31,7 +31,8 @@ class SingleVideoPlaybackViewController: UIViewController {
             self.view.addSubview(videoView)
             videoView.snp.makeConstraints({ (make) in
                 make.height.equalTo(view.snp.height).dividedBy(2)
-                make.left.right.top.equalTo(view)
+                make.top.equalTo(view.snp.top).offset(10)
+                make.left.right.equalTo(view)
             })
         }
     }
