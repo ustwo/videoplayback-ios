@@ -76,7 +76,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
-            serviceGroup.notify(queue: DispatchQueue.main, execute: {
+            serviceGroup.notify(queue: backgroundQueue, execute: {
                 self.asset = AVAsset(url: url)
                 self.currentVideoUrl = url
             })

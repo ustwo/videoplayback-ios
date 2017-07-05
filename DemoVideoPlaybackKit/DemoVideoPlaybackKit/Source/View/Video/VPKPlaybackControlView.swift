@@ -111,19 +111,9 @@ public class VPKPlaybackControlView: UIView {
         }
         blurContainer.layer.cornerRadius = bottomControlContainer.layer.cornerRadius
     
-        bottomControlContainer.addSubview(skipBackButton)
-        skipBackButton.snp.makeConstraints { (make) in
-            make.left.equalTo(bottomControlContainer).offset(10)
-            make.centerY.equalTo(bottomControlContainer)
-            make.height.width.equalTo(30)
-        }
-        skipBackButton.setBackgroundImage(#imageLiteral(resourceName: "defaultSkipBack15"), for: .normal)
-        skipBackButton.addTarget(self, action: #selector(didSkipBack(_:)), for: .touchUpInside)
-        
-        
         bottomControlContainer.addSubview(playPauseButton)
         playPauseButton.snp.makeConstraints { (make) in
-            make.left.equalTo(skipBackButton.snp.right).offset(8.0)
+            make.left.equalTo(bottomControlContainer).offset(8.0)
             make.centerY.equalTo(bottomControlContainer)
             make.height.width.equalTo(28)
         }
@@ -131,40 +121,29 @@ public class VPKPlaybackControlView: UIView {
         playPauseButton.contentMode = .scaleAspectFit
         playPauseButton.addTarget(self, action: #selector(didTapPlayPause), for: .touchUpInside)
         
-        bottomControlContainer.addSubview(skipForwardButton)
-        skipForwardButton.snp.makeConstraints { (make) in
-            make.left.equalTo(playPauseButton.snp.right).offset(8.0)
-            make.centerY.equalTo(bottomControlContainer)
-            make.height.width.equalTo(28)
-        }
-        
-        skipForwardButton.setBackgroundImage(#imageLiteral(resourceName: "defaultSkipForward15"), for: .normal)
-        skipForwardButton.addTarget(self, action: #selector(didSkipForward(_:)), for: .touchUpInside)
-        
         
         bottomControlContainer.addSubview(timeProgressLabel)
         bottomControlContainer.addSubview(playbackProgressSlider)
         
         timeProgressLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(skipForwardButton.snp.right).offset(8.0)
+            make.left.equalTo(playPauseButton.snp.right).offset(8.0)
             make.centerY.equalTo(bottomControlContainer)
             make.right.equalTo(playbackProgressSlider.snp.left).offset(-6.0)
         }
         
         timeProgressLabel.textColor = UIColor(white: 1.0, alpha: 0.75)
         timeProgressLabel.text = "0:00"
-        //TODO: ADD FONT
-        
         
         bottomControlContainer.addSubview(durationLabel)
         playbackProgressSlider.snp.makeConstraints { (make) in
             make.left.equalTo(timeProgressLabel.snp.right).offset(5.0)
-            make.right.equalTo(durationLabel.snp.left).offset(5.0)
+            make.right.equalTo(durationLabel.snp.left).offset(-5.0).priority(1000)
             make.centerY.equalTo(bottomControlContainer)
             make.height.equalTo(5.0)
         }
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
         playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        playbackProgressSlider.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
         
         playbackProgressSlider.textColor = VPKColor.borderiOS11Default.rgbColor
         playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
@@ -180,8 +159,9 @@ public class VPKPlaybackControlView: UIView {
             make.centerY.equalTo(bottomControlContainer)
         }
         durationLabel.textColor = UIColor(white: 1.0, alpha: 0.75)
-        durationLabel.text = ""
+        durationLabel.text = "0:00"
         durationLabel.setContentCompressionResistancePriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        durationLabel.setContentHuggingPriority(UILayoutPriorityFittingSizeLevel, for: .horizontal)
         
         
         addSubview(expandButton)
@@ -195,6 +175,9 @@ public class VPKPlaybackControlView: UIView {
         }
         expandButton.setBackgroundImage(#imageLiteral(resourceName: "defaultExpand"), for: .normal)
         expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
+        
+        bottomControlContainer.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
+        
         
     }
 }
@@ -211,6 +194,7 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     
     func showDurationWith(_ time: String) {
         durationLabel.text = time
+        layoutIfNeeded()
     }
     
     func didSkipBack(_ seconds: Float = 15.0) {
