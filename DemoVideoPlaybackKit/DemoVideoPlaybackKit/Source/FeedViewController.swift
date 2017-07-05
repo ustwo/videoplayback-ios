@@ -49,12 +49,13 @@ class FeedViewController: UIViewController {
         datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
             
-            VPKVideoPlaybackBuilder.vpk_buildInFeedModuleFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), completion: { (videoView) in
+            VPKVideoPlaybackBuilder.vpk_buildInFeedFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), completion: { (videoView) in
                 cell.videoView = videoView
                 cell.layoutIfNeeded()
             })}.addDisposableTo(disposeBag)
         
         tableView.rx.setDelegate(self)
+        
     }
 
 }

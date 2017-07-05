@@ -54,20 +54,20 @@ extension VPKVideoPlaybackInteractor: VPKVideoPlaybackDelegate {
         presenter?.onVideoResetPresentation()
     }
     
-    func playbackManager(_: VPKVideoPlaybackManager, didPreparePlayerLayer playerLayer: AVPlayerLayer) {
+    func playbackManager(_: VPKVideoPlaybackManager, didPrepare playerLayer: AVPlayerLayer) {
         presenter?.onVideoLoadSuccess(playerLayer)
     }
     
-    
-    func playbackManager(_: VPKVideoPlaybackManager, didStartPlayingWithDuration duration: TimeInterval) {
+    func playbackManager(_: VPKVideoPlaybackManager, didStartPlayingWith duration: TimeInterval) {
         presenter?.onVideoDidStartPlayingWith(duration)
     }
+
     
-    func playbackManager(_: VPKVideoPlaybackManager, didChangePlayingTime time: TimeInterval) {
+    func playbackManager(_: VPKVideoPlaybackManager, didChange time: TimeInterval) {
         presenter?.onVideoPlayingFor(time)
     }
     
-    func playbackManager(_: VPKVideoPlaybackManager, didFailWithError error: Error) {
+    func playbackManager(_: VPKVideoPlaybackManager, didFailWith error: Error) {
         //TODO::::
     }
     

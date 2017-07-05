@@ -20,7 +20,8 @@ public class VPKPlaybackControlView: UIView {
     var progressValue: Float = 0.0 {
         didSet {
             DispatchQueue.main.async {
-                self.playbackProgressSlider.value = self.progressValue   
+                self.playbackProgressSlider.value = self.progressValue
+                self.layoutIfNeeded()
             }
         }
     }
@@ -194,6 +195,7 @@ public class VPKPlaybackControlView: UIView {
         }
         expandButton.setBackgroundImage(#imageLiteral(resourceName: "defaultExpand"), for: .normal)
         expandButton.addTarget(self, action: #selector(didTapExpandView), for: .touchUpInside)
+        
     }
 }
 
@@ -209,10 +211,6 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     
     func showDurationWith(_ time: String) {
         durationLabel.text = time
-    }
-    
-    func setMaximumDurationIn(_ seconds: Float) {
-        
     }
     
     func didSkipBack(_ seconds: Float = 15.0) {

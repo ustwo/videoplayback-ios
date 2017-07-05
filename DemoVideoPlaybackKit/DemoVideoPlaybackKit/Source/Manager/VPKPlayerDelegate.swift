@@ -13,12 +13,12 @@ import AVFoundation
 
 protocol VPKVideoPlaybackDelegate: class {
     
-    func playbackManager(_: VPKVideoPlaybackManager, didPreparePlayerLayer playerLayer: AVPlayerLayer)
-    func playbackManager(_: VPKVideoPlaybackManager, didStartPlayingWithDuration duration: TimeInterval)
+    func playbackManager(_: VPKVideoPlaybackManager, didPrepare playerLayer: AVPlayerLayer)
+    func playbackManager(_: VPKVideoPlaybackManager, didStartPlayingWith duration: TimeInterval)
     func playbackManagerDidStopPlaying(_: VPKVideoPlaybackManager)
     func playbackManagerDidPlayToEnd(_: VPKVideoPlaybackManager)
-    func playbackManager(_: VPKVideoPlaybackManager, didChangePlayingTime time: TimeInterval)
-    func playbackManager(_: VPKVideoPlaybackManager, didFailWithError error: Error)
+    func playbackManager(_: VPKVideoPlaybackManager, didChange time: TimeInterval)
+    func playbackManager(_: VPKVideoPlaybackManager, didFailWith error: Error)
     func playbackManagerDidPlayNewVideo(_: VPKVideoPlaybackManager)
 }
 

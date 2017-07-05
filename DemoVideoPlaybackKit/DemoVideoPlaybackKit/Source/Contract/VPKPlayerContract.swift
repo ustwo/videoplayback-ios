@@ -135,7 +135,7 @@ public protocol VPKVideoPlaybackBuilderProtocol: class {
     static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
     
     //View in Feed
-    static func vpk_buildInFeedModuleFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildInFeedFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {

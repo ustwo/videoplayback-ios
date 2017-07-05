@@ -56,7 +56,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate lazy var player = AVPlayer()
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
     fileprivate enum ObservableKeyPaths: String {
-        case status, rate, timeControlStatus
+        case status, rate, timeControlStatus, playbackLikelyToKeepUp
         static let allValues = [status, rate, timeControlStatus]
     }
 
@@ -157,7 +157,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     func handleErrorWithMessage(_ message: String?, error: Error? = nil) {
         NSLog("Error occured with message: \(String(describing: message)), error: \(String(describing: error)).")
         guard let safeError = error else { return }
-        delegate?.playbackManager(VPKVideoPlaybackManager.shared, didFailWithError: safeError)
+        delegate?.playbackManager(VPKVideoPlaybackManager.shared, didFailWith: safeError)
     }
     
     
@@ -181,21 +181,26 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     //MARK: KVO setup
     fileprivate func trackTimeProgress() {
         let timeQueue = DispatchQueue(label: "time_tracking")
-        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 2), queue: timeQueue) { [weak self] (time) in
+        player.addPeriodicTimeObserver(forInterval: CMTimeMake(1, 1), queue: timeQueue) { [weak self] (time) in
             self?.videoPlayingTimeChangedTo(time.seconds)
         }
     }
     
     private func addPlayerObservers() {
-        player.addObserver(self, forKeyPath: ObservableKeyPaths.status.rawValue, options: .new, context: nil)
-        player.addObserver(self, forKeyPath: ObservableKeyPaths.rate.rawValue, options: .new, context: nil)
-        player.addObserver(self, forKeyPath: ObservableKeyPaths.timeControlStatus.rawValue, options: .new, context: nil)
-    }
+        ObservableKeyPaths.allValues.forEach { (keyPath) in
+            player.addObserver(self, forKeyPath: keyPath.rawValue, options: .new, context: nil)
+        }
+}
     
     private func addPlayerItemObservers() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: nil) { (notification) in
             self.didPlayToEnd()
         }
+        
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemNewAccessLogEntry, object: self.player.currentItem, queue: nil) { (notification) in
+            print("\(notification.userInfo)")
+        }
+        
     }
     
     private func removePlayerObservers() {
@@ -219,6 +224,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             let keyPathEnumType: ObservableKeyPaths = ObservableKeyPaths(rawValue: key) else { return }
         
         switch keyPathEnumType {
+        case .playbackLikelyToKeepUp:
+            print("PLAYBACK likely to keep up")
         case .timeControlStatus:
             handleObservedTimeControlStatus()
         case .rate where player.rate == 0:
@@ -257,7 +264,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
 extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     
     fileprivate func didPreparePlayerLayer(_ playerLayer: AVPlayerLayer) {
-        delegate?.playbackManager(self, didPreparePlayerLayer: playerLayer)
+        delegate?.playbackManager(self, didPrepare: playerLayer)
     }
     
     fileprivate func didStopPlaying() {
@@ -283,7 +290,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
         }
         
         playerState = .playing
-        delegate?.playbackManager(self, didStartPlayingWithDuration: transformedTime)
+        delegate?.playbackManager(self, didStartPlayingWith: transformedTime)
     }
     
     fileprivate func didPlayToEnd() {
@@ -293,7 +300,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     }
     
     fileprivate func videoPlayingTimeChangedTo(_ time: TimeInterval) {        
-        delegate?.playbackManager(self, didChangePlayingTime: time)
+        delegate?.playbackManager(self, didChange: time)
     }
 }
 

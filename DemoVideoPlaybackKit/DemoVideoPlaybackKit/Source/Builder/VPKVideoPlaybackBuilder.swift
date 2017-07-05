@@ -16,8 +16,11 @@ public typealias CompletionClosure = () -> ()
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
-    //Feed
-   public static func vpk_buildInFeedModuleFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
+    //Feed (auto-play)
+    
+    
+    //Feed (not auto-play, tap to play)
+   public static func vpk_buildInFeedFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: false, showInCell: indexPath, playbackTheme: playbackBarTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
