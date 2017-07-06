@@ -21,7 +21,6 @@ public class VPKPlaybackControlView: UIView {
         didSet {
             DispatchQueue.main.async {
                 self.playbackProgressSlider.value = self.progressValue
-                self.layoutIfNeeded()
             }
         }
     }
@@ -40,7 +39,7 @@ public class VPKPlaybackControlView: UIView {
     fileprivate let durationLabel = UILabel(frame: .zero)
     private let skipBackButton = UIButton(frame: .zero)
     private let skipForwardButton = UIButton(frame: .zero)
-    
+    private let bottomControlContainer = UIView(frame: .zero)
     fileprivate let playbackProgressSlider = ASValueTrackingSlider(frame: .zero)
 
     
@@ -63,38 +62,51 @@ public class VPKPlaybackControlView: UIView {
     private func setup() {
         switch theme {
         case .normal:
+            setupNormalColorTheme()
             setupNormalLayout()
-        case let .transparent(backgroundColor: bgColor, foregroundColor: fgColor, alphaValue: alpha):
-            setupTransparentThemeWith(bgColor, foreground: fgColor, atTransparency: alpha)
+            
+        case .custom(bottomBackgroundColor: _, sliderBackgroundColor: _, sliderIndicatorColor: _, sliderCalloutColors: _):
             setupNormalLayout()
+            setupCustomColorWith(theme: theme)
         }
     }
     
-    private func setupTransparentThemeWith(_ background: UIColor, foreground fg: UIColor, atTransparency alphaValue: CGFloat) {
-        alpha = CGFloat(alphaValue)
-        backgroundColor = background
-        playbackProgressSlider.backgroundColor = fg
-        playbackProgressSlider.popUpViewAnimatedColors = [fg, background, UIColor.white]
+    private func setupNormalColorTheme() {
+        bottomControlContainer.backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
+        playbackProgressSlider.textColor = VPKColor.borderiOS11Default.rgbColor
+        playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
+        playbackProgressSlider.popUpViewColor = .white
+        
+    }
+    
+    private func setupCustomColorWith(theme: ToolBarTheme) {
+        switch theme {
+        case let .custom(bottomBackgroundColor: bottomBGColor, sliderBackgroundColor: sliderBGColor, sliderIndicatorColor: sliderIndicatorColor, sliderCalloutColors: calloutColors):
+            
+            self.bottomControlContainer.backgroundColor = bottomBGColor
+            self.playbackProgressSlider.backgroundColor = sliderBGColor
+            self.playbackProgressSlider.textColor = sliderIndicatorColor
+            self.playbackProgressSlider.popUpViewAnimatedColors = calloutColors
+        default:
+            break
+        }
     }
     
     private func setupNormalLayout() {
         
         isUserInteractionEnabled = true
 
-        let bottomControlContainer = UIView(frame: .zero)
         addSubview(bottomControlContainer)
-        bottomControlContainer.backgroundColor = VPKColor.backgroundiOS11Default.rgbColor
         bottomControlContainer.snp.makeConstraints { (make) in
             make.left.equalTo(self).offset(6.5)
             make.right.equalTo(self).offset(-6.5)
             make.height.equalTo(47)
             make.bottom.equalTo(self.snp.bottom).offset(-6.5)
         }
-        
         bottomControlContainer.layer.cornerRadius = 16.0
         bottomControlContainer.layer.borderColor = VPKColor.borderiOS11Default.rgbColor.cgColor
         bottomControlContainer.layer.borderWidth = 0.5
-
+        
         let blurContainer = UIView(frame: .zero)
         bottomControlContainer.addSubview(blurContainer)
         blurContainer.snp.makeConstraints { (make) in
@@ -144,13 +156,6 @@ public class VPKPlaybackControlView: UIView {
         playbackProgressSlider.addTarget(self, action: #selector(didScrub), for: .valueChanged)
         playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         playbackProgressSlider.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        
-        playbackProgressSlider.textColor = VPKColor.borderiOS11Default.rgbColor
-        playbackProgressSlider.backgroundColor = VPKColor.timeSliderBackground.rgbColor
-        playbackProgressSlider.popUpViewColor = .white
-        
-        playbackProgressSlider.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .horizontal)
-        playbackProgressSlider.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
         
         
         bottomControlContainer.addSubview(durationLabel)

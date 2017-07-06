@@ -58,9 +58,10 @@ class DemoViewController: UIViewController {
             case .FeedAutoplayView:
                 let feedVC = FeedViewController(true)
                 self.navigationController?.pushViewController(feedVC, animated: true)
-            default:
-                print("not ready")
-                break
+            case .CustomToolBar:
+                let toolBarTheme = ToolBarTheme.custom(bottomBackgroundColor: UIColor.purple, sliderBackgroundColor: UIColor.white, sliderIndicatorColor: UIColor.lightGray, sliderCalloutColors: [.red, .orange, .green])
+                let singleVC = SingleVideoPlaybackViewController(shouldAutoPlay: false, customTheme: toolBarTheme)
+                self.navigationController?.pushViewController(singleVC, animated: true)
             }
             
         }).addDisposableTo(disposeBag)

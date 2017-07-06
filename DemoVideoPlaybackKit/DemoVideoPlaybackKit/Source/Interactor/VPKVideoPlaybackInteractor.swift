@@ -68,7 +68,7 @@ extension VPKVideoPlaybackInteractor: VPKVideoPlaybackDelegate {
     }
     
     func playbackManager(_: VPKVideoPlaybackManager, didFailWith error: Error) {
-        //TODO::::
+        //TODO:
     }
     
     func playbackManagerDidStopPlaying(_: VPKVideoPlaybackManager) {

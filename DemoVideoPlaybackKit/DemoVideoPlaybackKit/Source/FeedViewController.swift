@@ -47,6 +47,8 @@ class FeedViewController: UIViewController {
         tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
         tableView.estimatedRowHeight = 400
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.prefetchDataSource = self
+        
         
         datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
@@ -78,5 +80,18 @@ extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
 extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
+    }
+}
+
+extension FeedViewController: UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print("prefetchRowsAt \(indexPaths)")
+
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        print("cancelPrefetchingForRowsAt \(indexPaths)")
+
     }
 }

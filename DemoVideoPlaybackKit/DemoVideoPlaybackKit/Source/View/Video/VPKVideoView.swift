@@ -49,7 +49,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     }
 
     //private
-    private let activityIndicator = UIActivityIndicatorView(frame: .zero)
+    fileprivate let activityIndicator = UIActivityIndicatorView(frame: .zero)
     fileprivate let placeHolder = UIImageView(frame: .zero)
     private let tap = UITapGestureRecognizer()
     
@@ -104,6 +104,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             make.width.height.equalTo(40)
         }
         activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true 
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
         
         addSubview(fullScreenBGView)
@@ -124,21 +125,15 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     func addPlaybackControlView() {
         guard let safePlaybackBarView = playbackBarView as? UIView else { return } // cannot complete playback view with no playback controls
         addSubview(safePlaybackBarView)
-        
-        switch playbackBarView!.theme {
-        case ToolBarTheme.normal:
-            safePlaybackBarView.snp.makeConstraints { (make) in
-                make.edges.equalTo(self)
-            }
-            
-            safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
-            safePlaybackBarView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
-        default:
-            //TODO: Add support for custom theme positioning & constraint layout
-            break
+        safePlaybackBarView.snp.makeConstraints { (make) in
+            make.edges.equalTo(self)
         }
+        
+        safePlaybackBarView.setContentCompressionResistancePriority(UILayoutPriorityDefaultLow, for: .horizontal)
+        safePlaybackBarView.setContentHuggingPriority(UILayoutPriorityDefaultHigh, for: .vertical)
     }
 }
+
 
 //MARK: Outputs
 //**
@@ -151,6 +146,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func didTapView() {
+        activityIndicator.startAnimating()
         presenter?.didTapVideoView()
     }
     
@@ -166,6 +162,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
+        activityIndicator.stopAnimating()
         self.playerLayer = playerLayer
         playerLayer.frame = self.bounds
         playerLayer.needsDisplayOnBoundsChange = true

@@ -73,18 +73,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
     }
     
     func didTapVideoView() {
-        
-        var videoUrl: URL?
-        switch videoType {
-        case let .local(videoPathName: aName, fileType: aType, placeholderImageName: _) where Bundle.main.path(forResource: aName, ofType: aType) != nil:
-            videoUrl = URL(fileURLWithPath: Bundle.main.path(forResource: aName, ofType: aType)!)
-        case let .remote(url: remoteUrlName, placeholderURLName: _) where URL(string: remoteUrlName) != nil:
-            videoUrl = URL(string: remoteUrlName)
-        default:
-            break
-        }
-        
-        guard let safeVideoUrl = videoUrl else { return }
+        guard let safeVideoUrl = videoType.videoUrl else { return }
         interactor?.didTapVideo(videoURL: safeVideoUrl, at: self.indexPath)
     }
     
@@ -139,6 +128,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     func onVideoDidPlayToEnd() {
         videoView?.showPlaceholder()
         playbackBarView?.toggleActionButton(PlayerState.paused.buttonImageName)
+        playbackBarView?.progressValue = 0.0
     }
     
     func onVideoDidStopPlaying() {

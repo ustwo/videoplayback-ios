@@ -14,36 +14,9 @@ import ASValueTrackingSlider
 
 typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
-//***PUBLIC *** 
-
-//** Styling
-//*
-//*
-public protocol Theme {
-    var colorTheme: ColorTheme { get }
-    var fontTheme: FontTheme { get }
-}
-
-public protocol ColorTheme {
-    var primaryColor: UIColor { get }
-    var secondaryColor: UIColor { get }
-    var tertiaryColor: UIColor { get }
-}
-
-public protocol FontTheme {
-    var title: [String: String] { get }
-    var subtitle: [String: String] {get }
-    var heading1: [String: String] { get }
-    var heading2: [String: String] { get }
-    // ...
-    
-    func titleText(text: String) -> NSAttributedString
-    func subtitleText(text: String) -> NSAttributedString
-    func heading1Text(text: String) -> NSAttributedString
-    func heading2Text(text: String) -> NSAttributedString
-    // ...
-}
-
+/*
+ ***** VIPER FRAMEWORK PROTOCOL CONTRACT ******
+ */
 
 //** Use Case
 //*
@@ -56,11 +29,6 @@ protocol VPKMainPlayerUseCase: class {
     func controlVolume()
     func doubleTapForCommand()
 }
-
-/*
- ***** VIPER FRAMEWORK PROTOCOL CONTRACT ******
- */
-
 
 //*** View
 //*
@@ -122,12 +90,6 @@ protocol VPKPlaybackControlViewProtocol: class {
 //*** Builder
 //*
 //*
-
-public protocol VPKBuildInCellProtocol: class {
-    var videoModel: VPKVideoType { get set }
-
-    static func build(videoURL: String, with placeHolderImageURL: String, shouldAutoplay autoPlay: Bool) -> VPKVideoView
-}
 
 public protocol VPKVideoPlaybackBuilderProtocol: class {
     
