@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VideoPlaybackKit"
-  spec.version = "0.0.3"
+  spec.version = "0.0.4"
   spec.summary = "Using Swift and the VIP pattern this is a module built using AVPlayer to return video views"
   spec.homepage = "https://github.com/ustwo/videoplayback-ios"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   }
 
   spec.source = { :git => "https://github.com/ustwo/videoplayback-ios.git", :tag => "v#{spec.version}", :submodules => true }
-  spec.source_files  ="VideoPlaybackKit/VideoPlaybackKit/*"
+  spec.source_files  ="Source/*.swift"
   spec.requires_arc = true
   spec.platform     = :ios, "10.0"
   
