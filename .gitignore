@@ -21,6 +21,7 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+DemoVideoPlaybackKit/
 
 ## Obj-C/Swift specific
 *.hmap
