@@ -7,30 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		272AE6031F1011470069345F /* VPKVideoPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE5F91F1011470069345F /* VPKVideoPlaybackBuilder.swift */; };
-		272AE6041F1011470069345F /* VPKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE5FB1F1011470069345F /* VPKColor.swift */; };
-		272AE6051F1011470069345F /* VPKEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE5FC1F1011470069345F /* VPKEnum.swift */; };
-		272AE6061F1011470069345F /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE5FD1F1011470069345F /* VPKPlayerContract.swift */; };
-		272AE6071F1011470069345F /* AVContentInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE5FF1F1011470069345F /* AVContentInfoRequest.swift */; };
-		272AE6081F1011470069345F /* FileManager+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6001F1011470069345F /* FileManager+Configure.swift */; };
-		272AE6091F1011470069345F /* URL+Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6011F1011470069345F /* URL+Prefix.swift */; };
-		272AE60A1F1011470069345F /* URLRequest+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6021F1011470069345F /* URLRequest+Configure.swift */; };
-		272AE6191F10114F0069345F /* VPKTableViewVideoPlaybackScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE60C1F10114F0069345F /* VPKTableViewVideoPlaybackScrollable.swift */; };
-		272AE61A1F10114F0069345F /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE60D1F10114F0069345F /* VPKVideoPlaybackInteractor.swift */; };
-		272AE61B1F10114F0069345F /* ByteRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6101F10114F0069345F /* ByteRange.swift */; };
-		272AE61C1F10114F0069345F /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6111F10114F0069345F /* Requests.swift */; };
-		272AE61D1F10114F0069345F /* VPKAssetResourceLoaderDelegate .swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6121F10114F0069345F /* VPKAssetResourceLoaderDelegate .swift */; };
-		272AE61E1F10114F0069345F /* VPKTableViewPrefetchSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6131F10114F0069345F /* VPKTableViewPrefetchSynchronizer.swift */; };
-		272AE61F1F10114F0069345F /* VPKVideoRequestDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6141F10114F0069345F /* VPKVideoRequestDownloader.swift */; };
-		272AE6201F10114F0069345F /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6151F10114F0069345F /* VPKPlayerDelegate.swift */; };
-		272AE6211F10114F0069345F /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6161F10114F0069345F /* VPKVideoPlaybackManager.swift */; };
-		272AE6221F10114F0069345F /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6181F10114F0069345F /* VPKVideoPlaybackPresenter.swift */; };
-		272AE6291F1011550069345F /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6251F1011550069345F /* VideoViewAnimator.swift */; };
-		272AE62A1F1011550069345F /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6271F1011550069345F /* VPKPlaybackControlView.swift */; };
-		272AE62B1F1011550069345F /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272AE6281F1011550069345F /* VPKVideoView.swift */; };
+		27077F2C1F10154900D82FA8 /* VPKVideoPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F061F10154900D82FA8 /* VPKVideoPlaybackBuilder.swift */; };
+		27077F2D1F10154900D82FA8 /* VPKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F081F10154900D82FA8 /* VPKColor.swift */; };
+		27077F2E1F10154900D82FA8 /* VPKEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F091F10154900D82FA8 /* VPKEnum.swift */; };
+		27077F2F1F10154900D82FA8 /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F0A1F10154900D82FA8 /* VPKPlayerContract.swift */; };
+		27077F301F10154900D82FA8 /* AVContentInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F0C1F10154900D82FA8 /* AVContentInfoRequest.swift */; };
+		27077F311F10154900D82FA8 /* FileManager+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F0D1F10154900D82FA8 /* FileManager+Configure.swift */; };
+		27077F321F10154900D82FA8 /* URL+Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F0E1F10154900D82FA8 /* URL+Prefix.swift */; };
+		27077F331F10154900D82FA8 /* URLRequest+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F0F1F10154900D82FA8 /* URLRequest+Configure.swift */; };
+		27077F341F10154900D82FA8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27077F101F10154900D82FA8 /* Info.plist */; };
+		27077F351F10154900D82FA8 /* VPKTableViewVideoPlaybackScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F121F10154900D82FA8 /* VPKTableViewVideoPlaybackScrollable.swift */; };
+		27077F361F10154900D82FA8 /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F131F10154900D82FA8 /* VPKVideoPlaybackInteractor.swift */; };
+		27077F371F10154900D82FA8 /* ByteRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F161F10154900D82FA8 /* ByteRange.swift */; };
+		27077F381F10154900D82FA8 /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F171F10154900D82FA8 /* Requests.swift */; };
+		27077F391F10154900D82FA8 /* VPKAssetResourceLoaderDelegate .swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F181F10154900D82FA8 /* VPKAssetResourceLoaderDelegate .swift */; };
+		27077F3A1F10154900D82FA8 /* VPKTableViewPrefetchSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F191F10154900D82FA8 /* VPKTableViewPrefetchSynchronizer.swift */; };
+		27077F3B1F10154900D82FA8 /* VPKVideoRequestDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F1A1F10154900D82FA8 /* VPKVideoRequestDownloader.swift */; };
+		27077F3C1F10154900D82FA8 /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F1B1F10154900D82FA8 /* VPKPlayerDelegate.swift */; };
+		27077F3D1F10154900D82FA8 /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F1C1F10154900D82FA8 /* VPKVideoPlaybackManager.swift */; };
+		27077F3E1F10154900D82FA8 /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F201F10154900D82FA8 /* VideoViewAnimator.swift */; };
+		27077F3F1F10154900D82FA8 /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F221F10154900D82FA8 /* VPKPlaybackControlView.swift */; };
+		27077F401F10154900D82FA8 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F231F10154900D82FA8 /* VPKVideoView.swift */; };
+		27077F411F10154900D82FA8 /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F241F10154900D82FA8 /* VPKVideoPlaybackPresenter.swift */; };
+		27077F421F10154900D82FA8 /* VideoPlaybackKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 27077F251F10154900D82FA8 /* VideoPlaybackKit.h */; };
+		27077F431F10154900D82FA8 /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F281F10154900D82FA8 /* VideoViewAnimator.swift */; };
+		27077F441F10154900D82FA8 /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F2A1F10154900D82FA8 /* VPKPlaybackControlView.swift */; };
+		27077F451F10154900D82FA8 /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F2B1F10154900D82FA8 /* VPKVideoView.swift */; };
 		27341E631F10009900C46383 /* VideoPlaybackKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27341E591F10009900C46383 /* VideoPlaybackKit.framework */; };
 		27341E681F10009900C46383 /* VideoPlaybackKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27341E671F10009900C46383 /* VideoPlaybackKitTests.swift */; };
-		27341E6A1F10009900C46383 /* VideoPlaybackKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 27341E5C1F10009900C46383 /* VideoPlaybackKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,30 +48,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		272AE5F91F1011470069345F /* VPKVideoPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackBuilder.swift; sourceTree = "<group>"; };
-		272AE5FB1F1011470069345F /* VPKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKColor.swift; sourceTree = "<group>"; };
-		272AE5FC1F1011470069345F /* VPKEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKEnum.swift; sourceTree = "<group>"; };
-		272AE5FD1F1011470069345F /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
-		272AE5FF1F1011470069345F /* AVContentInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVContentInfoRequest.swift; sourceTree = "<group>"; };
-		272AE6001F1011470069345F /* FileManager+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Configure.swift"; sourceTree = "<group>"; };
-		272AE6011F1011470069345F /* URL+Prefix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Prefix.swift"; sourceTree = "<group>"; };
-		272AE6021F1011470069345F /* URLRequest+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Configure.swift"; sourceTree = "<group>"; };
-		272AE60C1F10114F0069345F /* VPKTableViewVideoPlaybackScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewVideoPlaybackScrollable.swift; sourceTree = "<group>"; };
-		272AE60D1F10114F0069345F /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
-		272AE6101F10114F0069345F /* ByteRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteRange.swift; sourceTree = "<group>"; };
-		272AE6111F10114F0069345F /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
-		272AE6121F10114F0069345F /* VPKAssetResourceLoaderDelegate .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VPKAssetResourceLoaderDelegate .swift"; sourceTree = "<group>"; };
-		272AE6131F10114F0069345F /* VPKTableViewPrefetchSynchronizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewPrefetchSynchronizer.swift; sourceTree = "<group>"; };
-		272AE6141F10114F0069345F /* VPKVideoRequestDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoRequestDownloader.swift; sourceTree = "<group>"; };
-		272AE6151F10114F0069345F /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
-		272AE6161F10114F0069345F /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
-		272AE6181F10114F0069345F /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
-		272AE6251F1011550069345F /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
-		272AE6271F1011550069345F /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
-		272AE6281F1011550069345F /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
+		27077F061F10154900D82FA8 /* VPKVideoPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackBuilder.swift; sourceTree = "<group>"; };
+		27077F081F10154900D82FA8 /* VPKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKColor.swift; sourceTree = "<group>"; };
+		27077F091F10154900D82FA8 /* VPKEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKEnum.swift; sourceTree = "<group>"; };
+		27077F0A1F10154900D82FA8 /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
+		27077F0C1F10154900D82FA8 /* AVContentInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVContentInfoRequest.swift; sourceTree = "<group>"; };
+		27077F0D1F10154900D82FA8 /* FileManager+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Configure.swift"; sourceTree = "<group>"; };
+		27077F0E1F10154900D82FA8 /* URL+Prefix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Prefix.swift"; sourceTree = "<group>"; };
+		27077F0F1F10154900D82FA8 /* URLRequest+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Configure.swift"; sourceTree = "<group>"; };
+		27077F101F10154900D82FA8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27077F121F10154900D82FA8 /* VPKTableViewVideoPlaybackScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewVideoPlaybackScrollable.swift; sourceTree = "<group>"; };
+		27077F131F10154900D82FA8 /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
+		27077F161F10154900D82FA8 /* ByteRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteRange.swift; sourceTree = "<group>"; };
+		27077F171F10154900D82FA8 /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
+		27077F181F10154900D82FA8 /* VPKAssetResourceLoaderDelegate .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VPKAssetResourceLoaderDelegate .swift"; sourceTree = "<group>"; };
+		27077F191F10154900D82FA8 /* VPKTableViewPrefetchSynchronizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewPrefetchSynchronizer.swift; sourceTree = "<group>"; };
+		27077F1A1F10154900D82FA8 /* VPKVideoRequestDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoRequestDownloader.swift; sourceTree = "<group>"; };
+		27077F1B1F10154900D82FA8 /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
+		27077F1C1F10154900D82FA8 /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
+		27077F201F10154900D82FA8 /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
+		27077F221F10154900D82FA8 /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
+		27077F231F10154900D82FA8 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
+		27077F241F10154900D82FA8 /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
+		27077F251F10154900D82FA8 /* VideoPlaybackKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlaybackKit.h; sourceTree = "<group>"; };
+		27077F281F10154900D82FA8 /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
+		27077F2A1F10154900D82FA8 /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
+		27077F2B1F10154900D82FA8 /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
 		27341E591F10009900C46383 /* VideoPlaybackKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VideoPlaybackKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		27341E5C1F10009900C46383 /* VideoPlaybackKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoPlaybackKit.h; sourceTree = "<group>"; };
-		27341E5D1F10009900C46383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27341E621F10009900C46383 /* VideoPlaybackKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoPlaybackKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27341E671F10009900C46383 /* VideoPlaybackKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlaybackKitTests.swift; sourceTree = "<group>"; };
 		27341E691F10009900C46383 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -92,99 +99,123 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		272AE5F81F1011470069345F /* Builder */ = {
+		27077F051F10154900D82FA8 /* Builder */ = {
 			isa = PBXGroup;
 			children = (
-				272AE5F91F1011470069345F /* VPKVideoPlaybackBuilder.swift */,
+				27077F061F10154900D82FA8 /* VPKVideoPlaybackBuilder.swift */,
 			);
 			path = Builder;
 			sourceTree = "<group>";
 		};
-		272AE5FA1F1011470069345F /* Contract */ = {
+		27077F071F10154900D82FA8 /* Contract */ = {
 			isa = PBXGroup;
 			children = (
-				272AE5FB1F1011470069345F /* VPKColor.swift */,
-				272AE5FC1F1011470069345F /* VPKEnum.swift */,
-				272AE5FD1F1011470069345F /* VPKPlayerContract.swift */,
+				27077F081F10154900D82FA8 /* VPKColor.swift */,
+				27077F091F10154900D82FA8 /* VPKEnum.swift */,
+				27077F0A1F10154900D82FA8 /* VPKPlayerContract.swift */,
 			);
 			path = Contract;
 			sourceTree = "<group>";
 		};
-		272AE5FE1F1011470069345F /* Extensions */ = {
+		27077F0B1F10154900D82FA8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				272AE5FF1F1011470069345F /* AVContentInfoRequest.swift */,
-				272AE6001F1011470069345F /* FileManager+Configure.swift */,
-				272AE6011F1011470069345F /* URL+Prefix.swift */,
-				272AE6021F1011470069345F /* URLRequest+Configure.swift */,
+				27077F0C1F10154900D82FA8 /* AVContentInfoRequest.swift */,
+				27077F0D1F10154900D82FA8 /* FileManager+Configure.swift */,
+				27077F0E1F10154900D82FA8 /* URL+Prefix.swift */,
+				27077F0F1F10154900D82FA8 /* URLRequest+Configure.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		272AE60B1F10114F0069345F /* Interactor */ = {
+		27077F111F10154900D82FA8 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				272AE60C1F10114F0069345F /* VPKTableViewVideoPlaybackScrollable.swift */,
-				272AE60D1F10114F0069345F /* VPKVideoPlaybackInteractor.swift */,
+				27077F121F10154900D82FA8 /* VPKTableViewVideoPlaybackScrollable.swift */,
+				27077F131F10154900D82FA8 /* VPKVideoPlaybackInteractor.swift */,
 			);
-			name = Interactor;
-			path = ../Interactor;
+			path = Interactor;
 			sourceTree = "<group>";
 		};
-		272AE60E1F10114F0069345F /* Manager */ = {
+		27077F141F10154900D82FA8 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				272AE60F1F10114F0069345F /* Utils */,
-				272AE6151F10114F0069345F /* VPKPlayerDelegate.swift */,
-				272AE6161F10114F0069345F /* VPKVideoPlaybackManager.swift */,
+				27077F151F10154900D82FA8 /* Utils */,
+				27077F1B1F10154900D82FA8 /* VPKPlayerDelegate.swift */,
+				27077F1C1F10154900D82FA8 /* VPKVideoPlaybackManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
 		};
-		272AE60F1F10114F0069345F /* Utils */ = {
+		27077F151F10154900D82FA8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				272AE6101F10114F0069345F /* ByteRange.swift */,
-				272AE6111F10114F0069345F /* Requests.swift */,
-				272AE6121F10114F0069345F /* VPKAssetResourceLoaderDelegate .swift */,
-				272AE6131F10114F0069345F /* VPKTableViewPrefetchSynchronizer.swift */,
-				272AE6141F10114F0069345F /* VPKVideoRequestDownloader.swift */,
+				27077F161F10154900D82FA8 /* ByteRange.swift */,
+				27077F171F10154900D82FA8 /* Requests.swift */,
+				27077F181F10154900D82FA8 /* VPKAssetResourceLoaderDelegate .swift */,
+				27077F191F10154900D82FA8 /* VPKTableViewPrefetchSynchronizer.swift */,
+				27077F1A1F10154900D82FA8 /* VPKVideoRequestDownloader.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		272AE6171F10114F0069345F /* Presenter */ = {
+		27077F1D1F10154900D82FA8 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				272AE60B1F10114F0069345F /* Interactor */,
-				272AE6181F10114F0069345F /* VPKVideoPlaybackPresenter.swift */,
+				27077F1E1F10154900D82FA8 /* View */,
+				27077F241F10154900D82FA8 /* VPKVideoPlaybackPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		272AE6231F1011550069345F /* View */ = {
+		27077F1E1F10154900D82FA8 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				272AE6241F1011550069345F /* Animator */,
-				272AE6261F1011550069345F /* Video */,
+				27077F1F1F10154900D82FA8 /* Animator */,
+				27077F211F10154900D82FA8 /* Video */,
 			);
-			name = View;
-			path = Presenter/View;
+			path = View;
 			sourceTree = "<group>";
 		};
-		272AE6241F1011550069345F /* Animator */ = {
+		27077F1F1F10154900D82FA8 /* Animator */ = {
 			isa = PBXGroup;
 			children = (
-				272AE6251F1011550069345F /* VideoViewAnimator.swift */,
+				27077F201F10154900D82FA8 /* VideoViewAnimator.swift */,
 			);
 			path = Animator;
 			sourceTree = "<group>";
 		};
-		272AE6261F1011550069345F /* Video */ = {
+		27077F211F10154900D82FA8 /* Video */ = {
 			isa = PBXGroup;
 			children = (
-				272AE6271F1011550069345F /* VPKPlaybackControlView.swift */,
-				272AE6281F1011550069345F /* VPKVideoView.swift */,
+				27077F221F10154900D82FA8 /* VPKPlaybackControlView.swift */,
+				27077F231F10154900D82FA8 /* VPKVideoView.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		27077F261F10154900D82FA8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				27077F271F10154900D82FA8 /* Animator */,
+				27077F291F10154900D82FA8 /* Video */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		27077F271F10154900D82FA8 /* Animator */ = {
+			isa = PBXGroup;
+			children = (
+				27077F281F10154900D82FA8 /* VideoViewAnimator.swift */,
+			);
+			path = Animator;
+			sourceTree = "<group>";
+		};
+		27077F291F10154900D82FA8 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				27077F2A1F10154900D82FA8 /* VPKPlaybackControlView.swift */,
+				27077F2B1F10154900D82FA8 /* VPKVideoView.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -210,14 +241,15 @@
 		27341E5B1F10009900C46383 /* VideoPlaybackKit */ = {
 			isa = PBXGroup;
 			children = (
-				27341E5C1F10009900C46383 /* VideoPlaybackKit.h */,
-				272AE5FA1F1011470069345F /* Contract */,
-				272AE5F81F1011470069345F /* Builder */,
-				272AE6231F1011550069345F /* View */,
-				272AE6171F10114F0069345F /* Presenter */,
-				272AE60E1F10114F0069345F /* Manager */,
-				272AE5FE1F1011470069345F /* Extensions */,
-				27341E5D1F10009900C46383 /* Info.plist */,
+				27077F051F10154900D82FA8 /* Builder */,
+				27077F071F10154900D82FA8 /* Contract */,
+				27077F0B1F10154900D82FA8 /* Extensions */,
+				27077F101F10154900D82FA8 /* Info.plist */,
+				27077F111F10154900D82FA8 /* Interactor */,
+				27077F141F10154900D82FA8 /* Manager */,
+				27077F1D1F10154900D82FA8 /* Presenter */,
+				27077F251F10154900D82FA8 /* VideoPlaybackKit.h */,
+				27077F261F10154900D82FA8 /* View */,
 			);
 			path = VideoPlaybackKit;
 			sourceTree = "<group>";
@@ -238,7 +270,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27341E6A1F10009900C46383 /* VideoPlaybackKit.h in Headers */,
+				27077F421F10154900D82FA8 /* VideoPlaybackKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +359,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27077F341F10154900D82FA8 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,27 +377,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272AE61D1F10114F0069345F /* VPKAssetResourceLoaderDelegate .swift in Sources */,
-				272AE6031F1011470069345F /* VPKVideoPlaybackBuilder.swift in Sources */,
-				272AE61F1F10114F0069345F /* VPKVideoRequestDownloader.swift in Sources */,
-				272AE6291F1011550069345F /* VideoViewAnimator.swift in Sources */,
-				272AE6211F10114F0069345F /* VPKVideoPlaybackManager.swift in Sources */,
-				272AE6041F1011470069345F /* VPKColor.swift in Sources */,
-				272AE6081F1011470069345F /* FileManager+Configure.swift in Sources */,
-				272AE62A1F1011550069345F /* VPKPlaybackControlView.swift in Sources */,
-				272AE61B1F10114F0069345F /* ByteRange.swift in Sources */,
-				272AE6071F1011470069345F /* AVContentInfoRequest.swift in Sources */,
-				272AE61E1F10114F0069345F /* VPKTableViewPrefetchSynchronizer.swift in Sources */,
-				272AE6061F1011470069345F /* VPKPlayerContract.swift in Sources */,
-				272AE62B1F1011550069345F /* VPKVideoView.swift in Sources */,
-				272AE6051F1011470069345F /* VPKEnum.swift in Sources */,
-				272AE60A1F1011470069345F /* URLRequest+Configure.swift in Sources */,
-				272AE6201F10114F0069345F /* VPKPlayerDelegate.swift in Sources */,
-				272AE6221F10114F0069345F /* VPKVideoPlaybackPresenter.swift in Sources */,
-				272AE6191F10114F0069345F /* VPKTableViewVideoPlaybackScrollable.swift in Sources */,
-				272AE61C1F10114F0069345F /* Requests.swift in Sources */,
-				272AE61A1F10114F0069345F /* VPKVideoPlaybackInteractor.swift in Sources */,
-				272AE6091F1011470069345F /* URL+Prefix.swift in Sources */,
+				27077F451F10154900D82FA8 /* VPKVideoView.swift in Sources */,
+				27077F391F10154900D82FA8 /* VPKAssetResourceLoaderDelegate .swift in Sources */,
+				27077F441F10154900D82FA8 /* VPKPlaybackControlView.swift in Sources */,
+				27077F2C1F10154900D82FA8 /* VPKVideoPlaybackBuilder.swift in Sources */,
+				27077F3B1F10154900D82FA8 /* VPKVideoRequestDownloader.swift in Sources */,
+				27077F3D1F10154900D82FA8 /* VPKVideoPlaybackManager.swift in Sources */,
+				27077F2D1F10154900D82FA8 /* VPKColor.swift in Sources */,
+				27077F311F10154900D82FA8 /* FileManager+Configure.swift in Sources */,
+				27077F371F10154900D82FA8 /* ByteRange.swift in Sources */,
+				27077F301F10154900D82FA8 /* AVContentInfoRequest.swift in Sources */,
+				27077F401F10154900D82FA8 /* VPKVideoView.swift in Sources */,
+				27077F3A1F10154900D82FA8 /* VPKTableViewPrefetchSynchronizer.swift in Sources */,
+				27077F3F1F10154900D82FA8 /* VPKPlaybackControlView.swift in Sources */,
+				27077F2F1F10154900D82FA8 /* VPKPlayerContract.swift in Sources */,
+				27077F2E1F10154900D82FA8 /* VPKEnum.swift in Sources */,
+				27077F3E1F10154900D82FA8 /* VideoViewAnimator.swift in Sources */,
+				27077F331F10154900D82FA8 /* URLRequest+Configure.swift in Sources */,
+				27077F3C1F10154900D82FA8 /* VPKPlayerDelegate.swift in Sources */,
+				27077F351F10154900D82FA8 /* VPKTableViewVideoPlaybackScrollable.swift in Sources */,
+				27077F381F10154900D82FA8 /* Requests.swift in Sources */,
+				27077F361F10154900D82FA8 /* VPKVideoPlaybackInteractor.swift in Sources */,
+				27077F431F10154900D82FA8 /* VideoViewAnimator.swift in Sources */,
+				27077F411F10154900D82FA8 /* VPKVideoPlaybackPresenter.swift in Sources */,
+				27077F321F10154900D82FA8 /* URL+Prefix.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
