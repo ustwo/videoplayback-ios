@@ -1,8 +1,7 @@
 //
-//  VPKVideoDownloadLoader.swift
+//  VPKTableViewPrefetchSynchronizer.swift
 //  DemoVideoPlaybackKit
-//
-//  Created by Sonam on 7/5/17.
+//s//  Created by Sonam on 7/5/17.
 //  Copyright © 2017 ustwo. All rights reserved.
 //
 
@@ -18,7 +17,7 @@ protocol VPKPrefetchVideoDownloader: class, UITableViewDataSourcePrefetching {
     func cancelDownloadingVideo(forItemAtIndex index: Int)
 }
 
-class VPKVideoDownloadLoader: NSObject, VPKPrefetchVideoDownloader {
+class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader {
 
     
     var videoItems = [VPKVideoType]()
@@ -47,7 +46,13 @@ class VPKVideoDownloadLoader: NSObject, VPKPrefetchVideoDownloader {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let resorceDelegate = VPKAssetResourceLoaderDelegate(customLoadingScheme: "VPKPlayback", resourcesDirectory: VPKVideoPlaybackManager.defaultDirectory, defaults: UserDefaults.standard)
+        
+        let asset = resorceDelegate.prepareAsset(for: url)
+        
+        //Configure asset, set resource delegate. Let resource delegate handle download.
+        
+       /* let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             //download Video data on a background thread 
             
@@ -64,7 +69,7 @@ class VPKVideoDownloadLoader: NSObject, VPKPrefetchVideoDownloader {
             }
         }
         task.resume()
-        tasks.append(task)
+        tasks.append(task)*/
     }
     
     func cancelDownloadingVideo(forItemAtIndex index: Int) {

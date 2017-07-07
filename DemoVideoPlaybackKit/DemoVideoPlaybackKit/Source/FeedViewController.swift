@@ -18,12 +18,14 @@ class FeedViewController: UIViewController {
     
     private let disposeBag = DisposeBag()
 
+    
     let datasource = Variable([
         VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1"),
         VPKVideoType.remote(url: "http://wbellentube-a.akamaihd.net/20160404/1656/0_t1zku1k4_0_6di1ulfi_2.mp4", placeholderURLName: "https://assets.ellentv.com/www.ellentv.com/main/default/img/ellen-og-1200x630.jpg"),
         VPKVideoType.remote(url: "http://wbellentube-a.akamaihd.net/20160404/1656/0_8x73t27s_0_hrxcpjv7_2.mp4", placeholderURLName: "http://media.ellentv.com/2016/04/05/john-travolta-talks-the-o-j-1362x1002-1.jpg"),
         VPKVideoType.remote(url: "http://wbellentube-a.akamaihd.net/20150603/1656/0_vmfukdeo_0_2tkvjd50_2.mp4", placeholderURLName: "http://media.ellentv.com/2015/06/04/a-exclusive-sneak-peek-at-the-magic-mikea-sequel-1362x1002.jpg")
     ])
+    
     
     convenience init(_ autoPlay: Bool) {
         self.init()
@@ -47,8 +49,6 @@ class FeedViewController: UIViewController {
         tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
         tableView.estimatedRowHeight = 400
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.prefetchDataSource = self
-        
         
         datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
@@ -83,15 +83,3 @@ extension FeedViewController: UITableViewDelegate {
     }
 }
 
-extension FeedViewController: UITableViewDataSourcePrefetching {
-    
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print("prefetchRowsAt \(indexPaths)")
-
-    }
-    
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        print("cancelPrefetchingForRowsAt \(indexPaths)")
-
-    }
-}

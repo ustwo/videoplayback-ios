@@ -9,6 +9,7 @@
 import Foundation
 import AVKit
 import AVFoundation
+import PINCache
 
 
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
@@ -16,6 +17,15 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     weak var delegate: VPKVideoPlaybackDelegate?
     static let shared = VPKVideoPlaybackManager()
+    /// The default directory for scratch file caching.
+    
+    static let defaultDirectory: URL = {
+        let caches = FileManager.default.cachesDirectory()!
+        return caches.appendingPathComponent(
+            "VPKPlaybackManager",
+            isDirectory: true
+        )
+    }()
 
     static let assetKeysRequiredToPlay = [
         "playable",
@@ -55,6 +65,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate lazy var player = AVQueuePlayer()
     fileprivate var playerLooper: AVPlayerLooper?
+    fileprivate var resourceLoaderDelegate: VPKAssetResourceLoaderDelegate?
+    
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
     fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus, likelyToKeepUp
@@ -70,6 +82,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         playerState = .paused
         player.actionAtItemEnd = .none
         player.automaticallyWaitsToMinimizeStalling = true
+        _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         
       //  addApplicationObservers()
         trackTimeProgress()
@@ -78,6 +91,16 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
     fileprivate func playVideoForTheFirstTime(_ url: URL) {
+        if PINCache.shared().containsObject(forKey: url.path) {
+            
+        
+        }
+        
+        let resourceDelegate = VPKAssetResourceLoaderDelegate(customLoadingScheme: "VPKPlayback", resourcesDirectory: VPKVideoPlaybackManager.defaultDirectory, defaults: UserDefaults.standard)
+        let asset = resourceDelegate.prepareAsset(for: url)
+        player.replaceCurrentItem(with: AVPlayerItem(asset: asset!))
+                
+        /*
         let serviceGroup = DispatchGroup()
         let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
         
@@ -86,6 +109,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             serviceGroup.notify(queue: backgroundQueue, execute: {
                 self.asset = AVAsset(url: url)
                 self.currentVideoUrl = url
+            
                 if self.loopEnabled && self.playerItem != nil  {
                     self.player.actionAtItemEnd = .advance
                     self.playerLooper = AVPlayerLooper(player: self.player, templateItem: self.playerItem!)
@@ -108,6 +132,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         
         serviceGroup.notify(queue: backgroundQueue, work: workItemTwo)
         backgroundQueue.async(group: serviceGroup, execute: workItemTwo)
+         */
+ 
     }
     
     // MARK: - Asset Loading
