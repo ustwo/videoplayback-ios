@@ -13,7 +13,7 @@ Pod::Spec.new do |spec|
   spec.source_files  ="VideoPlaybackKit/VideoPlaybackKit/*.{h,swift}"
   spec.requires_arc = true
   spec.platform     = :ios
-  spec.ios.deployment_target = "10.2"
+  spec.ios.deployment_target = "10.3"
   spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
   
  spec.dependency "ASValueTrackingSlider"
