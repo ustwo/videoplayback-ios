@@ -91,6 +91,8 @@ class VPKAssetResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate {
         }
     }
     
+    fileprivate var pendingRequests =  [Request]()
+    
     // MARK: Init/Deinit
     internal init(customLoadingScheme: String, resourcesDirectory: URL, defaults: UserDefaults) {
 
@@ -105,12 +107,10 @@ class VPKAssetResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate {
     
     // MARK: Internal Methods
     
-    
-    
     /// Prepares an AVURLAsset, configuring the resource loader's delegate, etc.
     /// This method returns nil if the receiver cannot prepare an asset that it
     /// can handle.
-    internal func prepareAsset(for url: URL) -> AVURLAsset? {
+    internal func prefetchAssetData(for url: URL) -> AVURLAsset? {
         self.originalURL = url
         
         guard let redirectUrl = url.convertToRedirectURL(prefix: customLoadingScheme) else {
@@ -123,8 +123,9 @@ class VPKAssetResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate {
         asset.resourceLoader.setDelegate(self, queue: loaderQueue)
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).response(queue: loaderQueue) { (response) in
-            
-            
+            if response.data != nil {
+                response.data!.writeFile(to: url, with: .atomic)
+            }
         }
         
         return asset
@@ -251,7 +252,7 @@ class VPKAssetResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate {
                     // Let's only reset meta data if we receive a successful
                     // response.
                     
-                    print("Failed with error: \(error)")
+                    print("Failed with error: \(String(describing: error))")
                     self.finish(loadingRequest, with: error)
                 }
                 

@@ -17,6 +17,7 @@ class FeedViewController: UIViewController {
     var shouldAutoplayVideos: Bool = false
     
     private let disposeBag = DisposeBag()
+    fileprivate var videoPrefetcher: VPKTableViewPrefetchSynchronizer?
 
     
     let datasource = Variable([
@@ -60,6 +61,8 @@ class FeedViewController: UIViewController {
         
         tableView.rx.setDelegate(self)
         
+        videoPrefetcher = VPKTableViewPrefetchSynchronizer(videoItems: datasource.value)
+        tableView.prefetchDataSource = self 
     }
 
 }
@@ -67,7 +70,8 @@ class FeedViewController: UIViewController {
 extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        trackVideoViewCellScrolling() // default implementation 
+        handleAutoplayInTopVideoCell()
+        trackVideoViewCellScrolling() // default implementation
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -83,3 +87,16 @@ extension FeedViewController: UITableViewDelegate {
     }
 }
 
+
+//* Use this delegate method to asynchronously load AVAsset keys in advance. This will help speed up progressive downloads of streams ** 
+
+extension FeedViewController: UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        videoPrefetcher?.tableView(tableView, prefetchRowsAt: indexPaths)
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        videoPrefetcher?.tableView(tableView, cancelPrefetchingForRowsAt: indexPaths)
+    }
+}

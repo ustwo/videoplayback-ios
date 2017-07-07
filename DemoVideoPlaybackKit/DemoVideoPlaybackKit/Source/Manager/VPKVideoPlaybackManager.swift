@@ -12,6 +12,9 @@ import AVFoundation
 import PINCache
 
 
+internal typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
+
+
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
@@ -32,13 +35,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         "hasProtectedContent"
     ]
 
-    private var asset: AVAsset? {
-        didSet {
-            guard let newAsset = asset else { return }
-            asynchronouslyLoadURLAsset(newAsset)
-        }
-    }
-    
+    private var currentAsset: AVAsset?
     private var playerItem: AVPlayerItem? = nil {
         didSet {
             player.replaceCurrentItem(with: self.playerItem)
@@ -63,10 +60,13 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate var isSeekInProgress = false
     fileprivate var chaseTime = kCMTimeZero
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
+    fileprivate let assetAsyncQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier)
+
     fileprivate lazy var player = AVQueuePlayer()
     fileprivate var playerLooper: AVPlayerLooper?
     fileprivate var resourceLoaderDelegate: VPKAssetResourceLoaderDelegate?
     
+    fileprivate var playerItems = [AVPlayerItem]()
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
     fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus, likelyToKeepUp
@@ -81,7 +81,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         super.init()
         playerState = .paused
         player.actionAtItemEnd = .none
-        player.automaticallyWaitsToMinimizeStalling = true
+        player.automaticallyWaitsToMinimizeStalling = false
         _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         
       //  addApplicationObservers()
@@ -91,29 +91,25 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
     fileprivate func playVideoForTheFirstTime(_ url: URL) {
-        if PINCache.shared().containsObject(forKey: url.path) {
-            
         
-        }
-        
-        let resourceDelegate = VPKAssetResourceLoaderDelegate(customLoadingScheme: "VPKPlayback", resourcesDirectory: VPKVideoPlaybackManager.defaultDirectory, defaults: UserDefaults.standard)
-        let asset = resourceDelegate.prepareAsset(for: url)
-        player.replaceCurrentItem(with: AVPlayerItem(asset: asset!))
-                
-        /*
         let serviceGroup = DispatchGroup()
         let backgroundQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier, qos: .background, target: nil)
         
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
             serviceGroup.notify(queue: backgroundQueue, execute: {
-                self.asset = AVAsset(url: url)
-                self.currentVideoUrl = url
-            
-                if self.loopEnabled && self.playerItem != nil  {
-                    self.player.actionAtItemEnd = .advance
-                    self.playerLooper = AVPlayerLooper(player: self.player, templateItem: self.playerItem!)
-                }
+                self.currentAsset = AVAsset(url: url)
+                self.playerItemWithAsynchronouslyLoaded(for: self.currentAsset!, with: { (playerItem) in
+                    self.player.replaceCurrentItem(with: playerItem)
+                    self.currentVideoUrl = url
+                    
+                    if self.loopEnabled && self.playerItem != nil  {
+                        self.player.actionAtItemEnd = .advance
+                        self.playerLooper = AVPlayerLooper(player: self.player, templateItem: self.playerItem!)
+                    }
+                })
+                
+                
             })
             serviceGroup.leave()
         }
@@ -131,22 +127,24 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         }
         
         serviceGroup.notify(queue: backgroundQueue, work: workItemTwo)
-        backgroundQueue.async(group: serviceGroup, execute: workItemTwo)
-         */
- 
+        backgroundQueue.async(group: serviceGroup, execute: workItemTwo) 
     }
     
     // MARK: - Asset Loading
-    func preloadAssetWith(url: URL) {
-        let urlAsset = AVURLAsset(url: url)
-        urlAsset.loadValuesAsynchronously(forKeys: VPKVideoPlaybackManager.assetKeysRequiredToPlay) {
-
-            
+    func preloadURLsForQueue(with videoTypes: [VPKVideoType]) {
+        videoTypes.forEach { (videoType) in
+            guard let videoURL = videoType.videoUrl else { return }
+            let asset = AVAsset(url: videoURL)
+            self.playerItemWithAsynchronouslyLoaded(for: asset, with: { (playerItem) in
+                let playerItem = AVPlayerItem(asset: asset)
+                self.playerItems.append(playerItem)
+            })
         }
+        
     }
     
-    func asynchronouslyLoadURLAsset(_ newAsset: AVAsset) {
-        //*** Based on Apple's demo AVFoundation sample code **** 
+    func playerItemWithAsynchronouslyLoaded(for newAsset: AVAsset,with  playerItemClosure: @escaping PlayerItemClosure) {
+        //*** Based on Apple's demo AVFoundation sample code ****
         
         /*
          Using AVAsset now runs the risk of blocking the current thread (the
@@ -160,13 +158,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
              we'll elect to use the main thread at all times, let's dispatch
              our handler to the main queue.
              */
-            DispatchQueue.main.async {
-                /*
-                 `self.asset` has already changed! No point continuing because
-                 another `newAsset` will come along in a moment.
-                 */
-                guard newAsset == self.asset else { return }
-                
+            self.assetAsyncQueue.async {
                 /*
                  Test whether the values of each of the keys we need have been
                  successfully loaded.
@@ -192,7 +184,8 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
                  We can play this asset. Create a new `AVPlayerItem` and make
                  it our player's current item.
                  */
-                self.playerItem = AVPlayerItem(asset: newAsset)
+                playerItemClosure(AVPlayerItem(asset: newAsset))
+                return
             }
         }
     }
@@ -388,6 +381,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
         stop()
         currentVideoUrl = nil
         configurePlayer(item: nil)
+        player.removeAllItems()
         removePlayerItemObservers()
         delegate?.playbackManagerDidPlayNewVideo(self)
     }

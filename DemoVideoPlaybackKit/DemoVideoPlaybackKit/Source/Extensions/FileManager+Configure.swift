@@ -8,14 +8,16 @@
 
 import Foundation
 
-public extension FileHandle {
-
-    public func fileToRead(at path: String) -> FileHandle? {
-        return  FileHandle(forReadingAtPath: path)
+public extension Data {
+    
+    func writeFile(to url: URL, with options: Data.WritingOptions) -> Bool {
+        do {
+            try write(to: url, options: options)
+            return true
+        } catch {
+            return false
+        }
     }
-    
-    
-    
 }
 
 public extension FileManager {
@@ -66,11 +68,6 @@ public extension FileManager {
         return true
     }
     
-    public func createFile(at url: URL) -> Bool {
-        do {
-            
-        }
-    }
     public func removeFile(at url: URL) -> Bool {
         do {
             try removeItem(at: url)

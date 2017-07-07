@@ -9,7 +9,14 @@
 import Foundation
 import UIKit
 
-protocol VPKPrefetchVideoDownloader: class, UITableViewDataSourcePrefetching {
+public extension UITableView {
+    func vpk_setPrefetchOptimizer(for videoItems:[VPKVideoType]) {
+        self.prefetchDataSource = VPKTableViewPrefetchSynchronizer(videoItems: videoItems)
+    }
+}
+
+
+protocol VPKPrefetchVideoDownloader: class {
     var videoItems: [VPKVideoType] { get set }
     var tasks: [URLSessionTask] { get set }
 
@@ -17,7 +24,7 @@ protocol VPKPrefetchVideoDownloader: class, UITableViewDataSourcePrefetching {
     func cancelDownloadingVideo(forItemAtIndex index: Int)
 }
 
-class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader {
+class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader, UITableViewDataSourcePrefetching {
 
     
     var videoItems = [VPKVideoType]()
@@ -26,6 +33,7 @@ class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader {
     convenience init(videoItems: [VPKVideoType]) {
         self.init()
         self.videoItems = videoItems
+        VPKVideoPlaybackManager.shared.preloadURLsForQueue(with: videoItems)
     }
     
     //MARK: Prefetch 
@@ -39,8 +47,8 @@ class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader {
     
     //MARK: Download
     func downloadVideo(forItemAtIndex index: Int) {
+        /*
         guard let url = videoItems[index].videoUrl else { return }
-        
         guard tasks.index(where: { $0.originalRequest?.url == url }) == nil else {
             // We're already downloading the video.
             return
@@ -48,37 +56,38 @@ class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader {
         
         let resorceDelegate = VPKAssetResourceLoaderDelegate(customLoadingScheme: "VPKPlayback", resourcesDirectory: VPKVideoPlaybackManager.defaultDirectory, defaults: UserDefaults.standard)
         
-        let asset = resorceDelegate.prepareAsset(for: url)
+        let asset = resorceDelegate.prefetchAssetData(for: url)
         
         //Configure asset, set resource delegate. Let resource delegate handle download.
         
-       /* let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
-            //download Video data on a background thread 
+            //download Video data on a background thread
             
-            // Perform UI changes only on main thread.
+             //Perform UI changes only on main thread.
             
             DispatchQueue.main.async {
-                //update UI If need be 
-//                    // Reload cell with fade animation.
-//                    let indexPath = IndexPath(row: index, section: 0)
-//                    if self.tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
-//                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-//                    }
-//                }
+                update UI If need be 
+                    // Reload cell with fade animation.
+                    let indexPath = IndexPath(row: index, section: 0)
+                    if self.tableView.indexPathsForVisibleRows?.contains(indexPath) ?? false {
+                        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                    }
+                }
             }
         }
         task.resume()
         tasks.append(task)*/
+
     }
     
     func cancelDownloadingVideo(forItemAtIndex index: Int) {
-        guard let url = videoItems[index].videoUrl else { return }
+        /*guard let url = videoItems[index].videoUrl else { return }
         
         // Find a task with given URL, cancel it and delete from `tasks` array.
         guard let taskIndex = tasks.index(where: { $0.originalRequest?.url == url }) else { return }
         let task = tasks[taskIndex]
         task.cancel()
-        tasks.remove(at: taskIndex)
+        tasks.remove(at: taskIndex)*/
     }
 }

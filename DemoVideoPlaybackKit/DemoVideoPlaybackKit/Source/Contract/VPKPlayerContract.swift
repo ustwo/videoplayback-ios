@@ -14,9 +14,11 @@ import ASValueTrackingSlider
 
 typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
-/*
- ***** VIPER FRAMEWORK PROTOCOL CONTRACT ******
- */
+///-----------------------------------------------------------------------------
+/// VIP FRAMEWORK PROTOCOL CONTRACT ******
+//  This contract defines and explains the public protocols for the VIP module to work with your code. Protocols define the neccessary behavior for any class to conform to in order for the module to function correctly. Please make sure to reference default implementations to further understand what is happening in the background
+///-----------------------------------------------------------------------------
+
 
 //** Use Case
 //*
@@ -31,8 +33,7 @@ protocol VPKMainPlayerUseCase: class {
 }
 
 //*** View
-//*
-//*
+/// The video protocol defines the interface requirements for a view that supports video playback.
 protocol VPKVideoViewProtocol: class {
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
@@ -45,6 +46,7 @@ protocol VPKVideoViewProtocol: class {
     var viewWillAppearClosure: CompletionClosure? { get set }
     var playerLayer: AVPlayerLayer? { get set }
     
+    //These methods
     // PRESENTER -> VIEW
     func reuseInCell()
     func reloadInterface(with playerLayer: AVPlayerLayer)
