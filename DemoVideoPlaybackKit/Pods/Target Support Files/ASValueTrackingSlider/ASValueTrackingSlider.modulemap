@@ -1,0 +1,6 @@
+framework module ASValueTrackingSlider {
+  umbrella header "ASValueTrackingSlider-umbrella.h"
+
+  export *
+  module * { export * }
+}
