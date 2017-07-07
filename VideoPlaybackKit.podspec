@@ -13,6 +13,7 @@ Pod::Spec.new do |spec|
   spec.source_files  ="VideoPlaybackKit/VideoPlaybackKit/*.{h,swift}"
   spec.requires_arc = true
   spec.platform     = :ios, "10.0"
+  
   #spec.ios.deployment_target = "10.3"
   spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
   
