@@ -1,3 +1,0 @@
-language: objective-c
-script: xcodebuild -project {project}.xcodeproj -target {target} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-
