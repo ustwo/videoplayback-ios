@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VideoPlaybackKit"
-  spec.version = "0.0.7"
+  spec.version = "0.0.8"
   spec.summary = "Using Swift and the VIP pattern this is a module built using AVPlayer to return video views"
   spec.homepage = "https://github.com/ustwo/videoplayback-ios"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
