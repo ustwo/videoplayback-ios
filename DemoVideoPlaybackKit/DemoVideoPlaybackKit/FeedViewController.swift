@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class FeedViewController: UIViewController {
 
     var tableView = UITableView(frame: .zero)
@@ -51,19 +50,19 @@ class FeedViewController: UIViewController {
         tableView.estimatedRowHeight = 400
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        videoPrefetcher = VPKTableViewPrefetchSynchronizer(videoItems: datasource.value)
+        tableView.prefetchDataSource = self
+
         datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
             guard let cell = cell as? VideoTableViewCell else { return }
             
-            VPKVideoPlaybackBuilder.vpk_buildInFeedFor(model, atIndexPath:  NSIndexPath(item: index, section: 0), completion: { (videoView) in
+            VPKVideoPlaybackBuilder.vpk_buildViewInCell(for: model, atIndexPath: NSIndexPath(item: index, section: 0), completion: { (videoView) in
                 cell.videoView = videoView
                 cell.layoutIfNeeded()
             })}.addDisposableTo(disposeBag)
         
         tableView.rx.setDelegate(self)
-        
-        videoPrefetcher = VPKTableViewPrefetchSynchronizer(videoItems: datasource.value)
-        tableView.prefetchDataSource = self 
-    }
+        }
 
 }
 

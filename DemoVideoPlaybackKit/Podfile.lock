@@ -1,32 +1,29 @@
 PODS:
-  - Alamofire (4.4.0)
+  - Alamofire (4.5.0)
   - AlamofireImage (3.2.0):
     - Alamofire (~> 4.1)
   - ASValueTrackingSlider (0.12.1)
-  - PINCache (2.3)
-  - RxCocoa (3.4.0):
+  - RxCocoa (3.5.0):
     - RxSwift (~> 3.4)
-  - RxSwift (3.4.0)
+  - RxSwift (3.5.0)
   - SnapKit (3.2.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.4)
-  - AlamofireImage (~> 3.1)
+  - Alamofire
+  - AlamofireImage
   - ASValueTrackingSlider
-  - PINCache
-  - RxCocoa (~> 3.0)
-  - RxSwift (~> 3.0)
-  - SnapKit (~> 3.2.0)
+  - RxCocoa
+  - RxSwift
+  - SnapKit
 
 SPEC CHECKSUMS:
-  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
   ASValueTrackingSlider: 5261de3fcf00adb339efc93885e8f0bc99e703cd
-  PINCache: ce36ed282031b92fc7733ffe831f474ff80fddc2
-  RxCocoa: d14ef6b6029e1ddc6e966508c09289090de68ff9
-  RxSwift: 3789a1af753002a14edecdb698a2424624296a9c
+  RxCocoa: a0a09f45d0e5b48ecb6a4a7b4b4c89c88d3f633f
+  RxSwift: 18ee9d78b45edb3b0b7e79916b47a116e6dbc842
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
 
-PODFILE CHECKSUM: f565db34bcc97e889ad7cb07e338248c1d9e15c4
+PODFILE CHECKSUM: 6955c22fb8bf4044db768f734d487bd77de77705
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.1

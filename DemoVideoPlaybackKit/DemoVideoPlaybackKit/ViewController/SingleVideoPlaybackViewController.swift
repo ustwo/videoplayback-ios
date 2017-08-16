@@ -31,7 +31,8 @@ class SingleVideoPlaybackViewController: UIViewController {
         view.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")
         
-        VPKVideoPlaybackBuilder.vpk_buildModuleFor(videoType, shouldAutoplay: self.shouldAutoPlay, playbackBarTheme: self.toolBarTheme) { (videoView) in
+        
+        VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.shouldAutoPlay, playbackBarTheme: self.toolBarTheme) { (videoView) in
             
             self.view.addSubview(videoView)
             videoView.snp.makeConstraints({ (make) in

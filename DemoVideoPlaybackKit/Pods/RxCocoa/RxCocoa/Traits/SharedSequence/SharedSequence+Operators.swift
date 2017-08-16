@@ -133,9 +133,9 @@ extension SharedSequenceConvertibleType {
     - parameter identifier: Identifier that is printed together with event description to standard output.
     - returns: An observable sequence whose events are printed to standard output.
     */
-    public func debug(_ identifier: String? = nil, file: String = #file, line: UInt = #line, function: String = #function) -> SharedSequence<SharingStrategy, E> {
+    public func debug(_ identifier: String? = nil, trimOutput: Bool = false, file: String = #file, line: UInt = #line, function: String = #function) -> SharedSequence<SharingStrategy, E> {
         let source = self.asObservable()
-            .debug(identifier, file: file, line: line, function: function)
+            .debug(identifier, trimOutput: trimOutput, file: file, line: line, function: function)
         return SharedSequence(source)
     }
 }
@@ -264,7 +264,6 @@ extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType,
     /**
     Merges elements from all observable sequences in the given enumerable sequence into a single observable sequence.
     
-    - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
     - returns: The observable sequence that merges the elements of the observable sequences.
     */
     public func merge() -> SharedSequence<SharingStrategy, E.E> {
@@ -277,6 +276,7 @@ extension SharedSequenceConvertibleType where E : SharedSequenceConvertibleType,
     /**
     Merges elements from all inner observable sequences into a single observable sequence, limiting the number of concurrent subscriptions to inner sequences.
     
+    - parameter maxConcurrent: Maximum number of inner observable sequences being subscribed to concurrently.
     - returns: The observable sequence that merges the elements of the inner sequences.
     */
     public func merge(maxConcurrent: Int)
@@ -384,6 +384,17 @@ extension SharedSequence {
         let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
     }
+
+    /**
+     Merges the specified observable sequences into one observable sequence all of the observable sequences have produced an element at a corresponding index.
+
+     - returns: An observable sequence containing the result of combining elements of the sources.
+     */
+    public static func zip<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+            let source = Observable.zip(collection.map { $0.asSharedSequence().asObservable() })
+            return SharedSequence<SharingStrategy, [Element]>(source)
+    }
 }
 
 // MARK: combineLatest
@@ -399,6 +410,17 @@ extension SharedSequence {
         where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
         let source = Observable.combineLatest(collection.map { $0.asObservable() }, resultSelector)
         return SharedSequence<SharingStrategy, R>(source)
+    }
+
+    /**
+     Merges the specified observable sequences into one observable sequence whenever any of the observable sequences produces an element.
+
+     - returns: An observable sequence containing the result of combining elements of the sources.
+     */
+    public static func combineLatest<C: Collection>(_ collection: C) -> SharedSequence<SharingStrategy, [Element]>
+        where C.Iterator.Element == SharedSequence<SharingStrategy, Element> {
+        let source = Observable.combineLatest(collection.map { $0.asObservable() })
+        return SharedSequence<SharingStrategy, [Element]>(source)
     }
 }
 
