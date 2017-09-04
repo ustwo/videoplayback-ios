@@ -75,8 +75,7 @@ VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.
 
 1. Create a UITabieViewCell that conforms to VPKViewInCellProtocol
 
-'''swift
-
+```swift 
 class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
     static let identifier = "VideoCell"
     var videoView: VPKVideoView? {
@@ -91,12 +90,12 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
         prepareForVideoReuse() //Extension default
     }
 }
-'''
+```
 
 2. Register cell in UIViewController, set up tableview. Add videoview to cell 
  
 
-'''swift
+```swift 
     tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
     tableView.estimatedRowHeight = 400
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -112,7 +111,55 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
 
         tableView.rx.setDelegate(self)
 }
-'''
+```
+
+### Autoplay Videos in a feed
+
+1. Conform to the VPKTableViewVideoPlaybackScrollable protocol 
+
+Implement the following: 
+
+```swift 
+extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        handleAutoplayInTopVideoCell() // default implementation
+        trackVideoViewCellScrolling() // default implementation
+    }   
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if shouldAutoplayVideos {
+            handleAutoplayInTopVideoCell()
+        }
+    }
+}
+```
+
+### Play video in feed, pre-fetch video asset data. *** Recommended especially for auto playing video in a feed ***
+
+1. Create a VPKTableViewPrefetchSynchronizer object 
+
+```swift 
+videoPrefetcher = VPKTableViewPrefetchSynchronizer(videoItems: datasource.value)
+```
+
+2. Conform to the UITableViewDataSourcePrefetching tableview protocool 
+
+```swift 
+
+tableView.prefetchDataSource = self
+
+extension FeedViewController: UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        videoPrefetcher?.tableView(tableView, prefetchRowsAt: indexPaths)
+    }
+
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        videoPrefetcher?.tableView(tableView, cancelPrefetchingForRowsAt: indexPaths)
+    }
+}
+```
 
 
 
