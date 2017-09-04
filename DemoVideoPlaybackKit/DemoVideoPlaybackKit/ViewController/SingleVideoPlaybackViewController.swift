@@ -27,6 +27,7 @@ class SingleVideoPlaybackViewController: UIViewController {
     
     private func setup() {
         
+        title = "Single Video"
         
         view.backgroundColor = UIColor.white.withAlphaComponent(0.7)
         let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")

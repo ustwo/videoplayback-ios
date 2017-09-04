@@ -71,5 +71,51 @@ VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.
 
 ```
 
+### Play a video in a feed 
 
+1. Create a UITabieViewCell that conforms to VPKViewInCellProtocol
+
+'''swift
+class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
+
+    static let identifier = "VideoCell"
+    var videoView: VPKVideoView? {
+        didSet {
+            self.setupVideoViewConstraints()
+            layoutIfNeeded()
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        prepareForVideoReuse() //Extension default
+    }
+}
+'''
+
+2. Register cell in UIViewController, set up tableview. Add videoview to cell 
+ 
+
+'''swift
+    tableView.register(VideoTableViewCell.self, forCellReuseIdentifier: VideoTableViewCell.identifier)
+    tableView.estimatedRowHeight = 400
+    tableView.rowHeight = UITableViewAutomaticDimension
+
+    datasource.asObservable().bind(to: tableView.rx.items(cellIdentifier: VideoTableViewCell.identifier)) { index, model, cell in
+            
+        guard let cell = cell as? VideoTableViewCell else { return }
+
+        VPKVideoPlaybackBuilder.vpk_buildViewInCell(for: model, at: NSIndexPath(item: index, section: 0), completion: { (videoView) in
+                cell.videoView = videoView
+                cell.layoutIfNeeded()
+        })}.addDisposableTo(disposeBag)
+
+        tableView.rx.setDelegate(self)
+}
+'''
+
+
+
+## Contact：
+- Email: sonam@ustwo.com
 

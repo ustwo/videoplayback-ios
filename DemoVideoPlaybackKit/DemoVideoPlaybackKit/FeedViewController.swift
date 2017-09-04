@@ -41,6 +41,8 @@ class FeedViewController: UIViewController {
     }
     
     private func setup() {
+        self.title = "Video Feed"
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
             make.edges.equalTo(view)
