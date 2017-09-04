@@ -48,10 +48,8 @@ This framework is built using the VIP architecture. It is a wrapper around the A
 
 import VideoPlaybackKit
 
-#### Play a single video in a view 
-
-Single Video view - add a single view to your screen which contains video content 
-
+#### Play a single video in a view - add a single view to your screen which contains video content 
+ 
 1. Define the Video Type (local or remote)
 
 ```swift 
