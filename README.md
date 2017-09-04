@@ -76,8 +76,8 @@ VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.
 1. Create a UITabieViewCell that conforms to VPKViewInCellProtocol
 
 '''swift
-class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
 
+class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
     static let identifier = "VideoCell"
     var videoView: VPKVideoView? {
         didSet {
