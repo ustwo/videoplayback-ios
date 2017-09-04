@@ -289,7 +289,7 @@ class VPKAssetResourceLoaderDelegate: NSObject, AVAssetResourceLoaderDelegate {
     
     func finish(_ loadingRequest: AVAssetResourceLoadingRequest, with error: Error?) {
         self.errorStatus = .error(error)
-        loadingRequest.finishLoading(with: error as? NSError)
+        loadingRequest.finishLoading(with: error as NSError?)
         DispatchQueue.main.async {
             if case .error(_) = self.errorStatus {
                 print(error ?? "error")
