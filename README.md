@@ -54,20 +54,24 @@ Single Video view - add a single view to your screen which contains video conten
 
 1. Define the Video Type (local or remote)
 
+```
 let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")
-
+```
 
 2. Build the video view 
 
+```swift
 VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.shouldAutoPlay, playbackBarTheme: self.toolBarTheme) { (videoView) in
 
-    self.view.addSubview(videoView)
-    videoView.snp.makeConstraints({ (make) in
-    make.height.equalTo(view.snp.height).dividedBy(2)
-    make.top.equalTo(view.snp.top).offset(10)
-    make.left.right.equalTo(view)
-})
+        self.view.addSubview(videoView)
+        videoView.snp.makeConstraints({ (make) in
+        make.height.equalTo(view.snp.height).dividedBy(2)
+        make.top.equalTo(view.snp.top).offset(10)
+        make.left.right.equalTo(view)
+    })
 }
+
+```
 
 
 
