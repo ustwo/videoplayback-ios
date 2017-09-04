@@ -54,10 +54,12 @@ extension VPKVideoPlaybackInteractor: VPKVideoPlaybackDelegate {
         presenter?.onVideoResetPresentation()
     }
     
+    @available(iOS 10, *)
     func playbackManager(_: VPKVideoPlaybackManager, didPrepare playerLayer: AVPlayerLayer) {
         presenter?.onVideoLoadSuccess(playerLayer)
     }
     
+    @available(iOS 10, *)
     func playbackManager(_: VPKVideoPlaybackManager, didStartPlayingWith duration: TimeInterval) {
         presenter?.onVideoDidStartPlayingWith(duration)
     }

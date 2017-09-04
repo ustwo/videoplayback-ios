@@ -14,6 +14,7 @@ import AVFoundation
 internal typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
 
 
+@available(iOS 10, *)
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     
@@ -81,7 +82,11 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         super.init()
         playerState = .paused
         player.actionAtItemEnd = .none
-        player.automaticallyWaitsToMinimizeStalling = false
+        if #available(iOS 10.0, *) {
+            player.automaticallyWaitsToMinimizeStalling = false
+        } else {
+            // Fallback on earlier versions
+        }
         _ = try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
         
       //  addApplicationObservers()
@@ -392,6 +397,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerOutputProtocol {
     }
 }
 
+@available(iOS 10, *)
 extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
     
     func didScrubTo(_ seconds: TimeInterval) {
@@ -442,6 +448,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
 
 //MARK: - Time Scrubbing
 
+@available(iOS 10, *)
 extension VPKVideoPlaybackManager {
     
     func stopPlayingAndSeekSmoothlyToTime(newChaseTime: CMTime) {

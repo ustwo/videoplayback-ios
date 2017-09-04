@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VideoPlaybackKit"
-  spec.version = "0.1.3"
+  spec.version = "0.1.4"
   spec.summary = "Using Swift and the VIP pattern this is a module built using AVPlayer to return video views"
   spec.homepage = "https://github.com/ustwo/videoplayback-ios"
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
@@ -10,12 +10,13 @@ Pod::Spec.new do |spec|
   }
 
   spec.source = { :git => "https://github.com/ustwo/videoplayback-ios.git", :tag => "v#{spec.version}", :submodules => true }
-  spec.header_mappings_dir = 'Source/'
+  spec.header_mappings_dir = 'VideoPlaybackKit/'
   spec.source_files  ="Source/**/*.{swift,h}"
   spec.requires_arc = true
   spec.platform     = :ios, "10.0"
+
   
-  spec.ios.deployment_target = "8.0"
+  spec.ios.deployment_target = "10.0"
   spec.pod_target_xcconfig = { 'SWIFT_VERSION' => '3.0' }
   
  spec.dependency "ASValueTrackingSlider"

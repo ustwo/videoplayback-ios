@@ -10,7 +10,6 @@ import Foundation
 import AVKit
 import AVFoundation
 
-
 protocol VPKVideoPlaybackDelegate: class {
     
     func playbackManager(_: VPKVideoPlaybackManager, didPrepare playerLayer: AVPlayerLayer)
