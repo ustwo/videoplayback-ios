@@ -23,7 +23,7 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .none 
+        selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -31,6 +31,7 @@
 		27216C531F16BBD600A0DB2D /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */; };
 		27216C541F16BBD600A0DB2D /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C3F1F16BBD600A0DB2D /* VPKPlaybackControlView.swift */; };
 		27216C551F16BBD600A0DB2D /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C401F16BBD600A0DB2D /* VPKVideoView.swift */; };
+		2729FAB71F4772FA004BBA67 /* PlaybackControlViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */; };
 		272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1CE01EAFE62F007F5816 /* AppDelegate.swift */; };
 		272A1CE61EAFE62F007F5816 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE41EAFE62F007F5816 /* Main.storyboard */; };
 		272A1CE81EAFE62F007F5816 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE71EAFE62F007F5816 /* Assets.xcassets */; };
@@ -97,6 +98,7 @@
 		27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
 		27216C3F1F16BBD600A0DB2D /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
 		27216C401F16BBD600A0DB2D /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
+		2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlViewAnimator.swift; sourceTree = "<group>"; };
 		272A1CDD1EAFE62F007F5816 /* DemoVideoPlaybackKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoVideoPlaybackKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272A1CE01EAFE62F007F5816 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		272A1CE51EAFE62F007F5816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */,
+				2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */,
 			);
 			path = Animator;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */,
 				27216C511F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift in Sources */,
 				27216C431F16BBD600A0DB2D /* VPKEnum.swift in Sources */,
+				2729FAB71F4772FA004BBA67 /* PlaybackControlViewAnimator.swift in Sources */,
 				27216C4A1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift in Sources */,
 				27077F471F10196500D82FA8 /* DemoViewController.swift in Sources */,
 				27077F491F10197100D82FA8 /* FeedViewController.swift in Sources */,
