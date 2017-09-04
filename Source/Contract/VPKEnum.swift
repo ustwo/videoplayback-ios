@@ -66,9 +66,9 @@ public enum PlayerState {
 //**
 //*
 public enum VPKVideoType {
+    
     case remote(url: String, placeholderURLName: String)
     case local(videoPathName: String, fileType: String, placeholderImageName: String)
-    
     
     var videoUrl: URL? {
         switch self {

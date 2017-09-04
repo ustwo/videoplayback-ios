@@ -33,20 +33,22 @@ class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader, UI
     convenience init(videoItems: [VPKVideoType]) {
         self.init()
         self.videoItems = videoItems
-        VPKVideoPlaybackManager.shared.preloadURLsForQueue(with: videoItems)
     }
     
     //MARK: Prefetch 
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { downloadVideo(forItemAtIndex: $0.row) }
+        let filteredVideoItems = indexPaths.map{ self.videoItems[$0.row] }
+        VPKVideoPlaybackManager.shared.preloadURLsForFeed(with: filteredVideoItems)
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { cancelDownloadingVideo(forItemAtIndex: $0.row) }
+        let filteredVideoItems = indexPaths.map{ self.videoItems[$0.row] }
+        VPKVideoPlaybackManager.shared.cancelPreload(of: filteredVideoItems)
     }
     
     //MARK: Download
     func downloadVideo(forItemAtIndex index: Int) {
+        
         /*
         guard let url = videoItems[index].videoUrl else { return }
         guard tasks.index(where: { $0.originalRequest?.url == url }) == nil else {

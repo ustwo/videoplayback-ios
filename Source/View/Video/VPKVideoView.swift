@@ -49,7 +49,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     }
 
     //private
-    fileprivate let activityIndicator = UIActivityIndicatorView(frame: .zero)
+    var activityIndicator = UIActivityIndicatorView(frame: .zero)
     fileprivate let placeHolder = UIImageView(frame: .zero)
     private let tap = UITapGestureRecognizer()
     
@@ -104,7 +104,8 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             make.width.height.equalTo(40)
         }
         activityIndicator.color = .white
-        activityIndicator.hidesWhenStopped = true 
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating() // Ensure's that its initial state is not-active 
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
         
         addSubview(fullScreenBGView)
@@ -146,7 +147,6 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func didTapView() {
-        activityIndicator.startAnimating()
         presenter?.didTapVideoView()
     }
     
@@ -154,6 +154,7 @@ extension VPKVideoView: VPKVideoViewProtocol {
         self.placeHolder.image = nil 
         self.playerLayer = nil
         self.playbackBarView = nil
+        self.activityIndicator.removeFromSuperview()
         presenter?.reuseInCell()
     }
     
@@ -162,13 +163,13 @@ extension VPKVideoView: VPKVideoViewProtocol {
     }
     
     func reloadInterface(with playerLayer: AVPlayerLayer) {
-        activityIndicator.stopAnimating()
         self.playerLayer = playerLayer
         playerLayer.frame = self.bounds
         playerLayer.needsDisplayOnBoundsChange = true
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspect
         playerLayer.zPosition = -1.0
         DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
             self.layer.insertSublayer(playerLayer, at: 0)
             self.placeHolder.isHidden = true
         }

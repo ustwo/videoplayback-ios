@@ -42,6 +42,7 @@ protocol VPKVideoViewProtocol: class {
     var originalSuperview: UIView { get set } 
 
     var localPlaceHolderName: String { get set }
+    var activityIndicator: UIActivityIndicatorView { get set }
     var remotePlaceHolderURL: URL? { get set }
     var viewWillAppearClosure: CompletionClosure? { get set }
     var playerLayer: AVPlayerLayer? { get set }
@@ -96,10 +97,10 @@ protocol VPKPlaybackControlViewProtocol: class {
 public protocol VPKVideoPlaybackBuilderProtocol: class {
     
     //Single View
-    static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
     
     //View in Feed
-    static func vpk_buildInFeedFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {
@@ -154,6 +155,8 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
 }
 
 protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
+    
+    var progressTime: TimeInterval { get set }
     
     //INTERACTOR --> PRESENTER
     func onVideoResetPresentation()

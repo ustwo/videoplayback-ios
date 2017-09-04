@@ -1,0 +1,22 @@
+PODS:
+  - Alamofire (4.5.0)
+  - AlamofireImage (3.2.0):
+    - Alamofire (~> 4.1)
+  - ASValueTrackingSlider (0.12.1)
+  - SnapKit (3.2.0)
+
+DEPENDENCIES:
+  - Alamofire
+  - AlamofireImage
+  - ASValueTrackingSlider
+  - SnapKit
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  AlamofireImage: 157ed682cc81d3b9db4fb90c1f12180ac552d93b
+  ASValueTrackingSlider: 5261de3fcf00adb339efc93885e8f0bc99e703cd
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+
+PODFILE CHECKSUM: 7686b8a79f49e02656a95d74b958788e1b8f92de
+
+COCOAPODS: 1.2.1

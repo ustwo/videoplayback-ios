@@ -5,7 +5,6 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ustwo/videoplayback-ios)
 [![pod](https://img.shields.io/badge/pod-1.0.0-green.svg)](https://github.com/ustwo/videoplayback-ios) 
 [![pod](https://img.shields.io/badge/swift-support-fc2f24.svg?maxAge=2592000)](https://github.com/apple/swift)
-[![pod](https://img.shields.io/badge/Carthage-support-green.svg)](https://github.com/Carthage/Carthage)
 
 
 This framework is built using the VIP architecture. It is a wrapper around the AVFoundation framework. Use it to play remote, or local videos in a simple view or feed. Its purpose is to make playing progressive downloads and live streams simpler in your iOS applications
@@ -46,9 +45,11 @@ This framework is built using the VIP architecture. It is a wrapper around the A
 
 ## How To Use
 
+```swift 
+
 import VideoPlaybackKit
 
-#### Play a single video in a view - add a single view to your screen which contains video content 
+### Play a single video in a view - add a single view to your screen which contains video content 
  
 1. Define the Video Type (local or remote)
 

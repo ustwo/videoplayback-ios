@@ -20,14 +20,14 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
     
     //Feed (not auto-play, tap to play)
-   public static func vpk_buildInFeedFor(_ videoType: VPKVideoType, atIndexPath indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
+   public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: false, showInCell: indexPath, playbackTheme: playbackBarTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
 
     //Single View
-    public static func vpk_buildModuleFor(_ videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
+    public static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))

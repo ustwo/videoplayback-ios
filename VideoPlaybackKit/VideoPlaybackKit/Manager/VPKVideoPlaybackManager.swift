@@ -9,7 +9,6 @@
 import Foundation
 import AVKit
 import AVFoundation
-import PINCache
 
 
 internal typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
@@ -20,8 +19,9 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     
     weak var delegate: VPKVideoPlaybackDelegate?
     static let shared = VPKVideoPlaybackManager()
-    /// The default directory for scratch file caching.
+    static let acceptableBufferTime: Float = 5.0
     
+    /// The default directory for scratch file caching.
     static let defaultDirectory: URL = {
         let caches = FileManager.default.cachesDirectory()!
         return caches.appendingPathComponent(
@@ -35,7 +35,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         "hasProtectedContent"
     ]
 
-    private var currentAsset: AVAsset?
+    private var currentAsset: AVURLAsset?
     private var playerItem: AVPlayerItem? = nil {
         didSet {
             player.replaceCurrentItem(with: self.playerItem)
@@ -62,7 +62,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate static let queueIdentifier = "com.vpk.playerQueue"
     fileprivate let assetAsyncQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier)
 
-    fileprivate lazy var player = AVQueuePlayer()
+    fileprivate lazy var player = AVPlayer()
     fileprivate var playerLooper: AVPlayerLooper?
     fileprivate var resourceLoaderDelegate: VPKAssetResourceLoaderDelegate?
     
@@ -70,7 +70,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
     fileprivate enum ObservableKeyPaths: String {
         case status, rate, timeControlStatus, likelyToKeepUp
-        static let allValues = [status, rate, timeControlStatus]
+        static let allValues = [status, rate, timeControlStatus, likelyToKeepUp ]
     }
     
     //public 
@@ -98,14 +98,29 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         let workItemOne = DispatchWorkItem {
             serviceGroup.enter()
             serviceGroup.notify(queue: backgroundQueue, execute: {
-                self.currentAsset = AVAsset(url: url)
+                self.currentAsset = AVURLAsset(url: url)
+                
+                let avURLS = self.playerItems.map({ $0.asset as? AVURLAsset })
+                for (index, asset) in avURLS.enumerated() {
+                    if asset!.url == self.currentAsset?.url {
+                        self.configurePlayer(item: self.playerItems[index])
+                        self.currentVideoUrl = url
+                        return
+                    }
+                }
+                if self.playerItems.filter({$0.asset == self.currentAsset}).count > 0 {
+                    self.configurePlayer(item: self.playerItems.first)
+                    
+                }
                 self.playerItemWithAsynchronouslyLoaded(for: self.currentAsset!, with: { (playerItem) in
-                    self.player.replaceCurrentItem(with: playerItem)
+                    
+                    
+                    self.configurePlayer(item: playerItem)
                     self.currentVideoUrl = url
                     
                     if self.loopEnabled && self.playerItem != nil  {
-                        self.player.actionAtItemEnd = .advance
-                        self.playerLooper = AVPlayerLooper(player: self.player, templateItem: self.playerItem!)
+                        self.player.actionAtItemEnd = .pause
+                        //TODO:
                     }
                 })
                 
@@ -131,9 +146,11 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     }
     
     // MARK: - Asset Loading
-    func preloadURLsForQueue(with videoTypes: [VPKVideoType]) {
+    func preloadURLsForFeed(with videoTypes: [VPKVideoType]) {
+        
         videoTypes.forEach { (videoType) in
             guard let videoURL = videoType.videoUrl else { return }
+            
             let asset = AVAsset(url: videoURL)
             self.playerItemWithAsynchronouslyLoaded(for: asset, with: { (playerItem) in
                 let playerItem = AVPlayerItem(asset: asset)
@@ -141,6 +158,14 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
             })
         }
         
+    }
+    
+    func cancelPreload(of videoTypes: [VPKVideoType]) {
+        videoTypes.forEach { (videoType) in
+            guard let videoURL = videoType.videoUrl else { return }
+            let asset = AVAsset(url: videoURL)
+            asset.cancelLoading()
+        }
     }
     
     func playerItemWithAsynchronouslyLoaded(for newAsset: AVAsset,with  playerItemClosure: @escaping PlayerItemClosure) {
@@ -158,7 +183,9 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
              we'll elect to use the main thread at all times, let's dispatch
              our handler to the main queue.
              */
-            self.assetAsyncQueue.async {
+            DispatchQueue.main.async {
+                
+        
                 /*
                  Test whether the values of each of the keys we need have been
                  successfully loaded.
@@ -181,9 +208,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
                 }
                 
                 /*
-                 We can play this asset. Create a new `AVPlayerItem` and make
-                 it our player's current item.
-                 */
+                 We can play this asset. Create a new `AVPlayerItem` */
                 playerItemClosure(AVPlayerItem(asset: newAsset))
                 return
             }
@@ -198,8 +223,11 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     }
     
     
-    //MARK: Configuration
+    //MARK: - Configuration
+    
     fileprivate func configurePlayer(item: AVPlayerItem?) {
+        
+        // Background queue is created to ease the block of the main thread
         let queue = DispatchQueue(label: "item_exchange")
         queue.async {
             self.player.replaceCurrentItem(with: item)
@@ -212,7 +240,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     }
     
     fileprivate func play() {
-        player.playImmediately(atRate: 1.0)
+        player.play()
     }
     
     //MARK: KVO setup
@@ -257,36 +285,62 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
         
         switch keyPathEnumType {
         case .likelyToKeepUp:
-            print("PLAYBACK likely to keep up")
+            print("playback likely to keep up")
         case .timeControlStatus:
             handleObservedTimeControlStatus()
+        case .status:
+            handleObservedStatus()
         case .rate where player.rate == 0:
             didStopPlaying()
         case .rate where player.rate == 1:
             if #available(iOS 10.0, *) { /* handled with time control status  */ break } else {
-                didStartPlaying()
+                print("player rate is 1.0")
+               
             }
         default:
             break
         }
     }
     
-    func handleObservedTimeControlStatus() {
+    private func handleObservedStatus() {
+        let status = player.status
+        switch status {
+        case .readyToPlay:
+            play()
+        case .failed, .unknown:
+            handleErrorWithMessage("Player failed to play")
+        }
+    }
+    
+    private func handleObservedTimeControlStatus() {
         if #available(iOS 10.0, *) {
             let timeStatus = player.timeControlStatus
             switch timeStatus {
             case AVPlayerTimeControlStatus.playing:
                 didStartPlaying()
             default:
-                print(player.timeControlStatus.rawValue)
-                print(player.reasonForWaitingToPlay?.description ?? "reason unknown")
                 break
             }
         }
     }
 
-    //MARK: Helpers
-    func isPlayerPlaying() -> Bool {
+    //MARK: - Helpers
+    
+    private func bufferedTimeIsSignificant() -> Bool {
+        guard let timeRanges: NSValue = player.currentItem?.loadedTimeRanges.first else { return false }
+        
+        var timeRange: CMTimeRange?
+        timeRanges.getValue(&timeRange)
+        let duration = timeRange?.duration
+        guard   let durationValue = duration?.value,
+                let timeScale = duration?.timescale else { return false }
+        
+        let timedLoaded = Float(durationValue) / Float(timeScale)
+        
+        return timedLoaded > VPKVideoPlaybackManager.acceptableBufferTime ? true : false
+    }
+    
+    public func isPlayerPlaying() -> Bool {
         return player.rate == 1 && player.error == nil
     }
     
@@ -381,13 +435,13 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
         stop()
         currentVideoUrl = nil
         configurePlayer(item: nil)
-        player.removeAllItems()
         removePlayerItemObservers()
         delegate?.playbackManagerDidPlayNewVideo(self)
     }
 }
 
-//MARK: Time Scrubbing
+//MARK: - Time Scrubbing
+
 extension VPKVideoPlaybackManager {
     
     func stopPlayingAndSeekSmoothlyToTime(newChaseTime: CMTime) {

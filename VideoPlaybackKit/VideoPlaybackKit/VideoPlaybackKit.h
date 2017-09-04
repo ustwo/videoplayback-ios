@@ -2,7 +2,7 @@
 //  VideoPlaybackKit.h
 //  VideoPlaybackKit
 //
-//  Created by Sonam on 7/7/17.
+//  Created by Sonam on 9/4/17.
 //  Copyright © 2017 ustwo. All rights reserved.
 //
 

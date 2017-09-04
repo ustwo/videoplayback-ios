@@ -9,15 +9,19 @@
 import Foundation
 import AVFoundation
 
-
 public class VPKVideoPlaybackPresenter {
 
+    static let fadeOutTime: TimeInterval = 3.0
+    
     var videoView: VPKVideoViewProtocol? {
         didSet {
             observeVideoViewLifecycle()
         }
     }
     
+    var hasFadedOutControlView: Bool = false
+    
+    var progressTime = 0.0
     var playbackBarView: VPKPlaybackControlViewProtocol?
     var interactor: VPKVideoPlaybackInteractorInputProtocol?
     var builder: VPKVideoPlaybackBuilderProtocol?
@@ -26,6 +30,7 @@ public class VPKVideoPlaybackPresenter {
     var videoType: VPKVideoType
     var shouldAutoplay: Bool?
     var indexPath: NSIndexPath?
+    var duration: TimeInterval?
 
     required public init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme = .normal) {
         self.videoType = videoType
@@ -115,6 +120,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     }
     
     func onVideoDidStartPlayingWith(_ duration: TimeInterval) {
+        self.duration = duration
         playbackBarView?.maximumSeconds = Float(duration)
         playbackBarView?.showDurationWith(duration.formattedTimeFromSeconds)
         playbackBarView?.toggleActionButton(PlayerState.playing.buttonImageName)
@@ -123,6 +129,38 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     func onVideoPlayingFor(_ seconds: TimeInterval) {
         playbackBarView?.progressValue = Float(seconds)
         playbackBarView?.updateTimePlayingCompletedTo(seconds.formattedTimeFromSeconds)
+        self.progressTime = seconds
+        
+        //TODO: (SD) Clean up
+        if videoIsReachingTheEnd() {
+            fadeInControlBarView()
+            hasFadedOutControlView = false
+        } else if videoHasBeenPlaying(for: VPKVideoPlaybackPresenter.fadeOutTime) && hasFadedOutControlView == false {
+            hasFadedOutControlView = true
+            fadeOutControlBarView()
+        }
+    }
+    
+    func videoHasBeenPlaying(for seconds: TimeInterval) -> Bool  {
+        
+        return (seconds...seconds + 5).contains(progressTime)
+    }
+    
+    func videoIsReachingTheEnd() -> Bool {
+        
+        guard let safeDuration = duration else { return false }
+        let timeLeft = safeDuration - progressTime
+        return timeLeft <= 5.0
+    }
+    
+    func fadeOutControlBarView() {
+        guard let playbackView = playbackBarView else { return }
+        PlaybackControlViewAnimator.fadeOut(playbackView)
+    }
+    
+    func fadeInControlBarView() {
+        guard let playbackView = playbackBarView else { return }
+        PlaybackControlViewAnimator.fadeIn(playbackView)
     }
     
     func onVideoDidPlayToEnd() {
@@ -133,9 +171,17 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     
     func onVideoDidStopPlaying() {
         playbackBarView?.toggleActionButton(PlayerState.paused.buttonImageName)
+        
+        guard let controlView = playbackBarView else {
+            assertionFailure("control view is nil")
+            return
+        }
+        
+        PlaybackControlViewAnimator.fadeIn(controlView)
     }
     
     func onVideoDidStartPlaying() {
+        videoView?.activityIndicator.stopAnimating()
         playbackBarView?.toggleActionButton(PlayerState.playing.buttonImageName)
     }
 
@@ -144,7 +190,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     }
     
     func onVideoLoadFail(_ error: String) {
-        
+        //TODO: (SD) PASS ERROR
     }
 }
 
