@@ -54,7 +54,7 @@ Single Video view - add a single view to your screen which contains video conten
 
 1. Define the Video Type (local or remote)
 
-```
+```swift 
 let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")
 ```
 
