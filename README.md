@@ -7,7 +7,7 @@
 [![pod](https://img.shields.io/badge/swift-support-fc2f24.svg?maxAge=2592000)](https://github.com/apple/swift)
 
 
-This framework is built using the VIPER (modified to VIPE) architecture. It started an experiment with the VIPER architecture is now a work in progress.
+This framework is built using the VIPER (modified to VIPE) architecture. It started as an experiment with the VIPER architecture is now a work in progress.
 
 In short it is a wrapper around the AVFoundation framework. Use it to play remote, or local videos in a simple view or feed. Its purpose is to make playing progressive downloads and live streams simpler in your iOS applications
 
