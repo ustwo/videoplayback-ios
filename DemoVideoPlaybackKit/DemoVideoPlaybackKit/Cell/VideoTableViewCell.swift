@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VideoPlaybackKit
 
 class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
 

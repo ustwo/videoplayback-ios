@@ -1,15 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'DemoVideoPlaybackKit' do
 	pod 'RxSwift' 
 	pod 'RxCocoa'
 	pod 'SnapKit'
-	pod 'ASValueTrackingSlider'
-	pod 'Alamofire'
-	pod 'AlamofireImage'
-	
+	pod 'VideoPlaybackKit', :git => 'https://github.com/ustwo/videoplayback-ios' 
 end
 
 post_install do |installer|

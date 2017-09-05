@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import VideoPlaybackKit
 
 private enum DemoOption: String {
     case SingleVideoView, SingleViewViewAutoplay, CustomToolBar, FeedView, FeedAutoplayView

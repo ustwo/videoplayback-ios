@@ -10,28 +10,6 @@
 		1AFDD25DF61F3E21AF0CCA9D /* Pods_DemoVideoPlaybackKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F47F77B9A192953D9A7889FA /* Pods_DemoVideoPlaybackKit.framework */; };
 		27077F471F10196500D82FA8 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F461F10196500D82FA8 /* DemoViewController.swift */; };
 		27077F491F10197100D82FA8 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27077F481F10197100D82FA8 /* FeedViewController.swift */; };
-		27216C411F16BBD600A0DB2D /* VPKVideoPlaybackBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C231F16BBD600A0DB2D /* VPKVideoPlaybackBuilder.swift */; };
-		27216C421F16BBD600A0DB2D /* VPKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C251F16BBD600A0DB2D /* VPKColor.swift */; };
-		27216C431F16BBD600A0DB2D /* VPKEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C261F16BBD600A0DB2D /* VPKEnum.swift */; };
-		27216C441F16BBD600A0DB2D /* VPKPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C271F16BBD600A0DB2D /* VPKPlayerContract.swift */; };
-		27216C451F16BBD600A0DB2D /* AVContentInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C291F16BBD600A0DB2D /* AVContentInfoRequest.swift */; };
-		27216C461F16BBD600A0DB2D /* FileManager+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C2A1F16BBD600A0DB2D /* FileManager+Configure.swift */; };
-		27216C471F16BBD600A0DB2D /* URL+Prefix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C2B1F16BBD600A0DB2D /* URL+Prefix.swift */; };
-		27216C481F16BBD600A0DB2D /* URLRequest+Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C2C1F16BBD600A0DB2D /* URLRequest+Configure.swift */; };
-		27216C491F16BBD600A0DB2D /* VPKTableViewVideoPlaybackScrollable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C2E1F16BBD600A0DB2D /* VPKTableViewVideoPlaybackScrollable.swift */; };
-		27216C4A1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C2F1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift */; };
-		27216C4B1F16BBD600A0DB2D /* ByteRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C321F16BBD600A0DB2D /* ByteRange.swift */; };
-		27216C4C1F16BBD600A0DB2D /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C331F16BBD600A0DB2D /* Requests.swift */; };
-		27216C4D1F16BBD600A0DB2D /* VPKAssetResourceLoaderDelegate .swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C341F16BBD600A0DB2D /* VPKAssetResourceLoaderDelegate .swift */; };
-		27216C4E1F16BBD600A0DB2D /* VPKTableViewPrefetchSynchronizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C351F16BBD600A0DB2D /* VPKTableViewPrefetchSynchronizer.swift */; };
-		27216C4F1F16BBD600A0DB2D /* VPKVideoRequestDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C361F16BBD600A0DB2D /* VPKVideoRequestDownloader.swift */; };
-		27216C501F16BBD600A0DB2D /* VPKPlayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C371F16BBD600A0DB2D /* VPKPlayerDelegate.swift */; };
-		27216C511F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C381F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift */; };
-		27216C521F16BBD600A0DB2D /* VPKVideoPlaybackPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C3A1F16BBD600A0DB2D /* VPKVideoPlaybackPresenter.swift */; };
-		27216C531F16BBD600A0DB2D /* VideoViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */; };
-		27216C541F16BBD600A0DB2D /* VPKPlaybackControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C3F1F16BBD600A0DB2D /* VPKPlaybackControlView.swift */; };
-		27216C551F16BBD600A0DB2D /* VPKVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27216C401F16BBD600A0DB2D /* VPKVideoView.swift */; };
-		2729FAB71F4772FA004BBA67 /* PlaybackControlViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */; };
 		272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272A1CE01EAFE62F007F5816 /* AppDelegate.swift */; };
 		272A1CE61EAFE62F007F5816 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE41EAFE62F007F5816 /* Main.storyboard */; };
 		272A1CE81EAFE62F007F5816 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272A1CE71EAFE62F007F5816 /* Assets.xcassets */; };
@@ -77,28 +55,6 @@
 		11A171081A5A92A1C8085A44 /* Pods-DemoVideoPlaybackKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoVideoPlaybackKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoVideoPlaybackKit/Pods-DemoVideoPlaybackKit.release.xcconfig"; sourceTree = "<group>"; };
 		27077F461F10196500D82FA8 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DemoViewController.swift; path = DemoVideoPlaybackKit/DemoViewController.swift; sourceTree = SOURCE_ROOT; };
 		27077F481F10197100D82FA8 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FeedViewController.swift; path = DemoVideoPlaybackKit/FeedViewController.swift; sourceTree = SOURCE_ROOT; };
-		27216C231F16BBD600A0DB2D /* VPKVideoPlaybackBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackBuilder.swift; sourceTree = "<group>"; };
-		27216C251F16BBD600A0DB2D /* VPKColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKColor.swift; sourceTree = "<group>"; };
-		27216C261F16BBD600A0DB2D /* VPKEnum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKEnum.swift; sourceTree = "<group>"; };
-		27216C271F16BBD600A0DB2D /* VPKPlayerContract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerContract.swift; sourceTree = "<group>"; };
-		27216C291F16BBD600A0DB2D /* AVContentInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVContentInfoRequest.swift; sourceTree = "<group>"; };
-		27216C2A1F16BBD600A0DB2D /* FileManager+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Configure.swift"; sourceTree = "<group>"; };
-		27216C2B1F16BBD600A0DB2D /* URL+Prefix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+Prefix.swift"; sourceTree = "<group>"; };
-		27216C2C1F16BBD600A0DB2D /* URLRequest+Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URLRequest+Configure.swift"; sourceTree = "<group>"; };
-		27216C2E1F16BBD600A0DB2D /* VPKTableViewVideoPlaybackScrollable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewVideoPlaybackScrollable.swift; sourceTree = "<group>"; };
-		27216C2F1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackInteractor.swift; sourceTree = "<group>"; };
-		27216C321F16BBD600A0DB2D /* ByteRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ByteRange.swift; sourceTree = "<group>"; };
-		27216C331F16BBD600A0DB2D /* Requests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
-		27216C341F16BBD600A0DB2D /* VPKAssetResourceLoaderDelegate .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VPKAssetResourceLoaderDelegate .swift"; sourceTree = "<group>"; };
-		27216C351F16BBD600A0DB2D /* VPKTableViewPrefetchSynchronizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKTableViewPrefetchSynchronizer.swift; sourceTree = "<group>"; };
-		27216C361F16BBD600A0DB2D /* VPKVideoRequestDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoRequestDownloader.swift; sourceTree = "<group>"; };
-		27216C371F16BBD600A0DB2D /* VPKPlayerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlayerDelegate.swift; sourceTree = "<group>"; };
-		27216C381F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackManager.swift; sourceTree = "<group>"; };
-		27216C3A1F16BBD600A0DB2D /* VPKVideoPlaybackPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoPlaybackPresenter.swift; sourceTree = "<group>"; };
-		27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewAnimator.swift; sourceTree = "<group>"; };
-		27216C3F1F16BBD600A0DB2D /* VPKPlaybackControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKPlaybackControlView.swift; sourceTree = "<group>"; };
-		27216C401F16BBD600A0DB2D /* VPKVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VPKVideoView.swift; sourceTree = "<group>"; };
-		2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackControlViewAnimator.swift; sourceTree = "<group>"; };
 		272A1CDD1EAFE62F007F5816 /* DemoVideoPlaybackKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoVideoPlaybackKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272A1CE01EAFE62F007F5816 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		272A1CE51EAFE62F007F5816 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -145,115 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		27216C211F16BBD600A0DB2D /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				27216C221F16BBD600A0DB2D /* Builder */,
-				27216C241F16BBD600A0DB2D /* Contract */,
-				27216C281F16BBD600A0DB2D /* Extensions */,
-				27216C2D1F16BBD600A0DB2D /* Interactor */,
-				27216C301F16BBD600A0DB2D /* Manager */,
-				27216C391F16BBD600A0DB2D /* Presenter */,
-				27216C3B1F16BBD600A0DB2D /* View */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
-		27216C221F16BBD600A0DB2D /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-				27216C231F16BBD600A0DB2D /* VPKVideoPlaybackBuilder.swift */,
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
-		27216C241F16BBD600A0DB2D /* Contract */ = {
-			isa = PBXGroup;
-			children = (
-				27216C251F16BBD600A0DB2D /* VPKColor.swift */,
-				27216C261F16BBD600A0DB2D /* VPKEnum.swift */,
-				27216C271F16BBD600A0DB2D /* VPKPlayerContract.swift */,
-			);
-			path = Contract;
-			sourceTree = "<group>";
-		};
-		27216C281F16BBD600A0DB2D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				27216C291F16BBD600A0DB2D /* AVContentInfoRequest.swift */,
-				27216C2A1F16BBD600A0DB2D /* FileManager+Configure.swift */,
-				27216C2B1F16BBD600A0DB2D /* URL+Prefix.swift */,
-				27216C2C1F16BBD600A0DB2D /* URLRequest+Configure.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		27216C2D1F16BBD600A0DB2D /* Interactor */ = {
-			isa = PBXGroup;
-			children = (
-				27216C2E1F16BBD600A0DB2D /* VPKTableViewVideoPlaybackScrollable.swift */,
-				27216C2F1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift */,
-			);
-			path = Interactor;
-			sourceTree = "<group>";
-		};
-		27216C301F16BBD600A0DB2D /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				27216C311F16BBD600A0DB2D /* Utils */,
-				27216C371F16BBD600A0DB2D /* VPKPlayerDelegate.swift */,
-				27216C381F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift */,
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
-		27216C311F16BBD600A0DB2D /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				27216C321F16BBD600A0DB2D /* ByteRange.swift */,
-				27216C331F16BBD600A0DB2D /* Requests.swift */,
-				27216C341F16BBD600A0DB2D /* VPKAssetResourceLoaderDelegate .swift */,
-				27216C351F16BBD600A0DB2D /* VPKTableViewPrefetchSynchronizer.swift */,
-				27216C361F16BBD600A0DB2D /* VPKVideoRequestDownloader.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		27216C391F16BBD600A0DB2D /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-				27216C3A1F16BBD600A0DB2D /* VPKVideoPlaybackPresenter.swift */,
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		27216C3B1F16BBD600A0DB2D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				27216C3C1F16BBD600A0DB2D /* Animator */,
-				27216C3E1F16BBD600A0DB2D /* Video */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		27216C3C1F16BBD600A0DB2D /* Animator */ = {
-			isa = PBXGroup;
-			children = (
-				27216C3D1F16BBD600A0DB2D /* VideoViewAnimator.swift */,
-				2729FAB61F4772FA004BBA67 /* PlaybackControlViewAnimator.swift */,
-			);
-			path = Animator;
-			sourceTree = "<group>";
-		};
-		27216C3E1F16BBD600A0DB2D /* Video */ = {
-			isa = PBXGroup;
-			children = (
-				27216C3F1F16BBD600A0DB2D /* VPKPlaybackControlView.swift */,
-				27216C401F16BBD600A0DB2D /* VPKVideoView.swift */,
-			);
-			path = Video;
-			sourceTree = "<group>";
-		};
 		272A1CD41EAFE62F007F5816 = {
 			isa = PBXGroup;
 			children = (
@@ -279,7 +126,6 @@
 		272A1CDF1EAFE62F007F5816 /* DemoVideoPlaybackKit */ = {
 			isa = PBXGroup;
 			children = (
-				27216C211F16BBD600A0DB2D /* Source */,
 				272A1D441EB108A2007F5816 /* Resources */,
 				272A1D3B1EAFF305007F5816 /* Cell */,
 				272A1D1F1EAFE6C2007F5816 /* ViewController */,
@@ -522,13 +368,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DemoVideoPlaybackKit-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F452070E7DB2F292706AEB29 /* [CP] Embed Pods Frameworks */ = {
@@ -537,9 +386,24 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DemoVideoPlaybackKit/Pods-DemoVideoPlaybackKit-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ASValueTrackingSlider/ASValueTrackingSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/VideoPlaybackKit/VideoPlaybackKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASValueTrackingSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VideoPlaybackKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -553,34 +417,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27216C441F16BBD600A0DB2D /* VPKPlayerContract.swift in Sources */,
-				27216C521F16BBD600A0DB2D /* VPKVideoPlaybackPresenter.swift in Sources */,
-				27216C451F16BBD600A0DB2D /* AVContentInfoRequest.swift in Sources */,
-				27216C461F16BBD600A0DB2D /* FileManager+Configure.swift in Sources */,
-				27216C4C1F16BBD600A0DB2D /* Requests.swift in Sources */,
-				27216C4E1F16BBD600A0DB2D /* VPKTableViewPrefetchSynchronizer.swift in Sources */,
-				27216C411F16BBD600A0DB2D /* VPKVideoPlaybackBuilder.swift in Sources */,
-				27216C421F16BBD600A0DB2D /* VPKColor.swift in Sources */,
 				272A1D231EAFE77C007F5816 /* SingleVideoPlaybackViewController.swift in Sources */,
-				27216C481F16BBD600A0DB2D /* URLRequest+Configure.swift in Sources */,
 				272A1D3D1EAFF316007F5816 /* BasicTableViewCell.swift in Sources */,
 				272A1CE11EAFE62F007F5816 /* AppDelegate.swift in Sources */,
-				27216C511F16BBD600A0DB2D /* VPKVideoPlaybackManager.swift in Sources */,
-				27216C431F16BBD600A0DB2D /* VPKEnum.swift in Sources */,
-				2729FAB71F4772FA004BBA67 /* PlaybackControlViewAnimator.swift in Sources */,
-				27216C4A1F16BBD600A0DB2D /* VPKVideoPlaybackInteractor.swift in Sources */,
 				27077F471F10196500D82FA8 /* DemoViewController.swift in Sources */,
 				27077F491F10197100D82FA8 /* FeedViewController.swift in Sources */,
-				27216C4B1F16BBD600A0DB2D /* ByteRange.swift in Sources */,
-				27216C551F16BBD600A0DB2D /* VPKVideoView.swift in Sources */,
 				27C945BA1EC4C25900E6D113 /* VideoTableViewCell.swift in Sources */,
-				27216C491F16BBD600A0DB2D /* VPKTableViewVideoPlaybackScrollable.swift in Sources */,
-				27216C531F16BBD600A0DB2D /* VideoViewAnimator.swift in Sources */,
-				27216C471F16BBD600A0DB2D /* URL+Prefix.swift in Sources */,
-				27216C4D1F16BBD600A0DB2D /* VPKAssetResourceLoaderDelegate .swift in Sources */,
-				27216C4F1F16BBD600A0DB2D /* VPKVideoRequestDownloader.swift in Sources */,
-				27216C501F16BBD600A0DB2D /* VPKPlayerDelegate.swift in Sources */,
-				27216C541F16BBD600A0DB2D /* VPKPlaybackControlView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,6 +585,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoVideoPlaybackKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ustwo.com.DemoVideoPlaybackKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -767,6 +610,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = DemoVideoPlaybackKit/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ustwo.com.DemoVideoPlaybackKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
