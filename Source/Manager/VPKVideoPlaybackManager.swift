@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 
 
-internal typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
+public typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
 
 
 @available(iOS 10, *)

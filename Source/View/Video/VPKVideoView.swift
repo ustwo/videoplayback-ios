@@ -47,7 +47,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
             layoutIfNeeded()
         }
     }
-
+    
     //private
     var activityIndicator = UIActivityIndicatorView(frame: .zero)
     fileprivate let placeHolder = UIImageView(frame: .zero)
@@ -62,7 +62,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        self.playerLayer?.frame = self.bounds //Ensures the player layer will change as the view changes 
+        self.playerLayer?.frame = self.bounds //Ensures the player layer will change as the view changes
     }
     
     override public class var layerClass: AnyClass {
@@ -105,7 +105,7 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
         }
         activityIndicator.color = .white
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.stopAnimating() // Ensure's that its initial state is not-active 
+        activityIndicator.stopAnimating() // Ensure's that its initial state is not-active
         activityIndicator.layer.zPosition = LayerHierachy.top.rawValue
         
         addSubview(fullScreenBGView)
@@ -142,27 +142,27 @@ public class VPKVideoView: UIView, UIGestureRecognizerDelegate  {
 //*
 extension VPKVideoView: VPKVideoViewProtocol {
     
-    func didMoveOffScreen() {
+    internal func didMoveOffScreen() {
         presenter?.didMoveOffScreen()
     }
     
-    func didTapView() {
+    internal func didTapView() {
         presenter?.didTapVideoView()
     }
     
-    func reuseInCell() {
-        self.placeHolder.image = nil 
+    internal func reuseInCell() {
+        self.placeHolder.image = nil
         self.playerLayer = nil
         self.playbackBarView = nil
         self.activityIndicator.removeFromSuperview()
         presenter?.reuseInCell()
     }
     
-    func showPlaceholder() {
+    internal func showPlaceholder() {
         placeHolder.isHidden = false
     }
     
-    func reloadInterface(with playerLayer: AVPlayerLayer) {
+    internal func reloadInterface(with playerLayer: AVPlayerLayer) {
         self.playerLayer = playerLayer
         playerLayer.frame = self.bounds
         playerLayer.needsDisplayOnBoundsChange = true
@@ -175,18 +175,18 @@ extension VPKVideoView: VPKVideoViewProtocol {
         }
     }
     
-    func reloadInterfaceWithoutPlayerlayer() {
+    internal func reloadInterfaceWithoutPlayerlayer() {
         self.playerLayer = nil
         showPlaceholder()
         guard let playbackView = playbackBarView as? UIView else { return }
         bringSubview(toFront: playbackView)
     }
     
-    func makeFullScreen() {
+    internal func makeFullScreen() {
         VideoViewAnimator.animateToFullScreen(self)
     }
     
-    func makeNormalScreen() {
+    internal func makeNormalScreen() {
         VideoViewAnimator.animateToNormalScreen(self)
     }
 }

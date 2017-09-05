@@ -9,16 +9,16 @@
 import Foundation
 import UIKit
 
-internal enum ScrollDirection {
+public enum ScrollDirection {
     case up, down, none
 }
 
-protocol ScrollInteractor {
+public protocol ScrollInteractor {
     func scrollDidHit(targetMidPoint: Int, acceptableOffset: Int,  direction: ScrollDirection, tableView: UITableView, view: UIView, cell: UITableViewCell) -> Bool
     func scrollDidScrollToTop(_ scrollView: UIScrollView) -> Bool
 }
 
-extension ScrollInteractor where Self: UIScrollViewDelegate {
+public extension ScrollInteractor where Self: UIScrollViewDelegate {
     
     //default implementations
     //use within scrollDidScrollDelegate method
@@ -46,14 +46,14 @@ extension ScrollInteractor where Self: UIScrollViewDelegate {
     }
 }
 
-protocol VPKTableViewVideoPlaybackScrollable: ScrollInteractor {
+public protocol VPKTableViewVideoPlaybackScrollable: ScrollInteractor {
     var tableView: UITableView { get set }
     static var scrollAcceptableOffset: Int { get }
     func trackVideoViewCellScrolling() //Use with scrollViewDidScroll
     func handleAutoplayInTopVideoCell()
 }
 
-extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
+public extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
     
     static var scrollAcceptableOffset: Int {
         return 5
@@ -71,7 +71,7 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
         
         //We only care if the video player is playing and we want to stop it as it scrolls off screen
         if sharedVideoManager.isPlaying {
-        
+            
             //Data structure for potential video cell thats currently playing a video
             var playingVideoCellTuple: (indexPath: IndexPath, cell: VPKViewInCellProtocol, direction: ScrollDirection)?
             
@@ -95,11 +95,11 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
             case (_, let topVideoCell, .up) where topVideoCell.videoView!.playerLayer != nil && scrollDidHit(targetMidPoint: targetMidPoint, acceptableOffset: Self.scrollAcceptableOffset, direction: .up, tableView: tableView, view: view, cell: (topVideoCell as? UITableViewCell)!):
                 
                 sharedVideoManager.cleanup()
-                                
+                
                 
             case (_, let bottomVideoCell, .down) where bottomVideoCell.videoView!.playerLayer != nil && scrollDidHit(targetMidPoint: targetMidPoint, acceptableOffset: Self.scrollAcceptableOffset, direction: .down, tableView: tableView, view: view, cell: bottomVideoCell as! UITableViewCell):
                 
-                    sharedVideoManager.cleanup()
+                sharedVideoManager.cleanup()
             default:
                 break
             }
@@ -110,13 +110,13 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
         
         //Handle when tableview is at the top
         if tableView.contentOffset.y == 0 {
-                print("table at top")
+            print("table at top")
             guard   let topIndexPath = tableView.indexPathsForVisibleRows?.first,
-                    let videoCell = tableView.cellForRow(at: topIndexPath) as? VPKViewInCellProtocol else { return }
+                let videoCell = tableView.cellForRow(at: topIndexPath) as? VPKViewInCellProtocol else { return }
             videoCell.videoView?.didTapView()
             return
         }
-       
+        
         if(!tableView.isDecelerating && !tableView.isDragging) {
             
             tableView.visibleCells.forEach { (cell) in
@@ -127,17 +127,13 @@ extension VPKTableViewVideoPlaybackScrollable where Self: UIViewController {
                 let convertedRect = tableView.convert(cellRect, to: superView)
                 let intersect = tableView.frame.intersection(convertedRect)
                 let visibleHeight = intersect.height
-                print("VISIBLE HEIGHT = \(visibleHeight)")
                 
                 if visibleHeight > cellRect.height * 0.6 {
                     //cell is visible more than 60%
                     guard let videoCell = cell as? VPKViewInCellProtocol else { return }
                     videoCell.videoView?.didTapView()
-                    print("autoplay cell at \(indexPath.row)")
                 }
             }
         }
     }
 }
-
-

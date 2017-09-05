@@ -16,16 +16,17 @@ public typealias CompletionClosure = () -> ()
 
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
-    //Feed (auto-play)
-    
+    public init() {
+        //Intentionally left emptoy to provide public access
+    }
     
     //Feed (not auto-play, tap to play)
-   public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
+    public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: false, showInCell: indexPath, playbackTheme: playbackBarTheme)
         viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
     }
-
+    
     //Single View
     public static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
         
@@ -34,7 +35,7 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     }
 }
 
-internal class VPKDependencyManager: VPKDependencyManagerProtocol {
+class VPKDependencyManager: VPKDependencyManagerProtocol {
     
     static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
         
