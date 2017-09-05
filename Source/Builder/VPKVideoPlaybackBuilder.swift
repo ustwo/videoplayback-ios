@@ -17,27 +17,27 @@ public typealias CompletionClosure = () -> ()
 public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     
     public init() {
-        //Intentionally left emptoy to provide public access
+        //Intentionally left empty to provide public access
     }
     
-    //Feed (not auto-play, tap to play)
+    //Feed
     public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: false, showInCell: indexPath, playbackTheme: playbackBarTheme)
-        viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
+        viewCompletion(VPKDependencyManager.videoViewWith(dependencies: presenter))
     }
     
     //Single View
     public static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
-        viewCompletion(VPKDependencyManager.setupDependencies(presenter: presenter))
+        viewCompletion(VPKDependencyManager.videoViewWith(dependencies: presenter))
     }
 }
 
 class VPKDependencyManager: VPKDependencyManagerProtocol {
     
-    static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
+    static func videoViewWith(dependencies presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
         
         let videoView = VPKVideoView(frame: .zero)
         let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: presenter.playbackTheme ?? .normal)

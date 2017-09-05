@@ -104,7 +104,7 @@ public protocol VPKVideoPlaybackBuilderProtocol: class {
 }
 
 protocol VPKDependencyManagerProtocol {
-    static func setupDependencies(presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
+    static func videoViewWith(dependencies presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
 }
 
 //*** Presenter
