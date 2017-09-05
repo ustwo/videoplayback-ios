@@ -60,24 +60,3 @@ public enum PlayerState {
         }
     }
 }
-
-
-//***** Used as the Entity 
-//**
-//*
-public enum VPKVideoType {
-    
-    case remote(url: String, placeholderURLName: String)
-    case local(videoPathName: String, fileType: String, placeholderImageName: String)
-    
-    var videoUrl: URL? {
-        switch self {
-        case let .local(videoPathName: aName, fileType: aType, placeholderImageName: _) where Bundle.main.path(forResource: aName, ofType: aType) != nil:
-            return URL(fileURLWithPath: Bundle.main.path(forResource: aName, ofType: aType)!)
-        case let .remote(url: remoteUrlName, placeholderURLName: _) where URL(string: remoteUrlName) != nil:
-           return URL(string: remoteUrlName)
-        default:
-            return nil
-        }
-    }
-}
