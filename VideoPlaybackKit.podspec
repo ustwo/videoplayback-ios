@@ -10,7 +10,6 @@ Pod::Spec.new do |spec|
   }
 
   spec.source = { :git => "https://github.com/ustwo/videoplayback-ios.git", :tag => "v#{spec.version}", :submodules => true }
-  spec.header_mappings_dir = 'VideoPlaybackKit/'
   spec.source_files  ="Source/**/*.{swift,h}"
   spec.requires_arc = true
   spec.platform     = :ios, "10.0"
