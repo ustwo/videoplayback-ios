@@ -24,7 +24,7 @@ struct PlaybackControlViewAnimator {
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut, animations: {
-                controlView.alpha = 0.0
+                controlView.isHidden = true
                 controlView.layoutIfNeeded()
             }, completion: nil)
         }
@@ -39,7 +39,7 @@ struct PlaybackControlViewAnimator {
         
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn, animations: {
-                controlView.alpha = 1.0
+                controlView.isHidden = false
                 controlView.layoutIfNeeded()
             }, completion: nil)
         }
