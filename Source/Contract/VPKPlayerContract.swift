@@ -154,7 +154,7 @@ protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     func didReuseInCell()
 }
 
-public protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
+protocol VPKVideoPlaybackInteractorOutputProtocol: class  {
     
     var progressTime: TimeInterval { get set }
     
