@@ -226,7 +226,10 @@ extension VPKPlaybackControlView: VPKPlaybackControlViewProtocol {
     }
     
     func toggleActionButton(_ imageName: String) {
-        playPauseButton.setBackgroundImage(UIImage(named: imageName), for: .normal)
+        
+        DispatchQueue.main.async {
+            playPauseButton.setBackgroundImage(UIImage(named: imageName), for: .normal)
+        }
     }
     
     func didTapPlayPause() {

@@ -414,9 +414,7 @@ extension VPKVideoPlaybackManager: VPKVideoPlaybackManagerInputProtocol {
     }
     
     func didMoveOffScreen()  {
-        if isPlayerPlaying() {
-            cleanup()
-        }
+        cleanup()
     }
     
     func didSelectVideoUrl(_ url: URL) {
