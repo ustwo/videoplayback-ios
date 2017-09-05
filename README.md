@@ -51,7 +51,10 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 import VideoPlaybackKit
 ```
 
-### Play a single video in a view - add a single view to your screen which contains video content 
+### Play a single video in a view - add a single view to your screen which contains video content
+
+<img src="Images/single_video.gif" title="Single Video" float=left>
+
  
 1. Define the Video Type (local or remote)
 
