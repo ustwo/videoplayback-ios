@@ -71,10 +71,11 @@ VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.
         make.left.right.equalTo(view)
     })
 }
-
 ```
 
-### Play a video in a feed 
+### Play a video in a feed
+
+<img src="Images/video_feed.gif" title="Video Feed" float=left>
 
 1. Create a UITabieViewCell that conforms to VPKViewInCellProtocol
 
