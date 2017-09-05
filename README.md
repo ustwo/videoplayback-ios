@@ -48,8 +48,8 @@ In short it is a wrapper around the AVFoundation framework. Use it to play remot
 ## How To Use
 
 ```swift 
-
 import VideoPlaybackKit
+```
 
 ### Play a single video in a view - add a single view to your screen which contains video content 
  
