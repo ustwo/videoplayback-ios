@@ -18,7 +18,6 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 - [x] Play in UITableView 
 - [x] Autoplay video    
 - [x] HTTPS support
-- [x] Live stream support 
 - [x] Written in Swift 
 - [x] Landscape support
 - [x] Cocoapod support 
@@ -31,7 +30,7 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 
 ## Getting Started
 
-- Try the example by running the Demo project
+- Go to the "DemoVideoPlaybackKit" folder, run pod install. Open the workspace and build 
 
 
 ## Communication
@@ -56,6 +55,7 @@ import VideoPlaybackKit
 <img src="Images/single_video.gif" title="Single Video" float=left>
 
  
+
 1. Define the Video Type (local or remote)
 
 ```swift 
