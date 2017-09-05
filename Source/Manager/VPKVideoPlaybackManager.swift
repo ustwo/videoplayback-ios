@@ -64,9 +64,7 @@ class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     fileprivate let assetAsyncQueue = DispatchQueue(label: VPKVideoPlaybackManager.queueIdentifier)
 
     fileprivate lazy var player = AVPlayer()
-    fileprivate var playerLooper: AVPlayerLooper?
-    fileprivate var resourceLoaderDelegate: VPKAssetResourceLoaderDelegate?
-    
+    fileprivate var playerLooper: AVPlayerLooper?    
     fileprivate var playerItems = [AVPlayerItem]()
     fileprivate lazy var playerLayer = AVPlayerLayer(player: VPKVideoPlaybackManager.shared.player)
     fileprivate enum ObservableKeyPaths: String {

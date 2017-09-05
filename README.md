@@ -3,7 +3,7 @@
 </p>
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ustwo/videoplayback-ios)
-[![pod](https://img.shields.io/badge/pod-1.0.0-green.svg)](https://github.com/ustwo/videoplayback-ios) 
+[![pod](https://img.shields.io/badge/pod-0.1.8-green.svg)](https://github.com/ustwo/videoplayback-ios) 
 [![pod](https://img.shields.io/badge/swift-support-fc2f24.svg?maxAge=2592000)](https://github.com/apple/swift)
 
 
