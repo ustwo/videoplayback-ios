@@ -32,7 +32,7 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 
 ## Disclaimer:
 
-This framework is a work in progress. Unit tests, and bug fixes are pending. 
+This framework is a work in progress. Unit tests, VIPE refactoring, and bug fixes are pending. 
 
 ## Getting Started
 
