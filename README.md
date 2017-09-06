@@ -1,6 +1,5 @@
 <p align="center" >
 <img src="Images/VPKPlayback_logo.png" title="VPKVideoPlayer logo" float=left>
-<img src="Images/snake.png" title="Snake Body" float=left>
 </p>
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ustwo/videoplayback-ios)
@@ -188,3 +187,4 @@ extension FeedViewController: UITableViewDataSourcePrefetching {
 ## Contact：
 - Email: sonam@ustwo.com
 
+<img src="Images/snake.png" title="Snake Body" float=left>
