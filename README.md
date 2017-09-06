@@ -7,6 +7,8 @@
 [![pod](https://img.shields.io/badge/swift-support-fc2f24.svg?maxAge=2592000)](https://github.com/apple/swift)
 
 
+## Summary 
+
 This framework is built using the VIPER (modified to VIPE) architecture. It started as an experiment with the architecture itself and is now a work in progress.
 
 It is a swift wrapper around the AVFoundation framework. Use it to play remote, or local videos in a simple view or feed. Its purpose is to make playing progressive downloads and live streams simpler in your iOS applications
@@ -33,6 +35,15 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 - Go to the "DemoVideoPlaybackKit" folder, run pod install. Open the workspace and build 
 
 
+## About
+
+The VIPER architecture has been talked about in the iOS community; however, it is uncommonly used. We wanted to gain an in depth understanding of this design pattern and see what the buzz was all about. As a result, we decided to test the following hypothesis: 
+
+> As a developer I would like to use the VIPER design pattern to build reusable modules
+
+
+Since displaying video content in iOS is not as simple as it seems we  decided to build a swift wrapper around the AVFoundation framework, specifically aiming to make downloading and playing video content easier for iOS developers  
+
 ## Communication
 
 - If you **found a bug**, open an issue.
@@ -42,7 +53,7 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 
 ## Installation
 
-- pod install VideoPlaybackKit
+- pod install 'VideoPlaybackKit'
 
 ## How To Use
 
@@ -168,6 +179,9 @@ extension FeedViewController: UITableViewDataSourcePrefetching {
 }
 ```
 
+## Disclaimer:
+
+This framework is a work in progress. Unit tests, and bug fixes are pending. 
 
 
 ## Contact：
