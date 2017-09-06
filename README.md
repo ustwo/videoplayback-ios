@@ -3,7 +3,7 @@
 </p>
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ustwo/videoplayback-ios)
-[![pod](https://img.shields.io/badge/pod-0.2.0-green.svg)](https://github.com/ustwo/videoplayback-ios) 
+[![pod](https://img.shields.io/badge/pod-0.2.2-green.svg)](https://github.com/ustwo/videoplayback-ios) 
 [![pod](https://img.shields.io/badge/swift-support-fc2f24.svg?maxAge=2592000)](https://github.com/apple/swift)
 
 
@@ -12,6 +12,10 @@
 This framework is built using the VIPER (modified to VIPE) architecture. It started as an experiment with the architecture itself and is now a work in progress.
 
 It is a swift wrapper around the AVFoundation framework. Use it to play remote, or local videos in a simple view or feed. Its purpose is to make playing progressive downloads and live streams simpler in your iOS applications
+
+## Disclaimer:
+
+This framework is a work in progress. Unit tests, VIPE refactoring, and bug fixes are pending. 
 
 ## Features
 
@@ -28,11 +32,6 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 
 - iOS 10.0 or later
 - Xcode 8.3 or later
-
-
-## Disclaimer:
-
-This framework is a work in progress. Unit tests, VIPE refactoring, and bug fixes are pending. 
 
 ## Getting Started
 
