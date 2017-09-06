@@ -23,36 +23,43 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     //Feed
     public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
-        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: false, showInCell: indexPath, playbackTheme: playbackBarTheme)
-        viewCompletion(VPKDependencyManager.videoViewWith(dependencies: presenter))
+        let interactor = VPKVideoPlaybackInteractor(entity: videoType, withAutoplay: false, showInCell: nil, playbackTheme: playbackBarTheme)
+        
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(with: false, showInCell: nil, playbackTheme: playbackBarTheme)
+        
+        viewCompletion(VPKDependencyManager.videoView(with: interactor, and: presenter))
+        
     }
     
     //Single View
     public static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
         
-        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(videoType: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
-        viewCompletion(VPKDependencyManager.videoViewWith(dependencies: presenter))
+        let interactor = VPKVideoPlaybackInteractor(entity: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
+        
+        let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(with: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
+        
+        
+        viewCompletion(VPKDependencyManager.videoView(with: interactor, and: presenter))
     }
 }
 
 class VPKDependencyManager: VPKDependencyManagerProtocol {
     
-    static func videoViewWith(dependencies presenter: VPKVideoPlaybackInteractorOutputProtocol & VPKVideoPlaybackPresenterProtocol) -> VPKVideoView {
+    static func videoView(with interactor: VPKVideoPlaybackInteractorProtocol & VPKVideoPlaybackInteractorInputProtocol, and presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol) -> VPKVideoView {
         
         let videoView = VPKVideoView(frame: .zero)
         let playbackBarView: VPKPlaybackControlViewProtocol = VPKPlaybackControlView(theme: presenter.playbackTheme ?? .normal)
-        let interactor : VPKVideoPlaybackInteractorInputProtocol = VPKVideoPlaybackInteractor()
         let videoPlaybackManager: VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol = VPKVideoPlaybackManager.shared
         
         //Dependency setup
+        presenter.interactor = interactor
+        interactor.presenter = presenter
         videoView.presenter = presenter
         videoView.playbackBarView = playbackBarView
         presenter.playbackBarView = playbackBarView
         playbackBarView.presenter = presenter
         
         presenter.videoView = videoView
-        presenter.interactor = interactor
-        interactor.presenter = presenter
         interactor.playbackManager = videoPlaybackManager
         
         return videoView

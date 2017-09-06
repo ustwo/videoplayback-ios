@@ -97,14 +97,14 @@ protocol VPKPlaybackControlViewProtocol: class {
 public protocol VPKVideoPlaybackBuilderProtocol: class {
     
     //Single View
-    static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildVideoView(for entity: VPKVideoType, shouldAutoplay autoPlay: Bool, playbackBarTheme playbackTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
     
     //View in Feed
-    static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
+    static func vpk_buildViewInCell(for entity: VPKVideoType, at indexPath: NSIndexPath,with playbackBarTheme: ToolBarTheme, completion viewCompletion: VideoViewClosure)
 }
 
 protocol VPKDependencyManagerProtocol {
-    static func videoViewWith(dependencies presenter: VPKVideoPlaybackInteractorOutputProtocol &  VPKVideoPlaybackPresenterProtocol) -> VPKVideoView
+    static func videoView(with interactor: VPKVideoPlaybackInteractorProtocol & VPKVideoPlaybackInteractorInputProtocol, and presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol) -> VPKVideoView
 }
 
 //*** Presenter
@@ -117,12 +117,10 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
     var interactor: VPKVideoPlaybackInteractorInputProtocol? { get set }
     var videoSizeState: VideoSizeState? { get set }
     var playbackTheme: ToolBarTheme? { get set }
-    
-    var videoType: VPKVideoType { get set }
     var shouldAutoplay: Bool? { get set } // if nil defaults to false
     var indexPath: NSIndexPath? { get set } //if nil defaults to false
     
-    init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
+    init(with autoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
     
     // VIEW -> PRESENTER
     func reuseInCell()
@@ -139,9 +137,19 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
 //*** Interactor
 //*
 //*
+
+protocol VPKVideoPlaybackInteractorProtocol: class {
+    
+    init(entity: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
+}
+
 protocol VPKVideoPlaybackInteractorInputProtocol: class  {
     
     var presenter: VPKVideoPlaybackInteractorOutputProtocol? { get set }
+    var videoType: VPKVideoType { get set }
+    var remoteImageURL: URL? { get set }
+    var localImageName: String? { get set }
+    
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol)? { get set }
     
     // PRESENTER -> INTERACTOR
