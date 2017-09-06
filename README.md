@@ -42,7 +42,7 @@ The VIPER architecture has been talked about in the iOS community; however, it i
 > As a developer I would like to use the VIPER design pattern to build reusable modules
 
 
-We then decided to experiment with VIPER & the AVFoundation framework. Displaying video content in iOS is not as simple as it seems we  decided to build a swift wrapper around the AVFoundation framework, specifically aiming to make downloading and playing video content easier for iOS developers  
+We then decided to experiment with VIPER & playing video content. Playing video involves UI updates, data downloading & data syncrhonization. These complexities & interactions proved themselves to be worthwhile candidate for a VIPER structured module. 
 
 ## Communication
 
