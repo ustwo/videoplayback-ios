@@ -31,6 +31,10 @@ It is a swift wrapper around the AVFoundation framework. Use it to play remote, 
 - Xcode 8.3 or later
 
 
+## Disclaimer:
+
+This framework is a work in progress. Unit tests, and bug fixes are pending. 
+
 ## Getting Started
 
 - Go to the "DemoVideoPlaybackKit" folder, run pod install. Open the workspace and build 
@@ -179,10 +183,6 @@ extension FeedViewController: UITableViewDataSourcePrefetching {
     }
 }
 ```
-
-## Disclaimer:
-
-This framework is a work in progress. Unit tests, and bug fixes are pending. 
 
 
 ## Contact：
