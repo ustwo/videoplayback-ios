@@ -79,13 +79,13 @@ let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", 
 2. Build the video view 
 
 ```swift
-VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.shouldAutoPlay, playbackBarTheme: self.toolBarTheme) { (videoView) in
+VPKVideoPlaybackBuilder.vpk_buildVideoView(for: videoType, shouldAutoplay: self.shouldAutoPlay, playbackBarTheme: self.toolBarTheme) { [weak self] (videoView) in
 
-        self.view.addSubview(videoView)
+        self?.view.addSubview(videoView)
         videoView.snp.makeConstraints({ (make) in
-        make.height.equalTo(view.snp.height).dividedBy(2)
-        make.top.equalTo(view.snp.top).offset(10)
-        make.left.right.equalTo(view)
+        make.height.equalTo(self?.view.snp.height).dividedBy(2)
+        make.top.equalTo(self?.view.snp.top).offset(10)
+        make.left.right.equalTo(self?.view)
     })
 }
 ```
@@ -125,7 +125,7 @@ class VideoTableViewCell: UITableViewCell, VPKViewInCellProtocol {
             
         guard let cell = cell as? VideoTableViewCell else { return }
 
-        VPKVideoPlaybackBuilder.vpk_buildViewInCell(for: model, at: NSIndexPath(item: index, section: 0), completion: { (videoView) in
+        VPKVideoPlaybackBuilder.vpk_buildViewInCell(for: model, at: NSIndexPath(item: index, section: 0), completion: { [weak self] (videoView) in
                 cell.videoView = videoView
                 cell.layoutIfNeeded()
         })}.addDisposableTo(disposeBag)
