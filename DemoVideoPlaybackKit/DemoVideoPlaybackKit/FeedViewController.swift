@@ -41,6 +41,11 @@ class FeedViewController: UIViewController {
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     private func setup() {
         self.title = "Video Feed"
         
@@ -74,7 +79,9 @@ class FeedViewController: UIViewController {
 extension FeedViewController: VPKTableViewVideoPlaybackScrollable {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        handleAutoplayInTopVideoCell()
+        if shouldAutoplayVideos {
+            handleAutoplayInTopVideoCell()
+        }
         trackVideoViewCellScrolling() // default implementation
     }
     
