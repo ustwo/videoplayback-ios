@@ -67,7 +67,7 @@ import VideoPlaybackKit
 
  
 
-1. Define the Video Type (local or remote)
+1. Define the Video Type (local or remote). This is the ENTITY represented in the VIPER structure
 
 ```swift 
 let videoType = VPKVideoType.local(videoPathName: "Elon_Musk", fileType: "mp4", placeholderImageName: "elon_1")
