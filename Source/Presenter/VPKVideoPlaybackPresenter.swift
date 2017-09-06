@@ -10,7 +10,7 @@ import Foundation
 import AVFoundation
 
 public class VPKVideoPlaybackPresenter {
-
+    
     static let fadeOutTime: TimeInterval = 3.0
     
     var videoView: VPKVideoViewProtocol? {
@@ -27,19 +27,19 @@ public class VPKVideoPlaybackPresenter {
     var builder: VPKVideoPlaybackBuilderProtocol?
     var videoSizeState: VideoSizeState?
     var playbackTheme: ToolBarTheme?
-    var videoType: VPKVideoType
     var shouldAutoplay: Bool?
     var indexPath: NSIndexPath?
     var duration: TimeInterval?
-
-    required public init(videoType: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme = .normal) {
-        self.videoType = videoType
-        self.shouldAutoplay = shouldAutoplay
+    
+    
+    required public init(with autoPlay:Bool = false, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme) {
+        
+        self.shouldAutoplay = autoPlay
         self.indexPath = indexPath
         self.videoSizeState = .normal
         self.playbackTheme = theme
     }
-
+    
     private func observeVideoViewLifecycle() {
         videoView?.viewWillAppearClosure = { () in
             if self.shouldAutoplay == true {
@@ -47,23 +47,23 @@ public class VPKVideoPlaybackPresenter {
             }
         }
     }
-
+    
 }
 
 //MARK: VIEW --> Presenter
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
-
-    //VIEW -> PRESENTER    
+    
+    //VIEW -> PRESENTER
     func viewDidLoad() {
         
-        switch videoType {
-        case let .local(videoPathName: _, fileType: _, placeholderImageName: imageName):
-            videoView?.localPlaceHolderName = imageName
-        case let .remote(url: _, placeholderURLName: imageURLString):
-            guard let imageURL = URL(string: imageURLString) else { return }
-            videoView?.remotePlaceHolderURL = imageURL
+        
+        //Update the default image
+        if let localImage = interactor?.localImageName {
+            videoView?.localPlaceHolderName = localImage
+        } else if let remoteImageURL = interactor?.remoteImageURL {
+            videoView?.remotePlaceHolderURL = remoteImageURL
         }
-    
+        
         if self.shouldAutoplay == true {
             didTapVideoView()
         }
@@ -78,7 +78,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
     }
     
     func didTapVideoView() {
-        guard let safeVideoUrl = videoType.videoUrl else { return }
+        guard let safeVideoUrl = interactor?.videoType.videoUrl else { return }
         interactor?.didTapVideo(videoURL: safeVideoUrl, at: self.indexPath)
     }
     
@@ -91,14 +91,14 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
             videoView?.makeNormalScreen()
         }
         
-      videoSizeState?.toggle()
+        videoSizeState?.toggle()
     }
     
     
     func didSkipBack(_ seconds: Float) {
         didScrubTo(TimeInterval(seconds))
     }
-
+    
     func didSkipForward(_ seconds: Float) {
         didScrubTo(TimeInterval(seconds))
     }
@@ -131,7 +131,6 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
         playbackBarView?.updateTimePlayingCompletedTo(seconds.formattedTimeFromSeconds)
         self.progressTime = seconds
         
-        //TODO: (SD) Clean up
         if videoIsReachingTheEnd() {
             fadeInControlBarView()
             hasFadedOutControlView = false
@@ -184,7 +183,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
         videoView?.activityIndicator.stopAnimating()
         playbackBarView?.toggleActionButton(PlayerState.playing.buttonImageName)
     }
-
+    
     func onVideoLoadSuccess(_ playerLayer: AVPlayerLayer) {
         videoView?.reloadInterface(with: playerLayer)
     }
