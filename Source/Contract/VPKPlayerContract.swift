@@ -22,7 +22,10 @@ public typealias LayerClosure = (_ layer: AVPlayerLayer) -> ()
 
 //** Use Case
 //*
-//*
+//** 
+//  You can use this if you want to create seperate interactors that are used to satisfy each use case
+//**
+
 protocol VPKMainPlayerUseCase: class {
     func selectVideo()
     func scrubVideo()
@@ -33,8 +36,9 @@ protocol VPKMainPlayerUseCase: class {
 }
 
 //*** View
-/// The video protocol defines the interface requirements for a view that supports video playback.
+/// The video view protocol defines the interface requirements for a view that supports video playback.
 protocol VPKVideoViewProtocol: class {
+    
     var presenter: VPKVideoPlaybackPresenterProtocol? { get set }
     var playbackBarView: VPKPlaybackControlViewProtocol? { get set }
     var fullScreenBGView: UIView { get set }
@@ -140,7 +144,7 @@ protocol VPKVideoPlaybackPresenterProtocol: class {
 
 protocol VPKVideoPlaybackInteractorProtocol: class {
     
-    init(entity: VPKVideoType, withAutoplay shouldAutoplay: Bool, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme)
+    init(entity: VPKVideoType)
 }
 
 protocol VPKVideoPlaybackInteractorInputProtocol: class  {

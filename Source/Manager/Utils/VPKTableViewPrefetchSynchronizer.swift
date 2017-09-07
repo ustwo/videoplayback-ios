@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 public extension UITableView {
+    
     func vpk_setPrefetchOptimizer(for videoItems:[VPKVideoType]) {
         self.prefetchDataSource = VPKTableViewPrefetchSynchronizer(videoItems: videoItems)
     }
 }
 
 protocol VPKPrefetchVideoDownloader: class {
+    
     var videoItems: [VPKVideoType] { get set }
     var tasks: [URLSessionTask] { get set }
     
@@ -24,8 +26,7 @@ protocol VPKPrefetchVideoDownloader: class {
 }
 
 public class VPKTableViewPrefetchSynchronizer: NSObject, VPKPrefetchVideoDownloader, UITableViewDataSourcePrefetching {
-    
-    
+        
     var videoItems = [VPKVideoType]()
     var tasks = [URLSessionTask]()
     

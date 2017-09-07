@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 
 
-public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorProtocol,VPKVideoPlaybackInteractorInputProtocol {
+public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorProtocol {
     
     
     var playbackManager: (VPKVideoPlaybackManagerInputProtocol & VPKVideoPlaybackManagerOutputProtocol & VPKVideoPlaybackManagerProtocol)?
@@ -22,7 +22,7 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorProtocol,VPKV
     weak var presenter: VPKVideoPlaybackInteractorOutputProtocol?
     
     
-    required public init(entity: VPKVideoType, withAutoplay shouldAutoplay: Bool = false, showInCell indexPath: NSIndexPath?, playbackTheme theme: ToolBarTheme) {
+    required public init(entity: VPKVideoType) {
         
         self.videoType = entity
         prepareEntityDataForPresenter()
@@ -39,7 +39,12 @@ public class VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorProtocol,VPKV
             remoteImageURL = URL(string: imageURLString)!
         }
     }
-    
+}
+
+// MARK: - Interactor Input. Passes inputs to the external playback data manager . You can also think of the data manager as an event handler
+
+extension VPKVideoPlaybackInteractor: VPKVideoPlaybackInteractorInputProtocol {
+
     func didTapVideo(videoURL: URL, at indexPath: NSIndexPath? = nil) {
         
         playbackManager?.didSelectVideoUrl(videoURL)

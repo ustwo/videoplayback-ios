@@ -116,6 +116,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackPresenterProtocol {
 extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     
     func onVideoResetPresentation() {
+        
         videoView?.reloadInterfaceWithoutPlayerlayer()
     }
     
@@ -127,6 +128,7 @@ extension VPKVideoPlaybackPresenter: VPKVideoPlaybackInteractorOutputProtocol {
     }
     
     func onVideoPlayingFor(_ seconds: TimeInterval) {
+        
         playbackBarView?.progressValue = Float(seconds)
         playbackBarView?.updateTimePlayingCompletedTo(seconds.formattedTimeFromSeconds)
         self.progressTime = seconds

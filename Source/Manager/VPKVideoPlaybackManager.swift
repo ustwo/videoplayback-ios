@@ -13,7 +13,6 @@ import AVFoundation
 
 public typealias PlayerItemClosure = (_ playerItem: AVPlayerItem) -> ()
 
-
 @available(iOS 10, *)
 class VPKVideoPlaybackManager: NSObject, VPKVideoPlaybackManagerProtocol {
     

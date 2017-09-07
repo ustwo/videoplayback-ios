@@ -23,7 +23,7 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     //Feed
     public static func vpk_buildViewInCell(for videoType: VPKVideoType, at indexPath: NSIndexPath, with playbackBarTheme: ToolBarTheme = .normal, completion viewCompletion: VideoViewClosure) {
         
-        let interactor = VPKVideoPlaybackInteractor(entity: videoType, withAutoplay: false, showInCell: nil, playbackTheme: playbackBarTheme)
+        let interactor = VPKVideoPlaybackInteractor(entity: videoType)
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(with: false, showInCell: nil, playbackTheme: playbackBarTheme)
         
@@ -34,7 +34,7 @@ public class VPKVideoPlaybackBuilder: VPKVideoPlaybackBuilderProtocol {
     //Single View
     public static func vpk_buildVideoView(for videoType: VPKVideoType, shouldAutoplay autoPlay: Bool = false, playbackBarTheme playbackTheme: ToolBarTheme = .normal, completion viewCompletion: (VPKVideoView) -> ()) {
         
-        let interactor = VPKVideoPlaybackInteractor(entity: videoType, withAutoplay: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
+        let interactor = VPKVideoPlaybackInteractor(entity: videoType)
         
         let presenter: VPKVideoPlaybackPresenterProtocol & VPKVideoPlaybackInteractorOutputProtocol = VPKVideoPlaybackPresenter(with: autoPlay, showInCell: nil, playbackTheme: playbackTheme)
         
@@ -58,7 +58,6 @@ class VPKDependencyManager: VPKDependencyManagerProtocol {
         videoView.playbackBarView = playbackBarView
         presenter.playbackBarView = playbackBarView
         playbackBarView.presenter = presenter
-        
         presenter.videoView = videoView
         interactor.playbackManager = videoPlaybackManager
         
