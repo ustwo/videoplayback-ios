@@ -6,7 +6,7 @@ target 'DemoVideoPlaybackKit' do
 	pod 'RxSwift' 
 	pod 'RxCocoa'
 	pod 'SnapKit'
-	pod 'VideoPlaybackKit', :git => 'https://github.com/ustwo/videoplayback-ios' 
+	pod 'VideoPlaybackKit'
 end
 
 post_install do |installer|
