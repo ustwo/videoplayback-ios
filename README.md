@@ -13,6 +13,8 @@ This framework is built using the VIPER (modified to VIPE) architecture. It star
 
 It is a swift wrapper around the AVFoundation framework. Use it to play remote, or local videos in a simple view or feed. Its purpose is to make playing progressive downloads and live streams simpler in your iOS applications
 
+We also wrote a blog post on VIPER itself here: https://ustwo.com/blog/ins-and-outs-of-viper
+
 ## Disclaimer:
 
 This framework is a work in progress. Unit tests, VIPE refactoring, and bug fixes are pending. 
