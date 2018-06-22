@@ -1,4 +1,4 @@
 github "Alamofire/Alamofire"
 github "Alamofire/AlamofireImage"
 github "SnapKit/SnapKit"
-github "alskipp/ASValueTrackingSlider"
+github "lukedurrant/ASValueTrackingSlider" "task/add-carthage-support"
