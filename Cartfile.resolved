@@ -1,0 +1,4 @@
+github "Alamofire/Alamofire" "4.7.2"
+github "Alamofire/AlamofireImage" "3.3.1"
+github "SnapKit/SnapKit" "4.0.0"
+github "lukedurrant/ASValueTrackingSlider" "0.12.2"
